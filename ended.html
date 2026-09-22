@@ -49,7 +49,7 @@
     <div style="display:flex;align-items:center;gap:9px">
       <div style="width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;line-height:1;cursor:pointer" style-hover="background:rgba(255,255,255,.16)">‹</div>
       <div style="color:#F3EAFF;font-weight:700;font-size:15px;letter-spacing:.06em">Crown Rush</div>
-      <div style="display:flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;background:rgba(46,204,113,.16);border:1px solid rgba(46,204,113,.45);color:#8FE3B8;font-size:10.5px;font-weight:700"><span style="width:5px;height:5px;border-radius:50%;background:#2ECC71;display:inline-block;animation:crPulseDot 1.6s infinite"></span>LIVE</div>
+      <div style="display:flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;background:rgba(169,145,214,.14);border:1px solid rgba(169,145,214,.4);color:#CDBBEF;font-size:10.5px;font-weight:700">ENDED</div>
     </div>
     <div onClick="{{ toggleRules }}" style="display:flex;align-items:center;gap:6px;padding:6px 13px;border-radius:8px;background:rgba(232,192,106,.12);border:1px solid rgba(232,192,106,.45);color:#E8C06A;font-weight:700;font-size:12px;cursor:pointer" style-hover="background:rgba(232,192,106,.2)">
       <svg width="13" height="14" viewBox="0 0 14 15" fill="none" aria-hidden="true">
@@ -71,45 +71,25 @@
 
         <div style="position:relative;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 12px;border-bottom:1px solid rgba(255,255,255,.08)">
           <div style="display:flex;align-items:center;gap:8px">
-            <span style="color:#8FE3B8;font-weight:800;font-size:12px;letter-spacing:.18em">EVENT LIVE NOW</span>
-            <span style="display:inline-flex;align-items:flex-end;gap:2px;height:12px">
-              <i style="display:block;width:3px;border-radius:2px;background:#2ECC71;height:5px;animation:crBar .9s ease-in-out infinite"></i>
-              <i style="display:block;width:3px;border-radius:2px;background:#2ECC71;height:9px;animation:crBar .9s ease-in-out infinite;animation-delay:.15s"></i>
-              <i style="display:block;width:3px;border-radius:2px;background:#2ECC71;height:12px;animation:crBar .9s ease-in-out infinite;animation-delay:.3s"></i>
-              <i style="display:block;width:3px;border-radius:2px;background:#2ECC71;height:7px;animation:crBar .9s ease-in-out infinite;animation-delay:.45s"></i>
-            </span>
+            <span style="color:#F0D291;font-weight:800;font-size:12px;letter-spacing:.18em">SEASON ENDED</span>
+            <span style="padding:2px 8px;border-radius:999px;background:rgba(232,192,106,.14);border:1px solid rgba(232,192,106,.36);color:#E8C06A;font-size:10px;font-weight:800">Rewards still claimable</span>
           </div>
           <div style="color:#F3EAFF;font-weight:800;font-size:12.5px;letter-spacing:.06em">12/01 - 12/31</div>
         </div>
 
-        <div style="position:relative;padding:8px 12px 9px">
+        <div style="position:relative;padding:9px 12px 10px">
           <div style="display:flex;align-items:center;gap:10px">
-            <div style="position:relative;flex:none;width:32px;height:32px;display:flex;align-items:center;justify-content:center">
-              <div style="position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(232,90,90,.55);animation:crAlarmRing 1.4s ease-out infinite"></div>
-              <div style="position:relative;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 50% 35%, #E8494E, #8E0F17);display:flex;align-items:center;justify-content:center;box-shadow:0 0 14px rgba(232,73,78,.6);animation:crShake .9s ease-in-out infinite">
-                <svg width="17" height="17" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-                  <path d="M11 3.4a7.3 7.3 0 1 1 0 14.6 7.3 7.3 0 0 1 0-14.6Z" fill="#FFF0E6" fill-opacity=".14" stroke="#FFE4E4" stroke-width="1.6" />
-                  <path d="M11 7.2v3.9l2.7 1.7" stroke="#FFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M4.6 3.9 2.4 5.9M17.4 3.9l2.2 2M5.6 18.1 4 19.9M16.4 18.1l1.6 1.8" stroke="#FFD2D2" stroke-width="1.7" stroke-linecap="round" />
-                </svg>
-              </div>
+            <div style="flex:none;width:30px;height:30px;border-radius:9px;background:rgba(232,192,106,.14);border:1px solid rgba(232,192,106,.4);display:flex;align-items:center;justify-content:center">
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M4 6.5h12v9.3a1.2 1.2 0 0 1-1.2 1.2H5.2A1.2 1.2 0 0 1 4 15.8z" stroke="#F0D291" stroke-width="1.5" stroke-linejoin="round" />
+                <path d="M2.6 6.5 10 2.6l7.4 3.9" stroke="#F0D291" stroke-width="1.5" stroke-linejoin="round" />
+                <path d="M7.6 11.4l1.9 1.9 3.4-3.6" stroke="#8FE3B8" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
             </div>
             <div style="flex:1;min-width:0">
-              <div style="color:#FFB3B3;font-size:10.5px;font-weight:800;letter-spacing:.16em">ENDS IN</div>
-              <div style="margin-top:2px;display:flex;align-items:baseline;gap:5px;color:#fff">
-                <span style="font-family:Anton,sans-serif;font-size:20px;line-height:1">{{ cdD }}</span><span style="font-size:10.5px;color:#DEC7E8">D</span>
-                <span style="font-family:Anton,sans-serif;font-size:20px;line-height:1">{{ cdH }}</span><span style="font-size:10.5px;color:#DEC7E8">H</span>
-                <span style="font-family:Anton,sans-serif;font-size:20px;line-height:1">{{ cdM }}</span><span style="font-size:10.5px;color:#DEC7E8">M</span>
-                <span style="font-family:Anton,sans-serif;font-size:20px;line-height:1;color:#FF9A9A;animation:crBlinkNum 1s steps(1,end) infinite">{{ cdS }}</span><span style="font-size:10.5px;color:#DEC7E8">S</span>
-              </div>
+              <div style="color:#F5E6C0;font-weight:800;font-size:12.5px">Claim window is open</div>
+              <div style="margin-top:2px;color:#A991D6;font-size:11px">Your season result is locked in — unclaimed rewards can be claimed anytime</div>
             </div>
-            <div style="flex:none;text-align:right">
-              <div style="color:#8E78BE;font-size:10px">Season progress</div>
-              <div style="color:#FFB3B3;font-weight:800;font-size:13px;margin-top:2px">{{ seasonPct }}</div>
-            </div>
-          </div>
-          <div style="margin-top:7px;height:4px;border-radius:999px;background:rgba(8,1,22,.65);overflow:hidden">
-            <div style="height:100%;border-radius:999px;background:linear-gradient(90deg,#2E8B57,#C8342F 60%,#F0D291);width:{{ seasonPct }}"></div>
           </div>
         </div>
       </div>
@@ -147,22 +127,32 @@
               </div>
             </sc-if>
             <sc-if value="{{ loggedOut }}">
-              <div onClick="{{ goLogin }}" style="padding:3px 11px;border-radius:999px;background:rgba(232,192,106,.14);border:1px solid rgba(232,192,106,.4);color:#E8C06A;font-size:11.5px;font-weight:700;cursor:pointer" style-hover="background:rgba(232,192,106,.22)">Log in to see progress</div>
+              <div onClick="{{ goLogin }}" style="padding:3px 11px;border-radius:999px;background:rgba(232,192,106,.14);border:1px solid rgba(232,192,106,.4);color:#E8C06A;font-size:11.5px;font-weight:700;cursor:pointer" style-hover="background:rgba(232,192,106,.22)">Log in to claim rewards</div>
             </sc-if>
           </div>
           <div style="flex:none;display:flex;align-items:center;gap:5px;font-size:11px;white-space:nowrap">
-            <span style="color:#8E78BE">Next Stage {{ nextLevel }}</span>
-            <span style="padding:2px 7px;border-radius:999px;background:rgba(232,192,106,.14);border:1px solid rgba(232,192,106,.35);color:#E8C06A;font-weight:700">{{ nextReward }}</span>
+            <span style="color:#8E78BE">Final result</span>
+            <span style="padding:2px 7px;border-radius:999px;background:rgba(232,192,106,.14);border:1px solid rgba(232,192,106,.35);color:#E8C06A;font-weight:700">Stage {{ level }}</span>
           </div>
         </div>
         <div style="position:relative;margin-top:8px;height:22px;border-radius:999px;background:rgba(8,1,22,.72);border:1px solid rgba(232,192,106,.28);overflow:hidden">
-          <div style="position:absolute;inset:0;border-radius:999px;background:linear-gradient(90deg,#8A5E14,#C89A3C);width:{{ pctText }}"></div>
+          <div style="position:absolute;inset:0;border-radius:999px;background:linear-gradient(90deg,#8A5E14,#C89A3C);width:100%"></div>
           <div style="position:relative;height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 10px">
             <span style="display:flex;align-items:baseline;gap:4px;text-shadow:0 1px 3px rgba(6,0,18,.95)">
-              <span style="color:#FFE9B0;font-size:10.5px;font-weight:800;letter-spacing:.08em">EXP</span>
+              <span style="color:#FFE9B0;font-size:10.5px;font-weight:800;letter-spacing:.08em">SEASON EXP</span>
               <span style="color:#FFFFFF;font-size:10.5px;font-weight:800;letter-spacing:.02em">{{ growthText }}</span>
             </span>
-            <span style="color:#E7D6FF;font-size:10.5px;font-weight:700;text-shadow:0 1px 3px rgba(6,0,18,.95)">{{ remainExp }} EXP to go</span>
+            <span style="color:#FFF1D0;font-size:10.5px;font-weight:700;text-shadow:0 1px 3px rgba(6,0,18,.95)">No longer accruing</span>
+          </div>
+        </div>
+        <div style="margin-top:7px;display:flex;gap:7px">
+          <div style="flex:1;padding:7px 9px;border-radius:9px;background:rgba(8,1,22,.5);border:1px solid rgba(255,255,255,.08)">
+            <div style="color:#8E78BE;font-size:10px">Unclaimed rewards</div>
+            <div style="color:#E8C06A;font-weight:800;font-size:13px;margin-top:2px">{{ claimableCount }} · {{ claimableAmount }}</div>
+          </div>
+          <div style="flex:1;padding:7px 9px;border-radius:9px;background:rgba(8,1,22,.5);border:1px solid rgba(255,255,255,.08)">
+            <div style="color:#8E78BE;font-size:10px">Claimed</div>
+            <div style="color:#8FE3B8;font-weight:800;font-size:13px;margin-top:2px">{{ claimedCount }} items</div>
           </div>
         </div>
       </div>
@@ -208,8 +198,12 @@
       </div>
     </sc-if>
     <sc-if value="{{ noClaimable }}">
-      <div style="display:block;width:100%;text-align:center;padding:7px 0;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#8E78BE;font-weight:700;font-size:12px">No cash rewards to claim</div>
+      <div style="display:block;width:100%;text-align:center;padding:7px 0;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#8E78BE;font-weight:700;font-size:12px">All rewards claimed</div>
     </sc-if>
+    <div style="margin-top:9px;display:flex;justify-content:space-between;align-items:center">
+      <div style="color:#E8C06A;font-weight:700;font-size:11.5px">Stages cleared · {{ reachedCount }} total</div>
+      <div style="color:#8E78BE;font-size:10.5px">Locked stages are hidden</div>
+    </div>
     <div ref="{{ listRef }}" onScroll="{{ onListScroll }}" style="margin-top:9px;max-height:490px;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;display:flex;flex-direction:column;gap:2px;padding-right:2px">
       <sc-for list="{{ tasks }}" as="t" hint-placeholder-count="6">
         <div data-unclaimed="{{ t.unclaimedFlag }}" data-lv="{{ t.lv }}">
@@ -335,8 +329,8 @@
   <!-- RANKING -->
   <div style="margin:5px 14px 0;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.1);padding:12px 12px">
     <div style="display:flex;justify-content:space-between;align-items:center">
-      <div style="color:#E8C06A;font-weight:700;font-size:12.5px;letter-spacing:.24em">LEADERBOARD TOP 100</div>
-      <div onClick="{{ refreshRanks }}" title="Refresh leaderboard" style="display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);color:#A991D6;font-size:10.5px;font-weight:700;cursor:pointer" style-hover="color:#E8C06A;border-color:rgba(232,192,106,.4)">
+      <div style="color:#E8C06A;font-weight:700;font-size:12.5px;letter-spacing:.24em">FINAL LEADERBOARD TOP 100</div>
+      <div onClick="{{ refreshRanks }}" title="Refresh" style="display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);color:#A991D6;font-size:10.5px;font-weight:700;cursor:pointer" style-hover="color:#E8C06A;border-color:rgba(232,192,106,.4)">
         <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true" style="animation:{{ refreshAnim }}">
           <path d="M12 7a5 5 0 1 1-1.6-3.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
           <path d="M12.3 1.4v3.1H9.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
@@ -666,7 +660,8 @@ class Component extends DCLogic {
   startStockAuto() {
     clearInterval(this.stockTimer);
     this.stockTimer = setInterval(() => {
-      this.setState(st => ({ stockIdx: ((st.stockIdx || 0) + 1) % 8 }));
+      const n = this.stockCount || 1;
+      this.setState(st => ({ stockIdx: ((st.stockIdx || 0) + 1) % n }));
     }, 5000);
   }
   scheduleHide() {
@@ -685,13 +680,6 @@ class Component extends DCLogic {
   tick() {
     const left = Math.max(0, this.end - Date.now());
     this.setState({ left });
-    // Auto-switch to the ended page once the event closes (12/31 23:59:59 GMT+8);
-    // In production, request the activity-status API first and only redirect when the server returns "ended"
-    if (left === 0 && !this.switched) {
-      this.switched = true;
-      clearInterval(this.timer);
-      location.replace('./ended.html');
-    }
   }
   toast(msg) { clearTimeout(this.tt); this.setState({ toast: msg }); this.tt = setTimeout(() => this.setState({ toast: '' }), 2200); }
   money(n) { return '₱' + n.toLocaleString(); }
@@ -775,9 +763,11 @@ class Component extends DCLogic {
         tagColor: out ? '#8E78BE' : (p.left <= 3 ? '#FFB3B3' : '#E8C06A')
       });
     });
+    const physicalsReached = physicals.filter(p => p.lv <= level);
+    this.stockCount = Math.max(1, physicalsReached.length);
     const physMap = {};
     physicals.forEach(p => { physMap[p.lv] = p; });
-    const tasks = rows.map(r => {
+    const tasks = rows.filter(r => r.lv <= level).map(r => {
       const reached = r.lv <= level, claimed = r.done || !!this.state.claimed[r.lv];
       const ph = physMap[r.lv];
       const soldOut = !!ph && ph.left === 0;
@@ -826,12 +816,14 @@ class Component extends DCLogic {
     const claimAmount = rows.filter(r => r.lv <= level && !r.done && !(physMap[r.lv] && physMap[r.lv].left > 0) && !this.state.claimed[r.lv]).reduce((a, r) => a + r.cash, 0);
 
     const n = physicals.length;
-    const deck = physicals.map((g, i) => {
-      const off = (i - this.state.prizeIdx + n) % n;
+    const deckSrc = physicalsReached;
+    const dn = Math.max(1, deckSrc.length);
+    const deck = deckSrc.map((g, i) => {
+      const off = (i - (this.state.prizeIdx % dn) + dn) % dn;
       return Object.assign({}, g, {
         transform: 'translateY(' + (off * 11) + 'px) scale(' + (1 - off * 0.05) + ')',
         opacity: off === 0 ? 1 : (off === 1 ? 0.78 : (off === 2 ? 0.5 : (off === 3 ? 0.28 : 0))),
-        z: n - off
+        z: dn - off
       });
     });
 
@@ -983,9 +975,9 @@ class Component extends DCLogic {
       claimResultAmount: this.state.claimResult ? this.state.claimResult.amount : '',
       claimResultItems: this.state.claimResult ? this.state.claimResult.items : [],
       closeClaimResult: () => { clearInterval(this.claimTimer); this.setState({ claimResult: null }); },
-      stockDeck: physicals.map((p, i) => {
-        const n = physicals.length;
-        const off = (i - (this.state.stockIdx || 0) + n) % n;
+      stockDeck: physicalsReached.map((p, i) => {
+        const n = Math.max(1, physicalsReached.length);
+        const off = (i - ((this.state.stockIdx || 0) % n) + n) % n;
         const taken = p.qty - p.left, out = p.left === 0, low = p.left > 0 && p.left <= 3;
         return {
           lv: p.lv, name: p.name, bgImg: p.bgImg, qty: p.qty, taken,
@@ -1006,9 +998,9 @@ class Component extends DCLogic {
           z: n - off
         };
       }),
-      stockIndexLabel: ((this.state.stockIdx || 0) + 1) + ' / ' + physicals.length,
-      stockDots: physicals.map((_, i) => ({
-        color: i === (this.state.stockIdx || 0) ? '#E8C06A' : 'rgba(255,255,255,.2)',
+      stockIndexLabel: (((this.state.stockIdx || 0) % Math.max(1, physicalsReached.length)) + 1) + ' / ' + physicalsReached.length,
+      stockDots: physicalsReached.map((_, i) => ({
+        color: i === ((this.state.stockIdx || 0) % Math.max(1, physicalsReached.length)) ? '#E8C06A' : 'rgba(255,255,255,.2)',
         onClick: () => { this.setState({ stockIdx: i }); this.startStockAuto(); }
       })),
       onStockDown: (e) => { this.stockX = e.clientX; },
@@ -1017,7 +1009,8 @@ class Component extends DCLogic {
         const dx = e.clientX - this.stockX;
         this.stockX = null;
         const dir = Math.abs(dx) < 18 ? 1 : (dx < 0 ? 1 : -1);
-        this.setState(st => ({ stockIdx: ((st.stockIdx || 0) + dir + physicals.length) % physicals.length }));
+        const sn = Math.max(1, physicalsReached.length);
+        this.setState(st => ({ stockIdx: ((st.stockIdx || 0) + dir + sn) % sn }));
         this.startStockAuto();
       },
       promos: [
@@ -1082,6 +1075,7 @@ class Component extends DCLogic {
         setTimeout(() => { this.setState({ refreshing: false }); this.toast('Leaderboard updated'); }, 900);
       },
       recordTotal: this.money(recordSum), recordCount: records.length,
+      reachedCount: rows.filter(r => r.lv <= level).length,
       myPrizes: physicals.filter(p => p.lv <= level && p.left > 0).sort((a, b) => a.lv - b.lv)
         .map(p => ({ img: p.bgImg, title: 'Stage ' + p.lv + ' · ' + p.name })),
       physicalIndexLabel: (this.state.prizeIdx + 1) + ' / ' + physicals.length,

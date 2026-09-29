@@ -79,11 +79,11 @@
           <button onClick="{{ applyFilter }}" style="height:32px;padding:0 20px;border:none;border-radius:3px;background:#3A9BDC;color:#fff;cursor:pointer">确 定</button>
           <button onClick="{{ resetFilter }}" style="height:32px;padding:0 16px;border:1px solid #DCDFE6;border-radius:3px;background:#fff;color:#555;cursor:pointer">重 置</button>
           <div style="flex:1"></div>
-          <button onClick="{{ openCreate }}" style="height:32px;padding:0 16px;border:none;border-radius:3px;background:#52C41A;color:#fff;cursor:pointer">+ 新增皮肤</button>
-          <button onClick="{{ openLogs }}" style="height:32px;padding:0 16px;border:1px solid #3A9BDC;border-radius:3px;background:#fff;color:#3A9BDC;cursor:pointer">操作日志</button>
+          <button onClick="{{ openCreate }}" style="height:32px;padding:0 16px;border:none;border-radius:3px;background:#52C41A;color:#fff;cursor:pointer">+ 新增皮肤</button><span onClick="{{ help.create }}" title="查看说明" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:4px;border-radius:50%;background:#C0C4CC;color:#fff;font-size:10px;font-weight:700;line-height:1;cursor:pointer;vertical-align:middle" style-hover="background:#3A9BDC">?</span>
+          <button onClick="{{ openLogs }}" style="height:32px;padding:0 16px;border:1px solid #3A9BDC;border-radius:3px;background:#fff;color:#3A9BDC;cursor:pointer">操作日志</button><span onClick="{{ help.logs }}" title="查看说明" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:4px;border-radius:50%;background:#C0C4CC;color:#fff;font-size:10px;font-weight:700;line-height:1;cursor:pointer;vertical-align:middle" style-hover="background:#3A9BDC">?</span>
         </div>
 
-        <div style="padding:8px 12px;margin-bottom:10px;border:1px dashed #D48806;border-radius:3px;background:#FFF7E6;color:#874D00;font-size:12px;line-height:1.7">需求提示：多套皮肤的生效时间段不得重叠；皮肤素材与图标由前端统一打包上传 CDN，后台仅选择资源包版本，不提供单张图片上传。换肤生效的页面范围及飘雪等动效由 UI 设计师与前端工程师确定，不在后台配置。</div>
+        <div style="padding:8px 12px;margin-bottom:10px;border:1px dashed #D48806;border-radius:3px;background:#FFF7E6;color:#874D00;font-size:12px;line-height:1.7">需求提示：多套皮肤的生效时间段不得重叠；皮肤素材与图标由前端统一打包上传 CDN，后台仅选择资源包版本，不提供单张图片上传。换肤生效的页面范围及飘雪等动效由 UI 设计师与前端工程师确定，不在后台配置。 <a href="./Skin Admin Manual.dc.html" style="color:#3A9BDC;text-decoration:underline">查看后台操作手册 ›</a></div>
 
         <div style="background:#fff;border:1px solid #EBEEF2;overflow-x:auto">
           <table style="width:100%;min-width:1180px;border-collapse:collapse;text-align:center">
@@ -91,14 +91,14 @@
               <tr style="background:#FAFAFA;color:#555">
                 <th style="padding:12px 8px;border:1px solid #EBEEF2;font-weight:400;width:56px">序号</th>
                 <th style="padding:12px 8px;border:1px solid #EBEEF2;font-weight:400">皮肤名称</th>
-                <th style="padding:12px 8px;border:1px solid #EBEEF2;font-weight:400">资源包版本</th>
-                <th style="padding:12px 8px;border:1px solid #EBEEF2;font-weight:400">适用端</th>
-                <th style="padding:12px 8px;border:1px solid #EBEEF2;font-weight:400">生效时间（GMT+8）</th>
-                <th style="padding:12px 8px;border:1px solid #EBEEF2;font-weight:400">灰度比例</th>
-                <th style="padding:12px 8px;border:1px solid #EBEEF2;font-weight:400">桌面图标</th>
-                <th style="padding:12px 8px;border:1px solid #EBEEF2;font-weight:400">状态</th>
+                <th style="padding:12px 8px;border:1px solid #EBEEF2;font-weight:400">资源包版本<span onClick="{{ help.version }}" title="查看说明" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:4px;border-radius:50%;background:#C0C4CC;color:#fff;font-size:10px;font-weight:700;line-height:1;cursor:pointer;vertical-align:middle" style-hover="background:#3A9BDC">?</span></th>
+                <th style="padding:12px 8px;border:1px solid #EBEEF2;font-weight:400">适用端<span onClick="{{ help.ends }}" title="查看说明" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:4px;border-radius:50%;background:#C0C4CC;color:#fff;font-size:10px;font-weight:700;line-height:1;cursor:pointer;vertical-align:middle" style-hover="background:#3A9BDC">?</span></th>
+                <th style="padding:12px 8px;border:1px solid #EBEEF2;font-weight:400">生效时间（GMT+8）<span onClick="{{ help.time }}" title="查看说明" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:4px;border-radius:50%;background:#C0C4CC;color:#fff;font-size:10px;font-weight:700;line-height:1;cursor:pointer;vertical-align:middle" style-hover="background:#3A9BDC">?</span></th>
+                <th style="padding:12px 8px;border:1px solid #EBEEF2;font-weight:400">灰度比例<span onClick="{{ help.gray }}" title="查看说明" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:4px;border-radius:50%;background:#C0C4CC;color:#fff;font-size:10px;font-weight:700;line-height:1;cursor:pointer;vertical-align:middle" style-hover="background:#3A9BDC">?</span></th>
+                <th style="padding:12px 8px;border:1px solid #EBEEF2;font-weight:400">桌面图标<span onClick="{{ help.icon }}" title="查看说明" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:4px;border-radius:50%;background:#C0C4CC;color:#fff;font-size:10px;font-weight:700;line-height:1;cursor:pointer;vertical-align:middle" style-hover="background:#3A9BDC">?</span></th>
+                <th style="padding:12px 8px;border:1px solid #EBEEF2;font-weight:400">状态<span onClick="{{ help.status }}" title="查看说明" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:4px;border-radius:50%;background:#C0C4CC;color:#fff;font-size:10px;font-weight:700;line-height:1;cursor:pointer;vertical-align:middle" style-hover="background:#3A9BDC">?</span></th>
                 <th style="padding:12px 8px;border:1px solid #EBEEF2;font-weight:400">创建人</th>
-                <th style="padding:12px 8px;border:1px solid #EBEEF2;font-weight:400;width:200px">操作</th>
+                <th style="padding:12px 8px;border:1px solid #EBEEF2;font-weight:400;width:200px">操作<span onClick="{{ help.ops }}" title="查看说明" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:4px;border-radius:50%;background:#C0C4CC;color:#fff;font-size:10px;font-weight:700;line-height:1;cursor:pointer;vertical-align:middle" style-hover="background:#3A9BDC">?</span></th>
               </tr>
             </thead>
             <tbody>
@@ -139,35 +139,35 @@
           <span>{{ formTitle }}</span><span onClick="{{ closeForm }}" style="cursor:pointer;color:#999">✕</span>
         </div>
         <div style="flex:1;overflow:auto;padding:16px 22px;display:grid;grid-template-columns:120px minmax(0,1fr);gap:14px 12px;align-items:center">
-          <div style="text-align:right;color:#555"><span style="color:#F5222D">*</span> 皮肤名称</div>
+          <div style="text-align:right;color:#555"><span style="color:#F5222D">*</span> 皮肤名称<span onClick="{{ help.name }}" title="查看说明" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:4px;border-radius:50%;background:#C0C4CC;color:#fff;font-size:10px;font-weight:700;line-height:1;cursor:pointer;vertical-align:middle" style-hover="background:#3A9BDC">?</span></div>
           <input value="{{ d.name }}" onChange="{{ setName }}" placeholder="例：2026 圣诞主题" style="height:32px;border:1px solid #DCDFE6;border-radius:3px;padding:0 10px" />
 
-          <div style="text-align:right;color:#555"><span style="color:#F5222D">*</span> 资源包版本</div>
+          <div style="text-align:right;color:#555"><span style="color:#F5222D">*</span> 资源包版本<span onClick="{{ help.version }}" title="查看说明" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:4px;border-radius:50%;background:#C0C4CC;color:#fff;font-size:10px;font-weight:700;line-height:1;cursor:pointer;vertical-align:middle" style-hover="background:#3A9BDC">?</span></div>
           <select value="{{ d.version }}" onChange="{{ setVersion }}" style="height:32px;border:1px solid #DCDFE6;border-radius:3px;padding:0 8px;background:#fff">
             <option value="xmas-2026-v1.0.3">xmas-2026-v1.0.3（前端上传于 11/20）</option>
             <option value="xmas-2026-v1.0.2">xmas-2026-v1.0.2（前端上传于 11/15）</option>
             <option value="default-v3.2.0">default-v3.2.0（默认皮肤）</option>
           </select>
 
-          <div style="text-align:right;color:#555"><span style="color:#F5222D">*</span> 适用端</div>
+          <div style="text-align:right;color:#555"><span style="color:#F5222D">*</span> 适用端<span onClick="{{ help.ends }}" title="查看说明" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:4px;border-radius:50%;background:#C0C4CC;color:#fff;font-size:10px;font-weight:700;line-height:1;cursor:pointer;vertical-align:middle" style-hover="background:#3A9BDC">?</span></div>
           <div style="display:flex;gap:16px;flex-wrap:wrap">
             <sc-for list="{{ endOpts }}" as="e" hint-placeholder-count="4">
               <label style="display:flex;align-items:center;gap:5px;cursor:pointer"><input type="checkbox" checked="{{ e.on }}" onChange="{{ e.toggle }}" />{{ e.name }}</label>
             </sc-for>
           </div>
 
-          <div style="text-align:right;color:#555"><span style="color:#F5222D">*</span> 开始时间</div>
+          <div style="text-align:right;color:#555"><span style="color:#F5222D">*</span> 开始时间<span onClick="{{ help.start }}" title="查看说明" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:4px;border-radius:50%;background:#C0C4CC;color:#fff;font-size:10px;font-weight:700;line-height:1;cursor:pointer;vertical-align:middle" style-hover="background:#3A9BDC">?</span></div>
           <input type="datetime-local" step="1" value="{{ d.start }}" onChange="{{ setStart }}" style="height:32px;border:1px solid #DCDFE6;border-radius:3px;padding:0 8px" />
-          <div style="text-align:right;color:#555"><span style="color:#F5222D">*</span> 结束时间</div>
+          <div style="text-align:right;color:#555"><span style="color:#F5222D">*</span> 结束时间<span onClick="{{ help.end }}" title="查看说明" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:4px;border-radius:50%;background:#C0C4CC;color:#fff;font-size:10px;font-weight:700;line-height:1;cursor:pointer;vertical-align:middle" style-hover="background:#3A9BDC">?</span></div>
           <input type="datetime-local" step="1" value="{{ d.end }}" onChange="{{ setEnd }}" style="height:32px;border:1px solid #DCDFE6;border-radius:3px;padding:0 8px" />
 
-          <div style="text-align:right;color:#555">灰度比例</div>
+          <div style="text-align:right;color:#555">灰度比例<span onClick="{{ help.gray }}" title="查看说明" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:4px;border-radius:50%;background:#C0C4CC;color:#fff;font-size:10px;font-weight:700;line-height:1;cursor:pointer;vertical-align:middle" style-hover="background:#3A9BDC">?</span></div>
           <div style="display:flex;align-items:center;gap:8px">
             <input type="number" min="0" max="100" value="{{ d.gray }}" onChange="{{ setGray }}" style="width:100px;height:32px;border:1px solid #DCDFE6;border-radius:3px;padding:0 8px" /><span>%</span>
             <span style="color:#999;font-size:12px">100% 为全量；全量前建议先放量 5% 验证</span>
           </div>
 
-          <div style="text-align:right;color:#555">桌面图标切换</div>
+          <div style="text-align:right;color:#555">桌面图标切换<span onClick="{{ help.icon }}" title="查看说明" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:4px;border-radius:50%;background:#C0C4CC;color:#fff;font-size:10px;font-weight:700;line-height:1;cursor:pointer;vertical-align:middle" style-hover="background:#3A9BDC">?</span></div>
           <div style="display:flex;gap:18px">
             <label style="display:flex;align-items:center;gap:5px;cursor:pointer"><input type="radio" checked="{{ d.icon }}" onChange="{{ iconOn }}" />切换</label>
             <label style="display:flex;align-items:center;gap:5px;cursor:pointer"><input type="radio" checked="{{ iconOff }}" onChange="{{ iconOffFn }}" />不切换</label>
@@ -215,6 +215,15 @@
     </div>
   </sc-if>
 
+  <sc-if value="{{ helpOpen }}">
+    <div onClick="{{ helpClose }}" style="position:fixed;inset:0;z-index:120;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;padding:20px">
+      <div style="width:100%;max-width:440px;background:#fff;border-radius:4px;box-shadow:0 8px 30px rgba(0,0,0,.25)">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid #EBEEF2;font-weight:700;color:#303133"><span style="display:flex;align-items:center;gap:8px"><span style="width:18px;height:18px;border-radius:50%;background:#3A9BDC;color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center">?</span>{{ helpTitle }}</span><span style="cursor:pointer;color:#999">✕</span></div>
+        <div style="padding:14px 16px 18px;color:#606266;font-size:13px;line-height:1.8;white-space:pre-line">{{ helpText }}</div>
+      </div>
+    </div>
+  </sc-if>
+
   <sc-if value="{{ hasToast }}">
     <div style="position:fixed;top:96px;left:50%;transform:translateX(-50%);z-index:70;padding:9px 18px;border-radius:3px;background:#F6FFED;border:1px solid #B7EB8F;color:#389E0D;box-shadow:0 4px 12px rgba(0,0,0,.12)">{{ toast }}</div>
   </sc-if>
@@ -231,12 +240,13 @@ class Component extends DCLogic {
       { id: 4, name: '万圣节主题（草稿）', version: 'default-v3.2.0', ends: ['H5'], start: '2026-10-25T00:00:00', end: '2026-10-31T23:59:59', gray: 100, icon: false, disabled: true, creator: 'sandy01' }
     ],
     f: { name: '', status: '全部', end: '全部' }, applied: { name: '', status: '全部', end: '全部' },
-    formOpen: false, draft: null, err: '', confirm: null, logsOpen: false, toast: '',
+    helpKey: null, formOpen: false, draft: null, err: '', confirm: null, logsOpen: false, toast: '',
     logs: [
       { time: '2026/11/20 15:02:11', user: 'Joshua0926', skin: '2026 圣诞主题', action: '新增皮肤' },
       { time: '2026/11/18 10:40:03', user: 'sandy01', skin: '万圣节主题（草稿）', action: '停用' }
     ]
   };
+  HELP = {"version":["资源包版本","前端将整套皮肤素材（页面背景、按钮、分类与底栏图标、桌面图标等）打包上传 CDN 后生成的版本号。\n后台只能选择已上传的版本，不能上传单张图片。选择「default」版本即恢复默认皮肤。"],"ends":["适用端","皮肤生效的客户端：H5（手机网页）、PWA（添加到桌面的网页应用）、Android、iOS。\n未勾选的端继续使用默认皮肤。"],"time":["生效时间（GMT+8）","皮肤在开始时间自动生效、结束时间自动恢复默认皮肤，无需人工切换。\n多套皮肤在同一适用端的生效时间段不得重叠，保存时会校验。"],"gray":["灰度比例","按用户 ID 哈希抽取该比例的用户看到新皮肤，同一用户始终看到同一结果。\n100% 为全量。建议正式上线前先建一条 5% 的灰度皮肤验证显示与性能，确认无误后再全量。"],"icon":["桌面图标","是否同时替换 App / PWA 在手机桌面上的图标。\n· Android、PWA：用户下次打开应用后生效；\n· iOS：需随 App 版本发布或使用系统「备用图标」，部分系统会弹出图标更换提示。\n结束后图标自动恢复默认。"],"status":["状态","按时间自动计算：\n· 未开始：未到开始时间；\n· 生效中：在生效时间内，前台显示该皮肤；\n· 已结束：超过结束时间，已恢复默认；\n· 已停用：人工停用，不论时间都不生效。"],"ops":["操作","编辑：修改皮肤配置。生效中的皮肤修改后，用户下次打开或刷新页面时生效。\n停用 / 启用：停用后立即恢复默认皮肤（用户刷新后生效）；启用后按生效时间重新计算状态。\n所有新增、编辑、停用、启用都会写入操作日志。"],"create":["新增皮肤","新建一套皮肤配置：选择资源包版本、适用端、生效时间、灰度比例和桌面图标是否切换。\n前端需先上传资源包，否则下拉中没有可选版本。"],"logs":["操作日志","记录所有皮肤的新增、编辑、停用、启用操作，包括时间、操作人、皮肤与操作内容，用于追溯。"],"name":["皮肤名称","仅用于后台识别，前台不显示。建议包含年份与主题，例如「2026 圣诞主题」。"],"start":["开始时间","到达该时间后皮肤自动生效（GMT+8）。建议预留 CDN 预热时间，不要设置为当前时间之前。"],"end":["结束时间","到达该时间后自动恢复默认皮肤（GMT+8）。结束时间须晚于开始时间。"]};
   componentDidMount() { this.t = setInterval(() => this.setState({ now: Date.now() }), 1000); }
   componentWillUnmount() { clearInterval(this.t); clearTimeout(this.tt); }
   flash(t) { this.setState({ toast: t }); clearTimeout(this.tt); this.tt = setTimeout(() => this.setState({ toast: '' }), 1800); }
@@ -275,7 +285,9 @@ class Component extends DCLogic {
     const setD = patch => this.setState(st => ({ draft: Object.assign({}, st.draft, patch), err: '' }));
 
     const conf = s.confirm;
+    const help = {}; Object.keys(this.HELP).forEach(k => { help[k] = (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.setState({ helpKey: k }); }; });
     return {
+      help, helpOpen: !!s.helpKey, helpTitle: s.helpKey ? this.HELP[s.helpKey][0] : '', helpText: s.helpKey ? this.HELP[s.helpKey][1] : '', helpClose: () => this.setState({ helpKey: null }),
       nowText,
       menu: ['活动列表', '活动类别管理', '活动目的管理', '派奖审核', '活动图素材管理', '轮播图素材管理', '流水稽核配置管理', '流水稽核配置统计', '节日皮肤管理'].map(n => {
         const on = n === '节日皮肤管理';

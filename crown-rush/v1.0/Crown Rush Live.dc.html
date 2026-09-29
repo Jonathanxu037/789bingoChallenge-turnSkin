@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../../support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@600;700;800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+<style>
+  html, body { margin:0; padding:0; background:#100322; }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  a { color:#E8C06A; text-decoration:none; }
+  a:hover { color:#F5DCA4; }
+  @keyframes crShine { 0% { transform:translateX(-140%);} 60%,100% { transform:translateX(360%);} }
+  @keyframes crPulseDot { 0%,100% { opacity:1;} 50% { opacity:.3;} }
+  @keyframes crBar { 0%,100% { transform:scaleY(.45);} 50% { transform:scaleY(1);} }
+  @keyframes crRing { 0% { box-shadow:0 0 0 0 rgba(46,204,113,.65);} 70% { box-shadow:0 0 0 9px rgba(46,204,113,0);} 100% { box-shadow:0 0 0 0 rgba(46,204,113,0);} }
+  @keyframes crTick { 0%,100% { transform:rotate(-7deg);} 50% { transform:rotate(7deg);} }
+  @keyframes crShake { 0%,100% { transform:rotate(-11deg) scale(1);} 25% { transform:rotate(9deg) scale(1.04);} 50% { transform:rotate(-7deg) scale(1);} 75% { transform:rotate(11deg) scale(1.04);} }
+  @keyframes crUpHint { 0%,100% { transform:translateY(0);} 50% { transform:translateY(-3px);} }
+  @keyframes crRowIn { from { opacity:.4; transform:translateY(-6px);} to { opacity:1; transform:translateY(0);} }
+  @keyframes crNudge { 0%,100% { transform:translateX(0);} 50% { transform:translateX(3px);} }
+  @keyframes crDust { 0% { transform:translate(6px,0) scale(.5); opacity:0;} 18% { opacity:.95;} 100% { transform:translate(-16px,-11px) scale(1.15); opacity:0;} }
+  @keyframes crDustHaze { 0%,100% { opacity:.35; transform:scaleX(.8);} 50% { opacity:.7; transform:scaleX(1.1);} }
+  @keyframes crFloatA { 0%,100% { transform:translateY(0) rotate(-1.5deg);} 50% { transform:translateY(-7px) rotate(1.5deg);} }
+  @keyframes crFloatB { 0%,100% { transform:translateY(-5px) rotate(1.5deg);} 50% { transform:translateY(3px) rotate(-1.5deg);} }
+  @keyframes crSnow { 0% { transform:translateY(-14px) translateX(0) rotate(0);} 100% { transform:translateY(640px) translateX(18px) rotate(220deg);} }
+  @keyframes crPopIn { 0% { opacity:0; transform:scale(.88);} 100% { opacity:1; transform:scale(1);} }
+  @keyframes crGiftPop { 0% { transform:scale(.8); opacity:0;} 60% { transform:scale(1.04);} 100% { transform:scale(1); opacity:1;} }
+  @keyframes crRise { 0% { opacity:0; transform:translateY(26px) scale(.94);} 100% { opacity:1; transform:translateY(0) scale(1);} }
+  @keyframes crFloatY { 0%,100% { transform:translateY(0) rotate(-3deg);} 50% { transform:translateY(5px) rotate(3deg);} }
+  @keyframes crSpinSlow { to { transform:rotate(360deg);} }
+  @keyframes crAlarmRing { 0% { transform:scale(.9); opacity:.9;} 100% { transform:scale(1.55); opacity:0;} }
+  @keyframes crBlinkNum { 0%,60% { opacity:1;} 61%,100% { opacity:.45;} }
+</style>
+<script src="../../image-slot.js"></script>
+</helmet>
+
+<div style="min-height:100vh;background:#0D0220;display:flex;justify-content:center;font-family:Barlow, sans-serif">
+<div style="width:100%;max-width:430px;background:linear-gradient(180deg,#2A0A56 0%,#1C0640 32%,#140430 70%,#0D0220 100%);position:relative;overflow:hidden;padding-bottom:26px">
+
+  <!-- top bar -->
+  <div style="position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:linear-gradient(180deg,rgba(13,2,32,.92),rgba(13,2,32,.35));backdrop-filter:blur(10px)">
+    <div style="display:flex;align-items:center;gap:9px">
+      <div style="width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;line-height:1;cursor:pointer" style-hover="background:rgba(255,255,255,.16)">‹</div>
+      <div style="color:#F3EAFF;font-weight:700;font-size:15px;letter-spacing:.06em">Crown Rush</div>
+      <div style="display:flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;background:rgba(46,204,113,.16);border:1px solid rgba(46,204,113,.45);color:#8FE3B8;font-size:10.5px;font-weight:700"><span style="width:5px;height:5px;border-radius:50%;background:#2ECC71;display:inline-block;animation:crPulseDot 1.6s infinite"></span>LIVE</div>
+    </div>
+    <div onClick="{{ toggleRules }}" style="display:flex;align-items:center;gap:6px;padding:6px 13px;border-radius:8px;background:rgba(232,192,106,.12);border:1px solid rgba(232,192,106,.45);color:#E8C06A;font-weight:700;font-size:12px;cursor:pointer" style-hover="background:rgba(232,192,106,.2)">
+      <svg width="13" height="14" viewBox="0 0 14 15" fill="none" aria-hidden="true">
+        <path d="M3 1.6h6.2L12 4.4v9H3z" stroke="#E8C06A" stroke-width="1.3" stroke-linejoin="round" />
+        <path d="M9 1.6v3h3" stroke="#E8C06A" stroke-width="1.3" stroke-linejoin="round" />
+        <path d="M5.2 7.3h4.2M5.2 9.8h4.2" stroke="#E8C06A" stroke-width="1.3" stroke-linecap="round" />
+      </svg>
+      <span>Event Rules</span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div style="position:relative;overflow:hidden;padding-bottom:0">
+    <div style="position:absolute;inset:6% 6% 16% 6%;background:radial-gradient(60% 55% at 50% 45%, rgba(232,192,106,.2), rgba(88,23,143,.22) 55%, transparent 78%);filter:blur(16px);pointer-events:none"></div>
+    <img src="../../assets/kv-live.png" alt="Crown Rush event key visual" style="display:block;position:relative;width:100%;height:auto;-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 3%,#000 97%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,#000 3%,#000 97%,transparent 100%)" />
+    <div style="position:relative;margin:8px 14px 0">
+      <div style="position:relative;overflow:hidden;border-radius:14px;background:linear-gradient(135deg,rgba(20,98,74,.26),rgba(8,1,22,.6) 46%,rgba(168,26,35,.3));border:1px solid rgba(232,192,106,.3)">
+        <div style="position:absolute;top:0;bottom:0;width:80px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);animation:crShine 5.2s ease-in-out infinite;pointer-events:none"></div>
+
+        <div style="position:relative;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 12px;border-bottom:1px solid rgba(255,255,255,.08)">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="color:#8FE3B8;font-weight:800;font-size:12px;letter-spacing:.18em">EVENT LIVE NOW</span>
+            <span style="display:inline-flex;align-items:flex-end;gap:2px;height:12px">
+              <i style="display:block;width:3px;border-radius:2px;background:#2ECC71;height:5px;animation:crBar .9s ease-in-out infinite"></i>
+              <i style="display:block;width:3px;border-radius:2px;background:#2ECC71;height:9px;animation:crBar .9s ease-in-out infinite;animation-delay:.15s"></i>
+              <i style="display:block;width:3px;border-radius:2px;background:#2ECC71;height:12px;animation:crBar .9s ease-in-out infinite;animation-delay:.3s"></i>
+              <i style="display:block;width:3px;border-radius:2px;background:#2ECC71;height:7px;animation:crBar .9s ease-in-out infinite;animation-delay:.45s"></i>
+            </span>
+          </div>
+          <div style="color:#F3EAFF;font-weight:800;font-size:12.5px;letter-spacing:.06em">12/01 - 12/31</div>
+        </div>
+
+        <div style="position:relative;padding:8px 12px 9px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="position:relative;flex:none;width:32px;height:32px;display:flex;align-items:center;justify-content:center">
+              <div style="position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(232,90,90,.55);animation:crAlarmRing 1.4s ease-out infinite"></div>
+              <div style="position:relative;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 50% 35%, #E8494E, #8E0F17);display:flex;align-items:center;justify-content:center;box-shadow:0 0 14px rgba(232,73,78,.6);animation:crShake .9s ease-in-out infinite">
+                <svg width="17" height="17" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+                  <path d="M11 3.4a7.3 7.3 0 1 1 0 14.6 7.3 7.3 0 0 1 0-14.6Z" fill="#FFF0E6" fill-opacity=".14" stroke="#FFE4E4" stroke-width="1.6" />
+                  <path d="M11 7.2v3.9l2.7 1.7" stroke="#FFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M4.6 3.9 2.4 5.9M17.4 3.9l2.2 2M5.6 18.1 4 19.9M16.4 18.1l1.6 1.8" stroke="#FFD2D2" stroke-width="1.7" stroke-linecap="round" />
+                </svg>
+              </div>
+            </div>
+            <div style="flex:1;min-width:0">
+              <div style="color:#FFB3B3;font-size:10.5px;font-weight:800;letter-spacing:.16em">ENDS IN</div>
+              <div style="margin-top:2px;display:flex;align-items:baseline;gap:5px;color:#fff">
+                <span style="font-family:Anton,sans-serif;font-size:20px;line-height:1">{{ cdD }}</span><span style="font-size:10.5px;color:#DEC7E8">D</span>
+                <span style="font-family:Anton,sans-serif;font-size:20px;line-height:1">{{ cdH }}</span><span style="font-size:10.5px;color:#DEC7E8">H</span>
+                <span style="font-family:Anton,sans-serif;font-size:20px;line-height:1">{{ cdM }}</span><span style="font-size:10.5px;color:#DEC7E8">M</span>
+                <span style="font-family:Anton,sans-serif;font-size:20px;line-height:1;color:#FF9A9A;animation:crBlinkNum 1s steps(1,end) infinite">{{ cdS }}</span><span style="font-size:10.5px;color:#DEC7E8">S</span>
+              </div>
+            </div>
+            <div style="flex:none;text-align:right">
+              <div style="color:#8E78BE;font-size:10px">Season progress</div>
+              <div style="color:#FFB3B3;font-weight:800;font-size:13px;margin-top:2px">{{ seasonPct }}</div>
+            </div>
+          </div>
+          <div style="margin-top:7px;height:4px;border-radius:999px;background:rgba(8,1,22,.65);overflow:hidden">
+            <div style="height:100%;border-radius:999px;background:linear-gradient(90deg,#2E8B57,#C8342F 60%,#F0D291);width:{{ seasonPct }}"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MY PROGRESS -->
+  <div style="margin:5px 14px 0;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.03));border:1px solid rgba(232,192,106,.32);padding:15px 14px 14px;box-shadow:0 14px 34px rgba(6,0,18,.45)">
+    <div style="display:flex;align-items:center;gap:13px">
+      <div style="position:relative;width:66px;height:66px;flex:none;display:flex;align-items:center;justify-content:center">
+        <div style="position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 210deg,#F7E3B0,#C89A3C 25%,#8A5E14 50%,#F0D291 75%,#F7E3B0);animation:crSpinSlow 9s linear infinite"></div>
+        <div style="position:absolute;inset:3px;border-radius:50%;background:radial-gradient(circle at 50% 28%, #3E1170, #16052F 70%);box-shadow:inset 0 2px 8px rgba(0,0,0,.6)"></div>
+        <div style="position:absolute;inset:3px;border-radius:50%;background:radial-gradient(circle at 50% 120%, rgba(232,192,106,.35), transparent 60%)"></div>
+        <svg viewBox="0 0 66 66" width="66" height="66" style="position:absolute;inset:0" aria-hidden="true">
+          <circle cx="33" cy="33" r="27" fill="none" stroke="rgba(232,192,106,.25)" stroke-width="2" />
+          <circle cx="33" cy="33" r="27" fill="none" stroke="#F0D291" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="{{ ringDash }}" transform="rotate(-90 33 33)" />
+        </svg>
+        <div style="position:absolute;top:-6px;left:50%;transform:translateX(-50%)">
+          <svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M10 1.2 12.4 7l6.4.5-4.9 4.2 1.5 6.2L10 14.6 4.6 17.9l1.5-6.2L1.2 7.5 7.6 7z" fill="url(#starG)" stroke="#8A5E14" stroke-width=".9" stroke-linejoin="round" />
+            <defs><linearGradient id="starG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF6DD" /><stop offset="1" stop-color="#D9A63C" /></linearGradient></defs>
+          </svg>
+        </div>
+        <div style="position:relative;display:flex;flex-direction:column;align-items:center;line-height:1">
+          <span style="font-family:Anton,sans-serif;font-size:30px;line-height:.9;background:linear-gradient(180deg,#FFF9E8,#E0AE49);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 1px 8px rgba(232,192,106,.4)">{{ level }}</span>
+          <span style="margin-top:2px;font-size:9px;font-weight:800;letter-spacing:.14em;color:#C6A461">STAGE</span>
+        </div>
+      </div>
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+          <div style="display:flex;align-items:center;gap:6px;min-width:0">
+            <sc-if value="{{ loggedIn }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;align-items:center;gap:6px;min-width:0">
+                <div style="color:#F3EAFF;font-weight:800;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ username }}</div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ loggedOut }}">
+              <div onClick="{{ goLogin }}" style="padding:3px 11px;border-radius:999px;background:rgba(232,192,106,.14);border:1px solid rgba(232,192,106,.4);color:#E8C06A;font-size:11.5px;font-weight:700;cursor:pointer" style-hover="background:rgba(232,192,106,.22)">Log in to see progress</div>
+            </sc-if>
+          </div>
+          <div style="flex:none;display:flex;align-items:center;gap:5px;font-size:11px;white-space:nowrap">
+            <span style="color:#8E78BE">Next Stage {{ nextLevel }}</span>
+            <span style="padding:2px 7px;border-radius:999px;background:rgba(232,192,106,.14);border:1px solid rgba(232,192,106,.35);color:#E8C06A;font-weight:700">{{ nextReward }}</span>
+          </div>
+        </div>
+        <div style="position:relative;margin-top:8px;height:22px;border-radius:999px;background:rgba(8,1,22,.72);border:1px solid rgba(232,192,106,.28);overflow:hidden">
+          <div style="position:absolute;inset:0;border-radius:999px;background:linear-gradient(90deg,#8A5E14,#C89A3C);width:{{ pctText }}"></div>
+          <div style="position:relative;height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 10px">
+            <span style="display:flex;align-items:baseline;gap:4px;text-shadow:0 1px 3px rgba(6,0,18,.95)">
+              <span style="color:#FFE9B0;font-size:10.5px;font-weight:800;letter-spacing:.08em">EXP</span>
+              <span style="color:#FFFFFF;font-size:10.5px;font-weight:800;letter-spacing:.02em">{{ growthText }}</span>
+            </span>
+            <span style="color:#E7D6FF;font-size:10.5px;font-weight:700;text-shadow:0 1px 3px rgba(6,0,18,.95)">{{ remainExp }} EXP to go</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- STAGE TASKS -->
+  <div style="margin:5px 14px 0;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.1);padding:15px 14px">
+    <div onPointerDown="{{ onStockDown }}" onPointerUp="{{ onStockUp }}" style="position:relative;height:82px;overflow:hidden;touch-action:pan-y;cursor:grab">
+      <sc-for list="{{ stockDeck }}" as="c" hint-placeholder-count="0">
+        <div style="position:absolute;top:0;left:0;width:72%;display:flex;align-items:stretch;gap:9px;padding:7px 9px;border-radius:11px;background:linear-gradient(180deg,rgba(64,20,112,.96),rgba(22,5,47,.96));border:1px solid {{ c.border }};box-shadow:0 10px 22px rgba(6,0,18,.5);transform-origin:left center;transition:transform .85s cubic-bezier(.33,.9,.28,1), opacity .85s cubic-bezier(.4,0,.2,1);transform:{{ c.transform }};opacity:{{ c.opacity }};z-index:{{ c.z }}">
+          <div style="flex:none;width:58px;border-radius:8px;background:rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center">
+            <div role="img" aria-label="{{ c.name }}" style="width:100%;height:52px;background-image:{{ c.bgImg }};background-size:contain;background-position:center;background-repeat:no-repeat;opacity:{{ c.imgOpacity }}"></div>
+          </div>
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center">
+            <div style="display:flex;align-items:center;gap:6px">
+              <span style="flex:none;color:#2A1500;background:linear-gradient(180deg,#F0D291,#C89A3C);border-radius:5px;padding:1px 6px;font-family:Anton,sans-serif;font-size:11px">Stage {{ c.lv }}</span>
+              <span style="color:#F3EAFF;font-weight:700;font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.name }}</span>
+            </div>
+            <div style="margin-top:5px;height:4px;border-radius:999px;background:rgba(8,1,22,.65);overflow:hidden"><div style="height:100%;border-radius:999px;background:{{ c.barFill }};width:{{ c.takenPct }}"></div></div>
+            <div style="margin-top:4px;display:flex;justify-content:space-between;align-items:center;gap:6px">
+              <span style="color:#8E78BE;font-size:10px">{{ c.taken }} / {{ c.qty }} claimed</span>
+              <sc-if value="{{ c.canClaim }}">
+                <div onClick="{{ c.onClaim }}" style="flex:none;padding:4px 12px;border-radius:999px;background:linear-gradient(180deg,#F0D291,#C89A3C);color:#2A1500;font-weight:800;font-size:10.5px;cursor:pointer;animation:crNudge 1.6s ease-in-out infinite" style-hover="filter:brightness(1.06)">Claim now</div>
+              </sc-if>
+              <sc-if value="{{ c.noClaim }}" hint-placeholder-val="{{ true }}">
+                <span style="color:{{ c.color }};font-size:10px;font-weight:800">{{ c.text }}</span>
+              </sc-if>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="margin:11px 0 12px;height:1px;background:rgba(255,255,255,.09)"></div>
+    <sc-if value="{{ hasClaimable }}" hint-placeholder-val="{{ true }}">
+      <div onClick="{{ claimAll }}" style="position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:7px;width:100%;padding:7px 0;border-radius:999px;background:linear-gradient(180deg,#FBE6B4,#E3B85C 46%,#C08F30);border:1px solid rgba(255,244,214,.55);color:#33200A;font-weight:800;font-size:12.5px;letter-spacing:.02em;cursor:pointer;box-shadow:0 4px 12px rgba(200,154,60,.28), inset 0 1px 0 rgba(255,255,255,.55)" style-hover="filter:brightness(1.05)">
+        <span style="position:absolute;top:0;bottom:0;width:60px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);animation:crShine 3.6s ease-in-out infinite;pointer-events:none"></span>
+        <span style="position:relative">Claim all cash · {{ claimableCount }} items</span>
+        <span style="position:relative;width:1px;height:11px;background:rgba(51,32,10,.32)"></span>
+        <span style="position:relative;font-family:Anton,sans-serif;font-size:14px;letter-spacing:.01em">{{ claimableAmount }}</span>
+      </div>
+    </sc-if>
+    <sc-if value="{{ noClaimable }}">
+      <div style="display:block;width:100%;text-align:center;padding:7px 0;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#8E78BE;font-weight:700;font-size:12px">No cash rewards to claim</div>
+    </sc-if>
+    <div ref="{{ listRef }}" onScroll="{{ onListScroll }}" style="margin-top:9px;max-height:490px;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;display:flex;flex-direction:column;gap:2px;padding-right:2px">
+      <sc-for list="{{ tasks }}" as="t" hint-placeholder-count="6">
+        <div data-unclaimed="{{ t.unclaimedFlag }}" data-lv="{{ t.lv }}">
+          <sc-if value="{{ t.isPlain }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;align-items:center;gap:11px;padding:10px 11px;border-radius:11px;background:rgba(8,1,22,.45);border:1px solid rgba(255,255,255,.07);animation:crRowIn .32s ease">
+              <div style="width:32px;height:32px;flex:none;border-radius:8px;background:rgba(232,192,106,.12);border:1px solid rgba(232,192,106,.32);color:#E8C06A;font-family:Anton,sans-serif;font-size:15px;display:flex;align-items:center;justify-content:center">{{ t.lv }}</div>
+              <div style="flex:1;min-width:0">
+                <div style="color:#FFF1D0;font-weight:800;font-size:13px;letter-spacing:.01em">{{ t.reward }}</div>
+                <div style="position:relative;margin-top:6px;height:17px;border-radius:999px;background:rgba(3,0,10,.8);border:1px solid rgba(255,255,255,.08);box-shadow:inset 0 1px 3px rgba(0,0,0,.65);overflow:hidden">
+                  <div style="position:absolute;top:0;bottom:0;left:0;border-radius:999px;background:{{ t.barFill }};box-shadow:0 0 10px {{ t.barGlow }}, inset 0 1px 0 rgba(255,255,255,.4);width:{{ t.progress }}"></div>
+                  <div style="position:absolute;top:0;bottom:0;left:0;width:{{ t.progress }};background-image:linear-gradient(115deg,rgba(255,255,255,.22) 0 6px,transparent 6px 13px);background-size:13px 100%;opacity:.55"></div>
+                  <div style="position:relative;height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 9px;font-variant-numeric:tabular-nums">
+                    <span style="font-size:10.5px;font-weight:800;color:{{ t.inkColor }};text-shadow:{{ t.inkShadow }}">{{ t.betNow }} <span style="opacity:.72;font-weight:700">/ {{ t.bet }}</span></span>
+                    <span style="font-size:10.5px;font-weight:900;color:{{ t.inkColor }};text-shadow:{{ t.inkShadow }}">{{ t.progress }}</span>
+                  </div>
+                </div>
+              </div>
+              <sc-if value="{{ t.claimable }}" hint-placeholder-val="{{ true }}">
+                <div onClick="{{ t.onClaim }}" style="flex:none;padding:8px 15px;border-radius:9px;background:linear-gradient(180deg,#F0D291,#C89A3C);color:#2A1500;font-weight:800;font-size:12.5px;cursor:pointer" style-hover="filter:brightness(1.06)">Claim</div>
+              </sc-if>
+              <sc-if value="{{ t.claimed }}">
+                <div style="flex:none;padding:8px 13px;border-radius:9px;background:rgba(46,204,113,.14);border:1px solid rgba(46,204,113,.38);color:#8FE3B8;font-weight:700;font-size:12px">Claimed</div>
+              </sc-if>
+              <sc-if value="{{ t.locked }}">
+                <div style="flex:none;display:flex;align-items:center;gap:5px;padding:7px 12px;border-radius:9px;background:rgba(255,255,255,.06);color:#8E78BE;font-weight:700;font-size:11.5px">
+                  <svg width="11" height="12" viewBox="0 0 12 14" fill="none" aria-hidden="true">
+                    <path d="M3 6V4.2C3 2.4 4.3 1 6 1s3 1.4 3 3.2V6" stroke="#8E78BE" stroke-width="1.4" stroke-linecap="round" />
+                    <rect x="1.4" y="6" width="9.2" height="7" rx="1.8" fill="#8E78BE" opacity="0.85" />
+                  </svg>
+                  <span>Locked</span>
+                </div>
+              </sc-if>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ t.isPhysical }}">
+            <div style="display:flex;align-items:stretch;gap:11px;padding:9px 10px;border-radius:12px;background:rgba(232,192,106,.07);border:1px solid rgba(232,192,106,.28);animation:crRowIn .32s ease">
+              <div style="width:84px;max-height:76px;flex:none;border-radius:9px;overflow:hidden;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center">
+                <div style="width:100%;height:76px;background-image:{{ t.bgImg }};background-size:contain;background-position:center;background-repeat:no-repeat"></div>
+              </div>
+              <div style="flex:1;min-width:0">
+                <div style="display:flex;align-items:center;gap:7px">
+                  <div style="flex:none;color:#2A1500;background:linear-gradient(180deg,#F0D291,#C89A3C);border-radius:6px;padding:2px 7px;font-family:Anton,sans-serif;font-size:12px">Stage {{ t.lv }}</div>
+                  <div style="color:#F3EAFF;font-weight:700;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ t.pName }}</div>
+                </div>
+                <div style="position:relative;margin-top:5px;height:17px;border-radius:999px;background:rgba(3,0,10,.8);border:1px solid rgba(255,255,255,.08);box-shadow:inset 0 1px 3px rgba(0,0,0,.65);overflow:hidden">
+                  <div style="position:absolute;top:0;bottom:0;left:0;border-radius:999px;background:{{ t.barFill }};box-shadow:0 0 10px {{ t.barGlow }}, inset 0 1px 0 rgba(255,255,255,.4);width:{{ t.progress }}"></div>
+                  <div style="position:absolute;top:0;bottom:0;left:0;width:{{ t.progress }};background-image:linear-gradient(115deg,rgba(255,255,255,.22) 0 6px,transparent 6px 13px);background-size:13px 100%;opacity:.55"></div>
+                  <div style="position:relative;height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 9px;font-variant-numeric:tabular-nums">
+                    <span style="font-size:10.5px;font-weight:800;color:{{ t.inkColor }};text-shadow:{{ t.inkShadow }}">{{ t.betNow }} <span style="opacity:.72;font-weight:700">/ {{ t.bet }}</span></span>
+                    <span style="font-size:10.5px;font-weight:900;color:{{ t.inkColor }};text-shadow:{{ t.inkShadow }}">{{ t.progress }}</span>
+                  </div>
+                </div>
+                <div style="margin-top:7px;display:flex;align-items:center;gap:9px">
+                  <div style="flex:1;min-width:0">
+                    <div style="height:6px;border-radius:999px;background:rgba(8,1,22,.6);overflow:hidden"><div style="height:100%;border-radius:999px;background:linear-gradient(90deg,#C89A3C,#F0D291);width:{{ t.pPct }}"></div></div>
+                    <div style="margin-top:4px;color:#8E78BE;font-size:10.5px">{{ t.pLeft }} / {{ t.pQty }} left</div>
+                  </div>
+                  <sc-if value="{{ t.claimable }}" hint-placeholder-val="{{ true }}">
+                    <div onClick="{{ t.onClaim }}" style="flex:none;padding:7px 14px;border-radius:999px;background:linear-gradient(180deg,#F0D291,#C89A3C);color:#2A1500;font-weight:800;font-size:12px;cursor:pointer" style-hover="filter:brightness(1.06)">Claim</div>
+                  </sc-if>
+                  <sc-if value="{{ t.claimed }}">
+                    <div style="flex:none;padding:6px 12px;border-radius:999px;background:rgba(46,204,113,.14);border:1px solid rgba(46,204,113,.38);color:#8FE3B8;font-weight:700;font-size:11px">Claimed</div>
+                  </sc-if>
+                  <sc-if value="{{ t.locked }}">
+                    <div style="flex:none;display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.06);color:#8E78BE;font-weight:700;font-size:11.5px">
+                      <svg width="11" height="12" viewBox="0 0 12 14" fill="none" aria-hidden="true">
+                        <path d="M3 6V4.2C3 2.4 4.3 1 6 1s3 1.4 3 3.2V6" stroke="#8E78BE" stroke-width="1.4" stroke-linecap="round" />
+                        <rect x="1.4" y="6" width="9.2" height="7" rx="1.8" fill="#8E78BE" opacity="0.85" />
+                      </svg>
+                      <span>Locked</span>
+                    </div>
+                  </sc-if>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+    <div style="margin-top:10px">
+      <div onPointerDown="{{ onDeckDown }}" onPointerUp="{{ onDeckUp }}" onWheel="{{ onDeckWheel }}" style="position:relative;height:140px;margin-top:8px;touch-action:pan-y;cursor:grab">
+        <sc-for list="{{ deck }}" as="g" hint-placeholder-count="0">
+          <div style="position:absolute;left:0;right:0;top:0;display:flex;align-items:stretch;gap:11px;padding:9px 10px;border-radius:12px;background:linear-gradient(180deg,rgba(64,20,112,.96),rgba(22,5,47,.96));border:1px solid rgba(232,192,106,.32);box-shadow:0 10px 24px rgba(6,0,18,.5);transition:transform .32s cubic-bezier(.22,.7,.3,1), opacity .32s ease;transform:{{ g.transform }};opacity:{{ g.opacity }};z-index:{{ g.z }}">
+            <div style="width:84px;max-height:76px;flex:none;border-radius:9px;overflow:hidden;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center">
+              <div style="width:100%;height:76px;background-image:{{ g.bgImg }};background-size:contain;background-position:center;background-repeat:no-repeat"></div>
+            </div>
+            <div style="flex:1;min-width:0">
+              <div style="display:flex;align-items:center;gap:7px">
+                <div style="flex:none;color:#2A1500;background:linear-gradient(180deg,#F0D291,#C89A3C);border-radius:6px;padding:2px 7px;font-family:Anton,sans-serif;font-size:12px">Stage {{ g.lv }}</div>
+                <div style="color:#F3EAFF;font-weight:700;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ g.name }}</div>
+              </div>
+              <div style="color:#A991D6;font-size:11px;margin-top:3px">Total bets {{ g.bet }}</div>
+              <div style="margin-top:7px;display:flex;align-items:center;gap:9px">
+                <div style="flex:1;min-width:0">
+                  <div style="height:6px;border-radius:999px;background:rgba(8,1,22,.6);overflow:hidden"><div style="height:100%;border-radius:999px;background:linear-gradient(90deg,#C89A3C,#F0D291);width:{{ g.pct }}"></div></div>
+                  <div style="margin-top:4px;color:#8E78BE;font-size:10.5px">{{ g.left }} / {{ g.qty }} left</div>
+                </div>
+                <div style="flex:none;padding:5px 10px;border-radius:999px;background:{{ g.tagBg }};border:1px solid {{ g.tagBorder }};color:{{ g.tagColor }};font-size:11px;font-weight:700">{{ g.tagText }}</div>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div onClick="{{ openRecords }}" style="margin-top:-4px;text-align:right;color:#A991D6;font-size:12px;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(169,145,214,.45)" style-hover="color:#E8C06A;text-decoration-color:rgba(232,192,106,.7)">Claim history ›</div>
+  </div>
+
+  <!-- RECENT GAMES -->
+  <div style="margin:5px 14px 0;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.1);padding:15px 14px">
+    <div style="color:#E8C06A;font-weight:700;font-size:12.5px;letter-spacing:.24em">HOT PICKS</div>
+    <div style="margin-top:12px;display:flex;gap:9px;overflow-x:auto;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px">
+      <sc-for list="{{ games }}" as="gm" hint-placeholder-count="0">
+        <div style="flex:0 0 96px;scroll-snap-align:start;cursor:pointer">
+          <div style="aspect-ratio:1/1;border-radius:11px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:rgba(8,1,22,.55)"><div role="img" aria-label="{{ gm.name }}" style="width:100%;height:100%;background-image:{{ gm.bgImg }};background-size:cover;background-position:center"></div></div>
+          <div style="margin-top:5px;color:#DED2F5;font-size:10.5px;font-weight:700;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ gm.name }}</div>
+
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- RANKING -->
+  <div style="margin:5px 14px 0;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.1);padding:12px 12px">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div style="color:#E8C06A;font-weight:700;font-size:12.5px;letter-spacing:.24em">LEADERBOARD TOP 100</div>
+      <div onClick="{{ refreshRanks }}" title="Refresh leaderboard" style="display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);color:#A991D6;font-size:10.5px;font-weight:700;cursor:pointer" style-hover="color:#E8C06A;border-color:rgba(232,192,106,.4)">
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true" style="animation:{{ refreshAnim }}">
+          <path d="M12 7a5 5 0 1 1-1.6-3.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+          <path d="M12.3 1.4v3.1H9.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span>{{ refreshLabel }}</span>
+      </div>
+    </div>
+    <div style="margin-top:8px;display:grid;grid-template-columns:24px 1fr 76px 34px 62px;gap:4px;padding:0 8px;color:#8E78BE;font-size:10px;font-weight:700">
+      <div>#</div><div>Player</div><div style="text-align:center">Prizes</div><div style="text-align:center">Stage</div><div style="text-align:right">Rewards</div>
+    </div>
+    <div style="margin-top:4px;display:flex;flex-direction:column;gap:1px">
+      <sc-for list="{{ ranks }}" as="r" hint-placeholder-count="8">
+        <div style="display:grid;grid-template-columns:24px 1fr 76px 34px 62px;gap:4px;align-items:center;padding:6px 8px;border-radius:8px;background:rgba(8,1,22,.4)">
+          <div style="font-family:Anton,sans-serif;font-size:13px;color:{{ r.rankColor }}">{{ r.rank }}</div>
+          <div style="color:#DED2F5;font-weight:700;font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.user }}</div>
+          <div style="display:flex;align-items:center;gap:2px">
+            <sc-if value="{{ r.hasPrize }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;align-items:center;gap:2px">
+                <sc-for list="{{ r.prizes }}" as="pz" hint-placeholder-count="0">
+                  <div title="{{ pz.title }}" style="width:22px;height:22px;flex:none;border-radius:5px;background-color:rgba(232,192,106,.1);border:1px solid rgba(232,192,106,.3);background-image:{{ pz.img }};background-size:80%;background-position:center;background-repeat:no-repeat"></div>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ r.noPrize }}">
+              <span style="color:#5A4A80;font-size:11px">—</span>
+            </sc-if>
+          </div>
+          <div style="text-align:center;color:#E8C06A;font-weight:800;font-size:12px">{{ r.lv }}</div>
+          <div style="text-align:right;color:#F3EAFF;font-weight:700;font-size:11.5px">{{ r.prize }}</div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="margin-top:6px;display:grid;grid-template-columns:24px 1fr 76px 34px 62px;gap:4px;align-items:center;padding:7px 8px;border-radius:8px;background:rgba(232,192,106,.1);border:1px solid rgba(232,192,106,.38)">
+      <div style="font-family:Anton,sans-serif;font-size:13px;color:#E8C06A">{{ myRank }}</div>
+      <div style="color:#F5E6C0;font-weight:800;font-size:11.5px">My rank</div>
+      <div style="display:flex;align-items:center;gap:2px">
+        <sc-for list="{{ myPrizes }}" as="pz" hint-placeholder-count="0">
+          <div title="{{ pz.title }}" style="width:22px;height:22px;flex:none;border-radius:5px;background-color:rgba(232,192,106,.14);border:1px solid rgba(232,192,106,.4);background-image:{{ pz.img }};background-size:80%;background-position:center;background-repeat:no-repeat"></div>
+        </sc-for>
+      </div>
+      <div style="text-align:center;color:#E8C06A;font-weight:800;font-size:12px">{{ level }}</div>
+      <div style="text-align:right;color:#F5E6C0;font-weight:700;font-size:11.5px">₱{{ myPrizeTotal }}</div>
+    </div>
+  </div>
+
+  <!-- HOT PROMOS -->
+  <div style="margin:5px 14px 0;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.1);padding:14px 12px">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div style="color:#E8C06A;font-weight:700;font-size:12.5px;letter-spacing:.24em">HOT PROMOS</div>
+      <a href="https://789bingo.com/promotions" target="_blank" rel="noopener" style="color:#A991D6;font-size:11px;text-decoration:none" style-hover="color:#E8C06A">All promos ›</a>
+    </div>
+    <div style="margin-top:6px;color:#8E78BE;font-size:10.5px">Placeholder · filled from the admin banner config</div>
+    <div style="display:none">
+    </div>
+    <div style="margin-top:11px;display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px">
+      <sc-for list="{{ promos }}" as="p" hint-placeholder-count="0">
+        <a href="{{ p.href }}" target="_blank" rel="noopener" style="flex:0 0 212px;scroll-snap-align:start;text-decoration:none;border-radius:12px;overflow:hidden;border:1px solid rgba(232,192,106,.24);background:rgba(8,1,22,.45)" style-hover="border-color:rgba(232,192,106,.55)">
+          <div style="position:relative;height:96px;background:{{ p.bg }};display:flex;flex-direction:column;justify-content:center;padding:0 13px">
+            <div style="position:absolute;top:8px;right:9px;padding:2px 8px;border-radius:999px;background:rgba(0,0,0,.42);color:#FFE9A8;font-size:9.5px;font-weight:800;letter-spacing:.06em">{{ p.tag }}</div>
+            <div style="color:#fff;font-family:Anton,sans-serif;font-size:21px;line-height:1.05;text-shadow:0 2px 8px rgba(0,0,0,.45)">{{ p.amount }}</div>
+            <div style="margin-top:4px;color:rgba(255,255,255,.92);font-size:11.5px;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,.5)">{{ p.title }}</div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 11px">
+            <div style="color:#A991D6;font-size:10.5px">{{ p.note }}</div>
+            <div style="color:#E8C06A;font-size:11px;font-weight:800">Join now ›</div>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="margin-top:14px;text-align:center;color:rgba(255,255,255,.35);font-size:10.5px;line-height:1.7">18+ Play responsibly · The platform reserves final interpretation of this event</div>
+
+  <!-- toast -->
+  <sc-if value="{{ toastOn }}">
+    <div style="position:fixed;left:50%;bottom:80px;transform:translateX(-50%);z-index:70;padding:11px 20px;border-radius:999px;background:rgba(8,1,22,.95);border:1px solid rgba(232,192,106,.4);color:#E8C06A;font-weight:700;font-size:13px">{{ toastMsg }}</div>
+  </sc-if>
+
+  <!-- records -->
+  <sc-if value="{{ recordsOpen }}">
+    <div style="position:fixed;inset:0;z-index:60;background:rgba(6,0,18,.78);display:flex;justify-content:center;align-items:flex-end">
+      <div style="width:100%;max-width:430px;max-height:76vh;overflow:auto;background:#16052F;border-top:1px solid rgba(232,192,106,.35);border-radius:18px 18px 0 0;padding:16px 14px 26px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="color:#E8C06A;font-weight:700;font-size:14px;letter-spacing:.2em">CLAIM HISTORY</div>
+          <div onClick="{{ closeRecords }}" style="width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.08);color:#F3EAFF;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer">✕</div>
+        </div>
+        <div style="margin-top:12px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 13px;border-radius:12px;background:rgba(232,192,106,.1);border:1px solid rgba(232,192,106,.35)">
+          <div>
+            <div style="color:#8E78BE;font-size:11px">Total cash claimed</div>
+            <div style="color:#E8C06A;font-family:Anton,sans-serif;font-size:22px;line-height:1.1;margin-top:3px">{{ recordTotal }}</div>
+          </div>
+          <div style="text-align:right;color:#A991D6;font-size:11px;line-height:1.6">{{ recordCount }} entries<br />Season 12/01 - 12/31</div>
+        </div>
+        <div style="margin-top:10px;max-height:401px;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;display:flex;flex-direction:column;gap:7px;padding-right:2px">
+          <sc-for list="{{ records }}" as="rec" hint-placeholder-count="4">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 12px;border-radius:11px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07)">
+              <div><div style="color:#F3EAFF;font-weight:700;font-size:13px">{{ rec.reward }}</div><div style="color:#8E78BE;font-size:11px;margin-top:2px">Stage {{ rec.lv }} · {{ rec.time }}</div></div>
+              <div style="color:#8FE3B8;font-weight:700;font-size:12px">Credited</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- rules -->
+  <sc-if value="{{ rulesOpen }}">
+    <div style="position:fixed;inset:0;z-index:60;background:rgba(6,0,18,.78);display:flex;justify-content:center;align-items:flex-end">
+      <div style="width:100%;max-width:430px;max-height:86vh;overflow:auto;background:#16052F;border-top:1px solid rgba(232,192,106,.35);border-radius:18px 18px 0 0;padding:16px 14px 26px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="color:#E8C06A;font-weight:700;font-size:14px;letter-spacing:.2em">Event Rules</div>
+          <div onClick="{{ toggleRules }}" style="width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.08);color:#F3EAFF;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer">✕</div>
+        </div>
+        <div style="margin-top:12px;display:flex;flex-direction:column;gap:9px;color:#DED2F5;font-size:12.5px;line-height:1.75">
+          <div style="padding:11px 12px;border-radius:11px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07)"><b style="color:#fff">1. Event period</b><br />One calendar month per season. This season: 12/01 00:00:00 - 12/31 23:59:59 (GMT+8).</div>
+          <div style="padding:11px 12px;border-radius:11px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07)"><b style="color:#fff">2. EXP calculation</b><br />EXP = valid bets ÷ conversion rate. Slots 1:1, Live Casino 20:1.</div>
+          <div style="padding:11px 12px;border-radius:11px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07)"><b style="color:#fff">3. Cash rewards</b><br />Claim manually on this page once a stage is cleared. "Claim all cash" credits every cleared cash stage straight to your account. Physical prize stages must be claimed individually.</div>
+          <div style="padding:11px 12px;border-radius:11px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07)"><b style="color:#fff">4. Physical prizes</b><br />Available once you clear the stage within quota; submit and confirm your shipping details. The button is disabled at zero stock — first come, first served.</div>
+          <div style="padding:11px 12px;border-radius:11px;background:rgba(168,26,35,.16);border:1px solid rgba(168,26,35,.45);color:#FFD6D6"><b style="color:#fff">5. Risk control</b><br />Hedging, arbitrage or abnormal betting may lead to disqualification and reward recovery.</div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- CLAIM RESULT -->
+  <sc-if value="{{ claimResultOpen }}">
+    <div style="position:fixed;inset:0;z-index:75;background:radial-gradient(70% 55% at 50% 42%, rgba(60,4,12,.72), rgba(4,0,12,.9));display:flex;align-items:center;justify-content:center;padding:58px 16px 16px">
+      <div style="position:relative;width:100%;max-width:318px;animation:crPopIn .5s cubic-bezier(.2,1.1,.35,1)">
+
+        <div style="position:relative;display:flex;flex-direction:column;max-height:calc(100vh - 88px);overflow:hidden;border-radius:18px;background:radial-gradient(118% 82% at 50% 0%, #A8161E 0%, #7E0F16 46%, #4A050C 100%);border:2px solid #E8C06A;box-shadow:0 0 0 1px rgba(255,238,190,.45) inset, 0 0 26px rgba(255,196,96,.24), 0 24px 54px rgba(4,0,14,.8)">
+
+          <div style="position:absolute;inset:5px;border-radius:13px;border:1px solid rgba(255,225,160,.3);pointer-events:none;z-index:4"></div>
+          <div style="position:absolute;inset:0;border-radius:18px;overflow:hidden;pointer-events:none;z-index:1">
+            <div style="position:absolute;inset:0;background-image:radial-gradient(1.6px 1.6px at 18% 22%, rgba(255,228,160,.85), transparent 60%),radial-gradient(1.4px 1.4px at 72% 16%, rgba(255,228,160,.7), transparent 60%),radial-gradient(1.8px 1.8px at 40% 58%, rgba(255,228,160,.55), transparent 60%),radial-gradient(1.4px 1.4px at 84% 66%, rgba(255,228,160,.6), transparent 60%),radial-gradient(1.6px 1.6px at 26% 82%, rgba(255,228,160,.5), transparent 60%)"></div>
+            <sc-for list="{{ snow }}" as="s" hint-placeholder-count="0">
+              <span style="position:absolute;top:-10px;left:{{ s.left }};width:{{ s.size }};height:{{ s.size }};border-radius:50%;background:rgba(255,255,255,.95);box-shadow:0 0 6px rgba(255,255,255,.8);opacity:{{ s.opacity }};animation:crSnow {{ s.dur }} linear infinite;animation-delay:{{ s.delay }}"></span>
+            </sc-for>
+          </div>
+
+          <div style="position:relative;z-index:3;flex:none;padding:48px 14px 0;text-align:center">
+            <img src="../../assets/claim-hero-v2.png" alt="Claim successful" style="display:block;width:auto;max-width:84%;max-height:112px;object-fit:contain;margin:0 auto;filter:drop-shadow(0 8px 18px rgba(0,0,0,.5));animation:crGiftPop .7s cubic-bezier(.2,1.2,.3,1)" />
+
+            <div style="margin-top:8px;position:relative;z-index:2;padding:6px 12px 7px;border-radius:15px;background:linear-gradient(180deg,rgba(168,22,30,.95),rgba(88,9,15,.95));border:1.5px solid #F0CE86;box-shadow:0 0 18px rgba(255,205,110,.3), inset 0 1px 0 rgba(255,255,255,.2)">
+              <div style="color:#FFE9B0;font-size:10.5px;font-weight:800;letter-spacing:.12em">You claimed <b style="color:#FFD75E">{{ claimResultCount }}</b> cash rewards</div>
+              <div style="margin-top:3px;color:#FFE07A;font-family:Anton,sans-serif;font-size:28px;line-height:1.02;text-shadow:0 3px 0 #7A3C05, 0 0 18px rgba(255,205,110,.6)">{{ claimResultAmount }}</div>
+              <div style="margin-top:3px;display:inline-flex;align-items:center;gap:5px;padding:3px 11px;border-radius:999px;background:rgba(31,142,86,.2);border:1px solid rgba(143,227,184,.45);color:#8FE3B8;font-size:11px;font-weight:800">✓ Credited to your balance</div>
+            </div>
+          </div>
+
+          <div style="position:relative;z-index:3;flex:0 1 auto;height:196px;min-height:92px;overflow:hidden;display:flex;flex-direction:column;margin:9px 16px 0;padding:8px 9px 7px;border-radius:14px;background:rgba(48,4,9,.52);border:1px solid rgba(255,225,160,.22)">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:0 2px 7px">
+              <span style="color:#FFD9A8;font-size:10.5px;font-weight:800;letter-spacing:.1em">CLAIM DETAILS</span>
+              <span style="color:#E0A9A9;font-size:9.5px">{{ claimResultCount }} items · physical prizes claimed separately</span>
+            </div>
+            <div style="flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;display:flex;flex-direction:column;gap:5px;text-align:left;padding-right:2px">
+              <sc-for list="{{ claimResultItems }}" as="it" hint-placeholder-count="0">
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 11px;border-radius:999px;background:linear-gradient(180deg,rgba(150,18,26,.85),rgba(86,8,14,.85));border:1px solid rgba(255,225,160,.3)">
+                  <span style="color:#FFEFD2;font-size:11.5px;font-weight:700">❄ Stage {{ it.lv }}</span>
+                  <span style="color:#FFD75E;font-size:11.5px;font-weight:800">{{ it.reward }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="position:relative;z-index:3;flex:none;padding:8px 16px 10px">
+            <div onClick="{{ closeClaimResult }}" style="display:flex;align-items:center;justify-content:center;gap:9px;padding:10px 0;border-radius:999px;background:linear-gradient(180deg,#FFF3C4,#F2C955 45%,#D19C2E);border:2px solid #FFF6DC;color:#5A2E05;font-weight:800;font-size:14.5px;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.75)" style-hover="filter:brightness(1.06)">
+              <span>Got it</span>
+              <span style="min-width:60px;padding:2px 9px;border-radius:999px;background:rgba(90,46,5,.16);font-size:11px;font-weight:800">closes in {{ claimCloseIn }}s</span>
+            </div>
+            <div style="position:relative;margin-top:8px;height:24px">
+              <div style="position:absolute;left:0;right:0;bottom:0;height:5px;border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(196,222,255,.55));box-shadow:inset 0 1px 0 rgba(255,255,255,.9), 0 0 8px rgba(190,220,255,.35)"></div>
+              <div style="position:absolute;left:0;bottom:0;height:5px;border-radius:999px;background:linear-gradient(90deg,rgba(255,214,120,.85),rgba(255,255,255,.75));width:{{ claimSleighPct }}"></div>
+              <div style="position:absolute;left:0;right:0;bottom:3px;pointer-events:none">
+                <div style="position:relative;width:66px;margin-left:{{ claimSleighShift }};transition:margin-left .95s linear">
+                  <div style="position:absolute;left:-26px;bottom:1px;width:34px;height:16px">
+                    <sc-for list="{{ sleighDust }}" as="p" hint-placeholder-count="0">
+                      <span style="position:absolute;left:{{ p.left }};bottom:{{ p.bottom }};width:{{ p.size }};height:{{ p.size }};border-radius:50%;background:rgba(255,255,255,.95);box-shadow:0 0 5px rgba(214,236,255,.9);animation:crDust {{ p.dur }} ease-out infinite;animation-delay:{{ p.delay }}"></span>
+                    </sc-for>
+                    <span style="position:absolute;left:4px;bottom:0;width:30px;height:5px;border-radius:999px;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.55));filter:blur(2px);animation:crDustHaze 1.1s ease-in-out infinite"></span>
+                  </div>
+                  <img src="../../assets/sleigh-sm.png" alt="" style="position:relative;display:block;width:100%;filter:drop-shadow(0 3px 5px rgba(0,0,0,.5))" />
+                </div>
+              </div>
+              <div style="position:absolute;right:0;bottom:7px;font-size:13px;line-height:1">🎄</div>
+            </div>
+
+          </div>
+        </div>
+
+        <img src="../../assets/deco-top-sm.png" alt="" style="position:absolute;top:-52px;left:-9%;width:118%;pointer-events:none;z-index:6;filter:drop-shadow(0 8px 14px rgba(0,0,0,.45))" />
+        <div style="position:absolute;top:22px;left:0;right:0;z-index:7;text-align:center;pointer-events:none">
+          <span style="font-family:Anton,sans-serif;font-size:15px;letter-spacing:.1em;background:linear-gradient(180deg,#FFF6DD,#F0C255 55%,#C88A22);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 2px 4px rgba(58,26,6,.75)">✦ MALIGAYANG PASKO ✦</span>
+        </div>
+        
+        
+        
+        
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- SHIPPING: FORM -->
+  <sc-if value="{{ shipFormOpen }}">
+    <div style="position:fixed;inset:0;z-index:70;background:rgba(4,0,12,.72);display:flex;align-items:flex-end;justify-content:center">
+      <div style="width:100%;max-width:430px;max-height:88vh;overflow:auto;background:#16052F;border-top:1px solid rgba(232,192,106,.35);border-radius:18px 18px 0 0;padding:16px 14px 26px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="color:#E8C06A;font-weight:700;font-size:14px;letter-spacing:.14em">{{ shipFormTitle }}</div>
+          <div onClick="{{ closeShip }}" style="width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.08);color:#F3EAFF;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer">✕</div>
+        </div>
+        <div style="margin-top:10px;padding:10px 12px;border-radius:10px;background:rgba(232,192,106,.1);border:1px solid rgba(232,192,106,.32);color:#F5E6C0;font-size:11.5px;line-height:1.6">These details will be bound to this account. To change them later, verify the code sent to your registered mobile number.</div>
+
+        <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px">
+          <div>
+            <div style="color:#8E78BE;font-size:11px;margin-bottom:4px">Account</div>
+            <div style="padding:11px 12px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:#8E78BE;font-size:13px">{{ username }} <span style="font-size:10.5px">· locked</span></div>
+          </div>
+          <div>
+            <div style="color:#8E78BE;font-size:11px;margin-bottom:4px">Recipient name</div>
+            <input value="{{ formName }}" onChange="{{ onFormName }}" placeholder="Full name" style="width:100%;box-sizing:border-box;padding:11px 12px;border-radius:10px;background:rgba(8,1,22,.6);border:1px solid rgba(255,255,255,.12);color:#F3EAFF;font-size:13px;outline:none" />
+          </div>
+          <div>
+            <div style="color:#8E78BE;font-size:11px;margin-bottom:4px">Mobile number</div>
+            <input value="{{ formPhone }}" onChange="{{ onFormPhone }}" placeholder="+63 9XX XXX XXXX" style="width:100%;box-sizing:border-box;padding:11px 12px;border-radius:10px;background:rgba(8,1,22,.6);border:1px solid rgba(255,255,255,.12);color:#F3EAFF;font-size:13px;outline:none" />
+          </div>
+          <div>
+            <div style="color:#8E78BE;font-size:11px;margin-bottom:4px">Region</div>
+            <input value="{{ formRegion }}" onChange="{{ onFormRegion }}" placeholder="Province / City / Barangay" style="width:100%;box-sizing:border-box;padding:11px 12px;border-radius:10px;background:rgba(8,1,22,.6);border:1px solid rgba(255,255,255,.12);color:#F3EAFF;font-size:13px;outline:none" />
+          </div>
+          <div>
+            <div style="color:#8E78BE;font-size:11px;margin-bottom:4px">Street address</div>
+            <input value="{{ formAddr }}" onChange="{{ onFormAddr }}" placeholder="House no., street, building" style="width:100%;box-sizing:border-box;padding:11px 12px;border-radius:10px;background:rgba(8,1,22,.6);border:1px solid rgba(255,255,255,.12);color:#F3EAFF;font-size:13px;outline:none" />
+          </div>
+          <div>
+            <div style="color:#8E78BE;font-size:11px;margin-bottom:4px">Postal code</div>
+            <input value="{{ formZip }}" onChange="{{ onFormZip }}" placeholder="1000" style="width:100%;box-sizing:border-box;padding:11px 12px;border-radius:10px;background:rgba(8,1,22,.6);border:1px solid rgba(255,255,255,.12);color:#F3EAFF;font-size:13px;outline:none" />
+          </div>
+        </div>
+
+        <div onClick="{{ submitShip }}" style="margin-top:14px;text-align:center;padding:13px 0;border-radius:12px;background:linear-gradient(180deg,#F0D291,#C89A3C);color:#2A1500;font-weight:800;font-size:14.5px;cursor:pointer" style-hover="filter:brightness(1.06)">{{ shipSubmitLabel }}</div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- SHIPPING: CONFIRM BEFORE CLAIM -->
+  <sc-if value="{{ shipConfirmOpen }}">
+    <div style="position:fixed;inset:0;z-index:70;background:rgba(4,0,12,.72);display:flex;align-items:flex-end;justify-content:center">
+      <div style="width:100%;max-width:430px;max-height:88vh;overflow:auto;background:#16052F;border-top:1px solid rgba(232,192,106,.35);border-radius:18px 18px 0 0;padding:16px 14px 26px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="color:#E8C06A;font-weight:700;font-size:14px;letter-spacing:.14em">Confirm shipping details</div>
+          <div onClick="{{ closeShip }}" style="width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.08);color:#F3EAFF;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer">✕</div>
+        </div>
+        <div style="margin-top:10px;color:#A991D6;font-size:12px;line-height:1.6">Claiming <b style="color:#E8C06A">{{ pendingPrize }}</b> — please confirm the delivery address.</div>
+
+        <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:12px;background:rgba(8,1,22,.5);border:1px solid rgba(255,255,255,.08);font-size:12.5px">
+          <div style="display:flex;gap:10px"><span style="flex:none;width:76px;color:#8E78BE">Account</span><span style="color:#F3EAFF">{{ username }}</span></div>
+          <div style="display:flex;gap:10px"><span style="flex:none;width:76px;color:#8E78BE">Recipient</span><span style="color:#F3EAFF">{{ shipName }}</span></div>
+          <div style="display:flex;gap:10px"><span style="flex:none;width:76px;color:#8E78BE">Mobile number</span><span style="color:#F3EAFF">{{ shipPhone }}</span></div>
+          <div style="display:flex;gap:10px"><span style="flex:none;width:76px;color:#8E78BE">Region</span><span style="color:#F3EAFF">{{ shipRegion }}</span></div>
+          <div style="display:flex;gap:10px"><span style="flex:none;width:76px;color:#8E78BE">Street address</span><span style="color:#F3EAFF">{{ shipAddr }}</span></div>
+          <div style="display:flex;gap:10px"><span style="flex:none;width:76px;color:#8E78BE">Postal</span><span style="color:#F3EAFF">{{ shipZip }}</span></div>
+        </div>
+
+        <div style="margin-top:10px;padding:10px 12px;border-radius:10px;background:rgba(168,26,35,.12);border:1px solid rgba(232,90,90,.35);color:#FFD6D6;font-size:11.5px;line-height:1.6">Once confirmed, the prize ships to this address. To change it, verify your mobile number first.</div>
+
+        <div style="margin-top:14px;display:flex;gap:9px">
+          <div onClick="{{ startOtp }}" style="flex:none;padding:13px 14px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);color:#DED2F5;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap" style-hover="color:#E8C06A;border-color:rgba(232,192,106,.4)">Edit address</div>
+          <div onClick="{{ confirmClaim }}" style="flex:1;text-align:center;padding:13px 0;border-radius:12px;background:linear-gradient(180deg,#F0D291,#C89A3C);color:#2A1500;font-weight:800;font-size:14.5px;cursor:pointer" style-hover="filter:brightness(1.06)">Confirm & claim</div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- SHIPPING: OTP -->
+  <sc-if value="{{ otpOpen }}">
+    <div style="position:fixed;inset:0;z-index:72;background:rgba(4,0,12,.78);display:flex;align-items:center;justify-content:center;padding:20px">
+      <div style="width:100%;max-width:340px;background:#16052F;border:1px solid rgba(232,192,106,.35);border-radius:16px;padding:18px 16px">
+        <div style="color:#E8C06A;font-weight:700;font-size:14px">Verify your mobile</div>
+        <div style="margin-top:8px;color:#A991D6;font-size:12px;line-height:1.6">A code has been sent to the mobile number on this account ({{ maskedPhone }}). Enter it to edit your shipping details.</div>
+        <input value="{{ otpCode }}" onChange="{{ onOtpChange }}" placeholder="6-digit code" style="margin-top:12px;width:100%;box-sizing:border-box;padding:12px;border-radius:10px;background:rgba(8,1,22,.6);border:1px solid rgba(255,255,255,.12);color:#F3EAFF;font-size:16px;letter-spacing:.3em;text-align:center;outline:none" />
+        <div style="margin-top:8px;display:flex;justify-content:space-between;align-items:center;color:#8E78BE;font-size:11px">
+          <span>{{ otpTimerText }}</span>
+          <span onClick="{{ resendOtp }}" style="color:#E8C06A;cursor:pointer">Resend</span>
+        </div>
+        <div style="margin-top:14px;display:flex;gap:9px">
+          <div onClick="{{ closeOtp }}" style="flex:1;text-align:center;padding:11px 0;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);color:#DED2F5;font-size:13px;font-weight:700;cursor:pointer">Cancel</div>
+          <div onClick="{{ verifyOtp }}" style="flex:1;text-align:center;padding:11px 0;border-radius:10px;background:linear-gradient(180deg,#F0D291,#C89A3C);color:#2A1500;font-size:13px;font-weight:800;cursor:pointer">Verify</div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:430,&quot;height&quot;:932},&quot;username&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;bingoplayer168&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Account&quot;},&quot;loggedIn&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Account&quot;},&quot;gameTypes&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;slots,live&quot;,&quot;slots,live,ebingo&quot;,&quot;slots,live,ebingo,fishing&quot;,&quot;slots,live,ebingo,fishing,poker&quot;],&quot;default&quot;:&quot;slots,live&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Admin config&quot;},&quot;shippingBound&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Account&quot;}}">
+class Component extends DCLogic {
+  state = {
+    claimed: {}, refreshing: false, rulesOpen: false, recordsOpen: false,
+    toast: '', left: 0, prizeIdx: 0, betIdx: 0, stockIdx: 0,
+    claimResult: null, claimCloseIn: 30,
+    shipStage: 'none', pendingLv: null, otpCode: '', otpLeft: 0, supportMode: false,
+    ship: { name: 'Juan Dela Cruz', phone: '+63 917 555 0142', region: 'Metro Manila / Quezon City / Barangay Holy Spirit', addr: '12 Sampaguita St., Villa Hermosa', zip: '1127' },
+    form: { name: '', phone: '', region: '', addr: '', zip: '' }
+  };
+  componentDidMount() {
+    if (this.props.shippingBound === false) this.setState({ ship: null });
+    const now = new Date();
+    const utc8 = new Date(now.getTime() + now.getTimezoneOffset() * 60000 + 8 * 3600000);
+    const year = utc8.getFullYear();
+    this.start = Date.UTC(year, 11, 1, 0, 0, 0) - 8 * 3600000;
+    this.end = Date.UTC(year, 11, 31, 23, 59, 59) - 8 * 3600000;
+
+    this.tick(); this.timer = setInterval(() => this.tick(), 1000);
+  }
+  componentWillUnmount() { clearInterval(this.timer); clearInterval(this.otpTimer); clearInterval(this.stockTimer); clearInterval(this.claimTimer); clearTimeout(this.tt); (this.hideTimers || []).forEach(clearTimeout); }
+  startClaimCountdown() {
+    clearInterval(this.claimTimer);
+    this.setState({ claimCloseIn: 30 });
+    this.claimTimer = setInterval(() => {
+      this.setState(st => {
+        if (st.claimCloseIn <= 1) { clearInterval(this.claimTimer); return { claimCloseIn: 0, claimResult: null }; }
+        return { claimCloseIn: st.claimCloseIn - 1 };
+      });
+    }, 1000);
+  }
+  startStockAuto() {
+    clearInterval(this.stockTimer);
+    this.stockTimer = setInterval(() => {
+      this.setState(st => ({ stockIdx: ((st.stockIdx || 0) + 1) % 8 }));
+    }, 5000);
+  }
+  scheduleHide() {
+    this.hideTimers = this.hideTimers || [];
+    this.hideTimers.forEach(clearTimeout);
+    this.hideTimers = [setTimeout(() => this.scrollToNext(), 5000)];
+  }
+  scrollToNext() {
+    const list = this.listEl;
+    if (!list) return;
+    const next = list.querySelector('[data-unclaimed="1"]');
+    if (!next) return;
+    list.scrollTo({ top: Math.max(0, next.offsetTop - list.offsetTop), behavior: 'smooth' });
+  }
+  simNow() { return Date.now(); }
+  tick() {
+    const left = Math.max(0, this.end - Date.now());
+    this.setState({ left });
+    // Auto-switch to the ended page once the event closes (12/31 23:59:59 GMT+8);
+    // In production, request the activity-status API first and only redirect when the server returns "ended"
+    if (left === 0 && !this.switched) {
+      this.switched = true;
+      clearInterval(this.timer);
+      location.replace('./Crown Rush Ended.dc.html');
+    }
+  }
+  toast(msg) { clearTimeout(this.tt); this.setState({ toast: msg }); this.tt = setTimeout(() => this.setState({ toast: '' }), 2200); }
+  money(n) { return '₱' + n.toLocaleString(); }
+  setForm(k, v) { this.setState(st => ({ form: Object.assign({}, st.form, { [k]: v }) })); }
+  runOtpTimer() {
+    clearInterval(this.otpTimer);
+    this.otpTimer = setInterval(() => {
+      this.setState(st => {
+        if (st.otpLeft <= 1) { clearInterval(this.otpTimer); return { otpLeft: 0 }; }
+        return { otpLeft: st.otpLeft - 1 };
+      });
+    }, 1000);
+  }
+  renderVals() {
+    const growth = 1084000, level = 30, nextLevel = 31, nextNeed = 1400000, prevNeed = 1000000;
+    const pct = Math.min(100, Math.round(((growth - prevNeed) / (nextNeed - prevNeed)) * 100));
+    const s = Math.floor(this.state.left / 1000);
+    const pad = n => String(n).padStart(2, '0');
+
+    const rows = [
+      { lv: 1, bet: '₱100', cash: 3, done: true },
+      { lv: 2, bet: '₱300', cash: 4, done: true },
+      { lv: 3, bet: '₱500', cash: 5, done: true },
+      { lv: 4, bet: '₱1,000', cash: 8, done: true },
+      { lv: 5, bet: '₱2,000', cash: 10, done: true },
+      { lv: 6, bet: '₱3,000', cash: 15, done: true },
+      { lv: 7, bet: '₱5,000', cash: 18, done: true },
+      { lv: 8, bet: '₱7,000', cash: 20, done: true },
+      { lv: 9, bet: '₱10,000', cash: 25, done: true },
+      { lv: 10, bet: '₱15,000', cash: 30, done: true },
+      { lv: 11, bet: '₱30,000', cash: 40, done: true },
+      { lv: 12, bet: '₱50,000', cash: 50, done: true },
+      { lv: 13, bet: '₱60,000', cash: 55, done: true },
+      { lv: 14, bet: '₱90,000', cash: 60, done: true },
+      { lv: 15, bet: '₱110,000', cash: 70 },
+      { lv: 16, bet: '₱130,000', cash: 80 },
+      { lv: 17, bet: '₱140,000', cash: 85 },
+      { lv: 18, bet: '₱160,000', cash: 90 },
+      { lv: 19, bet: '₱180,000', cash: 100 },
+      { lv: 20, bet: '₱200,000', cash: 0, extra: '20 Free Spins' },
+      { lv: 21, bet: '₱280,000', cash: 120 },
+      { lv: 22, bet: '₱360,000', cash: 140 },
+      { lv: 23, bet: '₱440,000', cash: 160 },
+      { lv: 24, bet: '₱520,000', cash: 180 },
+      { lv: 25, bet: '₱600,000', cash: 200 }
+    ].concat(
+      [[26, 680000, 220], [27, 760000, 240], [28, 840000, 260], [29, 920000, 280], [30, 1000000, 300],
+       [31, 1400000, 350], [32, 1700000, 400], [33, 2000000, 450], [34, 2400000, 500], [35, 2800000, 550],
+       [36, 3100000, 600], [37, 3400000, 650], [38, 3800000, 700], [39, 4200000, 750], [40, 4500000, 800],
+       [41, 5200000, 920], [42, 6000000, 1040], [43, 6800000, 1160], [44, 7500000, 1280], [45, 8200000, 1400],
+       [46, 9000000, 1520], [47, 9800000, 1640], [48, 10000000, 1760], [49, 11000000, 1880], [50, 12000000, 2000],
+       [51, 14000000, 2400], [52, 16000000, 2800], [53, 18000000, 3200], [54, 20000000, 3600], [55, 22000000, 4000],
+       [56, 24000000, 4400], [57, 26000000, 4800], [58, 28000000, 5200], [59, 30000000, 5600], [60, 32000000, 6000],
+       [61, 36000000, 7900], [62, 40000000, 9800], [63, 43000000, 11700], [64, 47000000, 13600], [65, 51000000, 15500],
+       [66, 55000000, 17400], [67, 59000000, 19300], [68, 62000000, 21200], [69, 66000000, 23100], [70, 70000000, 25000],
+       [71, 78000000, 29500], [72, 85000000, 34000], [73, 92000000, 38500], [74, 100000000, 43000], [75, 110000000, 47500],
+       [76, 115000000, 52000], [77, 120000000, 56500], [78, 130000000, 61000], [79, 140000000, 65500], [80, 145000000, 70000],
+       [81, 155000000, 72000], [82, 165000000, 74000], [83, 175000000, 76000], [84, 185000000, 78000], [85, 190000000, 80000],
+       [86, 200000000, 82000], [87, 210000000, 84000], [88, 220000000, 86000], [89, 230000000, 88000], [90, 240000000, 90000],
+       [91, 245000000, 91000], [92, 250000000, 92000], [93, 260000000, 93000], [94, 265000000, 94000], [95, 270000000, 95000],
+       [96, 275000000, 96000], [97, 280000000, 97000], [98, 290000000, 98000], [99, 295000000, 99000], [100, 300000000, 100000]]
+        .map(a => ({ lv: a[0], bet: '₱' + a[1].toLocaleString(), cash: a[2] }))
+    );
+    const physicals = [
+      { lv: 30, name: 'Huawei Smart Watch', qty: 20, left: 11, bet: '₱1,000,000', cash: '300', img: '../../assets/prize-lv30.png' },
+      { lv: 40, name: 'Apple AirPods', qty: 20, left: 0, bet: '₱4,500,000', cash: '800', img: '../../assets/prize-lv40.png' },
+      { lv: 50, name: 'Tablet', qty: 10, left: 4, bet: '₱12,000,000', cash: '2,000', img: '../../assets/prize-lv50.png' },
+      { lv: 60, name: 'DJI Drone', qty: 10, left: 6, bet: '₱32,000,000', cash: '6,000', img: '../../assets/prize-lv60.png' },
+      { lv: 70, name: 'iPhone 18 Pro Max', qty: 5, left: 3, bet: '₱70,000,000', cash: '25,000', img: '../../assets/prize-lv70.png' },
+      { lv: 80, name: 'MacBook Pro', qty: 3, left: 2, bet: '₱145,000,000', cash: '70,000', img: '../../assets/prize-lv80.png' },
+      { lv: 90, name: 'Luxury Motorcycle', qty: 2, left: 2, bet: '₱240,000,000', cash: '90,000', img: '../../assets/prize-lv90.png' },
+      { lv: 100, name: 'BMW X3', qty: 1, left: 1, bet: '₱300,000,000', cash: '100,000', img: '../../assets/prize-lv100.png' }
+    ].map(p => {
+      const out = p.left === 0;
+      return Object.assign({}, p, {
+        bgImg: 'url(' + p.img + ')',
+        pct: Math.round((p.left / p.qty) * 100) + '%',
+        tagText: out ? 'Sold out' : (p.left <= 3 ? 'Only ' + p.left + ' left' : 'In stock'),
+        tagBg: out ? 'rgba(255,255,255,.06)' : (p.left <= 3 ? 'rgba(168,26,35,.18)' : 'rgba(232,192,106,.14)'),
+        tagBorder: out ? 'rgba(255,255,255,.12)' : (p.left <= 3 ? 'rgba(232,90,90,.5)' : 'rgba(232,192,106,.4)'),
+        tagColor: out ? '#8E78BE' : (p.left <= 3 ? '#FFB3B3' : '#E8C06A')
+      });
+    });
+    const physMap = {};
+    physicals.forEach(p => { physMap[p.lv] = p; });
+    const tasks = rows.map(r => {
+      const reached = r.lv <= level, claimed = r.done || !!this.state.claimed[r.lv];
+      const ph = physMap[r.lv];
+      const soldOut = !!ph && ph.left === 0;
+      return {
+        isPhysical: !!ph && !soldOut, isPlain: !ph || soldOut,
+        pName: ph ? ph.name : '', pCash: ph ? ph.cash : '', bgImg: ph ? ph.bgImg : '',
+        pPct: ph ? ph.pct : '0%', pLeft: ph ? ph.left : 0, pQty: ph ? ph.qty : 0,
+        tagBg: ph ? ph.tagBg : '', tagBorder: ph ? ph.tagBorder : '', tagColor: ph ? ph.tagColor : '', tagText: ph ? ph.tagText : '',
+        lv: r.lv, bet: r.bet,
+        betNow: (() => {
+          const need = parseInt(String(r.bet).replace(/[^0-9]/g, ''), 10) || 1;
+          return this.money(reached ? need : Math.min(need, growth));
+        })(),
+        progress: (() => {
+          if (reached) return '100%';
+          const need = parseInt(String(r.bet).replace(/[^0-9]/g, ''), 10) || 1;
+          const p = Math.round((growth / need) * 100);
+          return Math.max(0, Math.min(99, p)) + '%';
+        })(),
+        progressColor: reached ? '#7DE8AE' : '#F0D291',
+        inkColor: reached ? '#08281A' : '#FFF6E2',
+        inkShadow: reached ? '0 1px 0 rgba(255,255,255,.35)' : '0 1px 2px rgba(6,1,16,.9)',
+        barGlow: reached ? 'rgba(78,209,139,.4)' : 'rgba(240,210,145,.35)',
+        barFill: reached ? 'linear-gradient(90deg,#2FA96A,#7DE8AE)' : 'linear-gradient(90deg,#8A5E18,#C89A3C)',
+        reward: soldOut
+          ? ('Physical prize sold out · cash instead ' + this.money(r.cash || 0))
+          : (r.cash ? ('Cash reward ' + this.money(r.cash)) : (r.extra || 'Reward locked')),
+        claimable: reached && !claimed, claimed: reached && claimed, locked: !reached,
+        unclaimedFlag: (reached && !claimed) || !reached ? '1' : '0',
+        onClaim: () => {
+          if (ph && !soldOut) {
+            if (!this.state.ship) {
+              this.setState({ shipStage: 'form', pendingLv: r.lv, supportMode: false, form: { name: '', phone: '', region: '', addr: '', zip: '' } });
+            } else {
+              this.setState({ shipStage: 'confirm', pendingLv: r.lv });
+            }
+            return;
+          }
+          this.setState(st => ({ claimed: Object.assign({}, st.claimed, { [r.lv]: true }) }));
+          this.toast('Claimed ' + this.money(r.cash) + ' · credited to your balance');
+          this.scheduleHide();
+        }
+      };
+    });
+    const claimables = tasks.filter(t => t.claimable && !t.isPhysical);
+    const claimAmount = rows.filter(r => r.lv <= level && !r.done && !(physMap[r.lv] && physMap[r.lv].left > 0) && !this.state.claimed[r.lv]).reduce((a, r) => a + r.cash, 0);
+
+    const n = physicals.length;
+    const deck = physicals.map((g, i) => {
+      const off = (i - this.state.prizeIdx + n) % n;
+      return Object.assign({}, g, {
+        transform: 'translateY(' + (off * 11) + 'px) scale(' + (1 - off * 0.05) + ')',
+        opacity: off === 0 ? 1 : (off === 1 ? 0.78 : (off === 2 ? 0.5 : (off === 3 ? 0.28 : 0))),
+        z: n - off
+      });
+    });
+
+    // Admin-configured "Hot picks" slot: game name, icon and link come from the backend
+    const games = [
+      { name: 'Super Ace', exp: 'JILI · 1:1 EXP', img: '../../assets/game-gs1.png' },
+      { name: 'Super Ace Deluxe', exp: 'JILI · 1:1 EXP', img: '../../assets/game-gs2.png' },
+      { name: 'Fortune Gems 3', exp: 'JILI · 1:1 EXP', img: '../../assets/game-gs3.png' },
+      { name: 'Baccarat', exp: 'LIVE · 20:1 EXP', img: '../../assets/game-gl1.png' },
+      { name: 'Dragon Tiger', exp: 'LIVE · 20:1 EXP', img: '../../assets/game-gl2.png' },
+      { name: 'Roulette', exp: 'LIVE · 20:1 EXP', img: '../../assets/game-gl3.png' }
+    ].map(g => Object.assign({ bgImg: 'url(' + g.img + ')' }, g));
+    const rankColors = ['#F0D291', '#D8D8E8', '#D69A5C'];
+    const ranks = [
+      { rank: 1, user: 'bi****8x9', lv: 66, prize: '₱58,200' },
+      { rank: 2, user: 'bi****wwn', lv: 64, prize: '₱51,400' },
+      { rank: 3, user: 'pe****i1c', lv: 64, prize: '₱50,900' },
+      { rank: 4, user: 'bi****s44', lv: 63, prize: '₱47,300' },
+      { rank: 5, user: 'vi****u70', lv: 62, prize: '₱44,100' },
+      { rank: 6, user: 'bi****t7s', lv: 60, prize: '₱39,800' },
+      { rank: 7, user: 'ma****dog', lv: 58, prize: '₱35,600' },
+      { rank: 8, user: 'bi****pg4', lv: 58, prize: '₱35,100' }
+    ].map(r => {
+      // Highest unlocked physical prize stage
+      // Physical prizes the player claimed, ascending by stage; sold-out stages excluded
+      const won = physicals
+        .filter(p => p.lv <= r.lv && p.left > 0)
+        .sort((a, b) => a.lv - b.lv)
+        .map(p => ({ img: p.bgImg, title: 'Stage ' + p.lv + ' · ' + p.name }));
+      return Object.assign({}, r, {
+        rankColor: rankColors[r.rank - 1] || '#8E78BE',
+        hasPrize: won.length > 0, noPrize: won.length === 0,
+        prizes: won
+      });
+    });
+
+    const recordSrc = [
+      [14, 60, '12/09 21:14'], [13, 55, '12/08 18:02'], [12, 50, '12/06 12:41'], [11, 40, '12/04 09:27'],
+      [10, 30, '12/03 20:18'], [9, 25, '12/03 11:05'], [8, 20, '12/02 22:47'], [7, 18, '12/02 15:30'],
+      [6, 15, '12/02 09:12'], [5, 10, '12/01 21:58'], [4, 8, '12/01 18:24'], [3, 5, '12/01 14:02'],
+      [2, 4, '12/01 12:36'], [1, 3, '12/01 10:15']
+    ];
+    const records = recordSrc.map(r => ({ reward: 'Cash ' + this.money(r[1]), lv: r[0], time: r[2] }));
+    const recordSum = recordSrc.reduce((a, r) => a + r[1], 0);
+
+    // game types enabled in admin config
+    const catalog = {
+      slots: { label: 'Slots', amount: 884000, weight: 1, href: 'https://789bingo.com/games/online-slot' },
+      live: { label: 'Live Casino', amount: 4000000, weight: 20, href: 'https://789bingo.com/games/live-casino' },
+      ebingo: { label: 'eBingo', amount: 430000, weight: 5, href: 'https://789bingo.com/games/bingo' },
+      fishing: { label: 'Fishing', amount: 320000, weight: 4, href: 'https://789bingo.com/games/fishing' },
+      poker: { label: 'Poker', amount: 600000, weight: 10, href: 'https://789bingo.com/games/poker' }
+    };
+    const enabled = (this.props.gameTypes || 'slots,live').split(',').map(k => k.trim()).filter(k => catalog[k]);
+    const totalBet = enabled.reduce((a, k) => a + catalog[k].amount, 0) || 1;
+    const betStats = enabled.map(k => {
+      const c = catalog[k];
+      return {
+        label: c.label,
+        href: c.href,
+        amount: this.money(c.amount),
+        exp: Math.round(c.amount / c.weight).toLocaleString(),
+        share: Math.round((c.amount / totalBet) * 100) + '%'
+      };
+    });
+    const bn = betStats.length;
+    const bIdx = Math.min(this.state.betIdx, Math.max(0, bn - 1));
+    const betDeck = betStats.map((b, i) => {
+      const off = (i - bIdx + bn) % bn;
+      return Object.assign({}, b, {
+        transform: 'translateY(' + (off * 10) + 'px) scale(' + (1 - off * 0.04) + ')',
+        opacity: off === 0 ? 1 : (off === 1 ? 0.72 : (off === 2 ? 0.44 : 0)),
+        z: bn - off
+      });
+    });
+
+    return {
+      betStats, betDeck,
+      fewCategories: bn <= 2,
+      manyCategories: bn > 2,
+      betIndexLabel: (bIdx + 1) + ' / ' + bn,
+      betDots: betStats.map((_, i) => ({
+        color: i === bIdx ? '#E8C06A' : 'rgba(255,255,255,.2)',
+        onClick: () => this.setState({ betIdx: i })
+      })),
+      prevBet: () => this.setState({ betIdx: (bIdx - 1 + bn) % bn }),
+      nextBet: () => this.setState({ betIdx: (bIdx + 1) % bn }),
+      onBetDown: (e) => { this.bY = e.clientY; },
+      onBetUp: (e) => {
+        if (this.bY == null) return;
+        const dy = e.clientY - this.bY; this.bY = null;
+        if (Math.abs(dy) < 18) { this.setState({ betIdx: (bIdx + 1) % bn }); return; }
+        this.setState({ betIdx: (bIdx + (dy < 0 ? 1 : -1) + bn) % bn });
+      },
+      onBetWheel: (e) => {
+        const now = Date.now();
+        if (this.bWheelAt && now - this.bWheelAt < 320) return;
+        this.bWheelAt = now;
+        this.setState({ betIdx: (bIdx + (e.deltaY > 0 ? 1 : -1) + bn) % bn });
+      },
+      loggedIn: this.props.loggedIn !== false,
+      loggedOut: this.props.loggedIn === false,
+      goLogin: () => {},
+      username: (() => {
+        const u = this.props.username || 'bingoplayer168';
+        return u.length <= 4 ? u : u.slice(0, 2) + '****' + u.slice(-3);
+      })(),
+      ringDash: (Math.round(2 * Math.PI * 27 * pct / 100)) + ' ' + Math.round(2 * Math.PI * 27),
+      level, nextLevel, growthText: growth.toLocaleString(), pctText: pct + '%',
+      remainExp: (nextNeed - growth).toLocaleString(), nextReward: 'Cash ₱350',
+      cdD: Math.floor(s / 86400),
+      cdH: pad(Math.floor(s / 3600) % 24),
+      cdM: pad(Math.floor(s / 60) % 60),
+      cdS: pad(s % 60),
+      seasonPct: (() => {
+        const p = Math.round(((this.simNow() - this.start) / (this.end - this.start)) * 100);
+        return Math.max(0, Math.min(100, p)) + '%';
+      })(),
+      hasClaimable: claimables.length > 0, noClaimable: claimables.length === 0,
+      claimableCount: claimables.length, claimableAmount: this.money(claimAmount),
+      claimAll: () => {
+        const next = Object.assign({}, this.state.claimed);
+        rows.forEach(r => { if (r.lv <= level && !r.done && !(physMap[r.lv] && physMap[r.lv].left > 0)) next[r.lv] = true; });
+        this.startClaimCountdown();
+        this.setState({ claimed: next, claimResult: { count: claimables.length, amount: this.money(claimAmount), items: claimables.slice(0, 20).map(t => ({ lv: t.lv, reward: t.reward })) } });
+        this.scheduleHide();
+      },
+      tasks, deck, games, ranks, records, physicalList: physicals,
+      claimResultOpen: !!this.state.claimResult,
+      claimCloseIn: this.state.claimCloseIn,
+      snow: Array.from({ length: 18 }, (_, i) => ({
+        left: ((i * 37) % 96 + 2) + '%',
+        size: (3 + (i % 3) * 1.6).toFixed(1) + 'px',
+        opacity: (0.45 + (i % 4) * 0.15).toFixed(2),
+        dur: (6 + (i % 5) * 1.7).toFixed(1) + 's',
+        delay: (i * 0.45).toFixed(2) + 's'
+      })),
+      claimClosePct: Math.max(0, Math.round((this.state.claimCloseIn / 30) * 100)) + '%',
+      claimSleighPct: Math.min(100, Math.max(0, Math.round((1 - this.state.claimCloseIn / 30) * 100))) + '%',
+      sleighDust: Array.from({ length: 9 }, (_, i) => ({
+        left: (2 + (i * 3.4) % 26).toFixed(1) + 'px',
+        bottom: (1 + (i % 4) * 2.2).toFixed(1) + 'px',
+        size: (2 + (i % 3) * 1.1).toFixed(1) + 'px',
+        dur: (0.75 + (i % 4) * 0.22).toFixed(2) + 's',
+        delay: (i * 0.11).toFixed(2) + 's'
+      })),
+      claimSleighShift: 'calc((100% - 66px) * ' + Math.min(1, Math.max(0, 1 - this.state.claimCloseIn / 30)).toFixed(3) + ')',
+      claimResultCount: this.state.claimResult ? this.state.claimResult.count : 0,
+      claimResultAmount: this.state.claimResult ? this.state.claimResult.amount : '',
+      claimResultItems: this.state.claimResult ? this.state.claimResult.items : [],
+      closeClaimResult: () => { clearInterval(this.claimTimer); this.setState({ claimResult: null }); },
+      stockDeck: physicals.map((p, i) => {
+        const n = physicals.length;
+        const off = (i - (this.state.stockIdx || 0) + n) % n;
+        const taken = p.qty - p.left, out = p.left === 0, low = p.left > 0 && p.left <= 3;
+        return {
+          lv: p.lv, name: p.name, bgImg: p.bgImg, qty: p.qty, taken,
+          takenPct: Math.round((taken / p.qty) * 100) + '%',
+          text: out ? 'Sold out' : ('' + p.left + ' left'),
+          color: out ? '#FF9A9A' : (low ? '#FFD08A' : '#8FE3B8'),
+          barFill: out ? 'linear-gradient(90deg,#8E1020,#C8342F)' : 'linear-gradient(90deg,#C89A3C,#F0D291)',
+          border: out ? 'rgba(232,90,90,.4)' : (low ? 'rgba(232,192,106,.42)' : 'rgba(255,255,255,.1)'),
+          imgOpacity: out ? '.42' : '1',
+          canClaim: !out && p.lv <= level && !this.state.claimed[p.lv],
+          noClaim: !(!out && p.lv <= level && !this.state.claimed[p.lv]),
+          onClaim: () => {
+            if (!this.state.ship) this.setState({ shipStage: 'form', pendingLv: p.lv, supportMode: false, form: { name: '', phone: '', region: '', addr: '', zip: '' } });
+            else this.setState({ shipStage: 'confirm', pendingLv: p.lv });
+          },
+          transform: 'translateX(' + (off * 24) + '%) scale(' + (1 - off * 0.05) + ')',
+          opacity: off <= 3 ? (off === 0 ? 1 : (off === 1 ? 0.78 : (off === 2 ? 0.48 : 0.24))) : 0,
+          z: n - off
+        };
+      }),
+      stockIndexLabel: ((this.state.stockIdx || 0) + 1) + ' / ' + physicals.length,
+      stockDots: physicals.map((_, i) => ({
+        color: i === (this.state.stockIdx || 0) ? '#E8C06A' : 'rgba(255,255,255,.2)',
+        onClick: () => { this.setState({ stockIdx: i }); this.startStockAuto(); }
+      })),
+      onStockDown: (e) => { this.stockX = e.clientX; },
+      onStockUp: (e) => {
+        if (this.stockX == null) return;
+        const dx = e.clientX - this.stockX;
+        this.stockX = null;
+        const dir = Math.abs(dx) < 18 ? 1 : (dx < 0 ? 1 : -1);
+        this.setState(st => ({ stockIdx: ((st.stockIdx || 0) + dir + physicals.length) % physicals.length }));
+        this.startStockAuto();
+      },
+      promos: [
+        { title: 'Promo title TBD', amount: 'Reward amount', tag: 'TBD', note: 'Banner slot 1', bg: 'linear-gradient(135deg,#8E1020,#3A0410)', href: 'https://789bingo.com/promotions' },
+        { title: 'Promo title TBD', amount: 'Reward amount', tag: 'TBD', note: 'Banner slot 2', bg: 'linear-gradient(135deg,#6A2BB8,#22063F)', href: 'https://789bingo.com/promotions' },
+        { title: 'Promo title TBD', amount: 'Reward amount', tag: 'TBD', note: 'Banner slot 3', bg: 'linear-gradient(135deg,#15613E,#04200F)', href: 'https://789bingo.com/promotions' },
+        { title: 'Promo title TBD', amount: 'Reward amount', tag: 'TBD', note: 'Banner slot 4', bg: 'linear-gradient(135deg,#B5601A,#3A1703)', href: 'https://789bingo.com/promotions' }
+      ],
+      shipFormOpen: this.state.shipStage === 'form',
+      shipConfirmOpen: this.state.shipStage === 'confirm',
+      otpOpen: this.state.shipStage === 'otp',
+      shipFormTitle: this.state.supportMode ? 'Edit shipping details' : 'Shipping details',
+      shipSubmitLabel: this.state.supportMode ? 'Save changes' : 'Submit shipping details',
+      pendingPrize: (() => { const p = physicals.find(x => x.lv === this.state.pendingLv); return p ? ('Stage ' + p.lv + ' · ' + p.name) : 'this prize'; })(),
+      shipName: this.state.ship ? this.state.ship.name : '',
+      shipPhone: this.state.ship ? this.state.ship.phone : '',
+      shipRegion: this.state.ship ? this.state.ship.region : '',
+      shipAddr: this.state.ship ? this.state.ship.addr : '',
+      shipZip: this.state.ship ? this.state.ship.zip : '',
+      maskedPhone: this.state.ship ? (() => { const p = this.state.ship.phone; return p.length <= 9 ? p : p.slice(0, 7) + ' **** ' + p.slice(-2); })() : '+63 **** **',
+      formName: this.state.form.name, formPhone: this.state.form.phone, formRegion: this.state.form.region,
+      formAddr: this.state.form.addr, formZip: this.state.form.zip,
+      onFormName: (e) => this.setForm('name', e.target.value),
+      onFormPhone: (e) => this.setForm('phone', e.target.value),
+      onFormRegion: (e) => this.setForm('region', e.target.value),
+      onFormAddr: (e) => this.setForm('addr', e.target.value),
+      onFormZip: (e) => this.setForm('zip', e.target.value),
+      closeShip: () => this.setState({ shipStage: 'none', pendingLv: null, supportMode: false }),
+      submitShip: () => {
+        const fm = this.state.form;
+        if (!fm.name || !fm.phone || !fm.region || !fm.addr) { this.toast('Please complete all required fields'); return; }
+        if (this.state.supportMode) {
+          this.setState({ ship: Object.assign({}, fm), shipStage: 'confirm', supportMode: false });
+          this.toast('Shipping details updated');
+          return;
+        }
+        this.setState({ ship: Object.assign({}, fm), shipStage: 'confirm' });
+        this.toast('Shipping details bound to this account');
+      },
+      startOtp: () => { this.setState({ shipStage: 'otp', otpCode: '', otpLeft: 60 }); this.runOtpTimer(); },
+      closeOtp: () => this.setState({ shipStage: 'confirm', otpCode: '' }),
+      onOtpChange: (e) => this.setState({ otpCode: e.target.value.replace(/[^0-9]/g, '').slice(0, 6) }),
+      otpCode: this.state.otpCode,
+      otpTimerText: this.state.otpLeft > 0 ? ('Code valid for ' + this.state.otpLeft + 's') : 'Code expired',
+      resendOtp: () => { this.setState({ otpLeft: 60 }); this.runOtpTimer(); this.toast('Verification code resent'); },
+      verifyOtp: () => {
+        if (this.state.otpCode.length !== 6) { this.toast('Enter the 6-digit code'); return; }
+        this.setState({ shipStage: 'form', supportMode: true, form: Object.assign({}, this.state.ship) });
+        this.toast('Verified · you can now edit your address');
+      },
+      confirmClaim: () => {
+        const lv = this.state.pendingLv;
+        this.setState(st => ({ claimed: Object.assign({}, st.claimed, { [lv]: true }), shipStage: 'none', pendingLv: null }));
+        this.toast('Claimed · a delivery ticket has been created');
+        this.scheduleHide();
+      },
+      refreshAnim: this.state.refreshing ? 'crSpinSlow .8s linear infinite' : 'none',
+      refreshLabel: this.state.refreshing ? 'Refreshing' : 'Refresh',
+      refreshRanks: () => {
+        if (this.state.refreshing) return;
+        this.setState({ refreshing: true });
+        setTimeout(() => { this.setState({ refreshing: false }); this.toast('Leaderboard updated'); }, 900);
+      },
+      recordTotal: this.money(recordSum), recordCount: records.length,
+      myPrizes: physicals.filter(p => p.lv <= level && p.left > 0).sort((a, b) => a.lv - b.lv)
+        .map(p => ({ img: p.bgImg, title: 'Stage ' + p.lv + ' · ' + p.name })),
+      physicalIndexLabel: (this.state.prizeIdx + 1) + ' / ' + physicals.length,
+      onListScroll: () => {
+        const list = this.listEl;
+        if (!list) return;
+        const rowsEl = list.querySelectorAll('[data-lv]');
+        const top = list.scrollTop, bottom = top + list.clientHeight;
+        let maxVisibleLv = null;
+        for (const el of rowsEl) {
+          const y = el.offsetTop - list.offsetTop;
+          if (y + el.offsetHeight > top + 4 && y < bottom - 4) {
+            const lv = parseInt(el.getAttribute('data-lv'), 10);
+            if (maxVisibleLv == null || lv > maxVisibleLv) maxVisibleLv = lv;
+          }
+        }
+        if (maxVisibleLv == null) return;
+        let idx = physicals.findIndex(p => p.lv > maxVisibleLv);
+        if (idx < 0) idx = physicals.length - 1;
+        if (idx !== this.state.prizeIdx) this.setState({ prizeIdx: idx });
+      },
+      listRef: (el) => {
+        this.listEl = el;
+        if (el && !this.didInitScroll) { this.didInitScroll = true; setTimeout(() => this.scrollToNext(), 60); }
+      },
+      hasClaimedRows: true,
+      claimedCount: rows.filter(r => r.done || this.state.claimed[r.lv]).length,
+      scrollTop: () => { if (this.listEl) this.listEl.scrollTo({ top: 0, behavior: 'smooth' }); },
+      prizeDots: physicals.map((_, i) => ({
+        color: i === this.state.prizeIdx ? '#E8C06A' : 'rgba(255,255,255,.2)',
+        onClick: () => this.setState({ prizeIdx: i })
+      })),
+      prevPrize: () => this.setState(st => ({ prizeIdx: (st.prizeIdx - 1 + n) % n })),
+      nextPrize: () => this.setState(st => ({ prizeIdx: (st.prizeIdx + 1) % n })),
+      onDeckDown: (e) => { this.dragY = e.clientY; this.dragX = e.clientX; },
+      onDeckUp: (e) => {
+        if (this.dragY == null) return;
+        const dy = e.clientY - this.dragY, dx = e.clientX - this.dragX;
+        const d = Math.abs(dy) > Math.abs(dx) ? dy : dx;
+        this.dragY = null;
+        if (Math.abs(d) < 18) { this.setState(st => ({ prizeIdx: (st.prizeIdx + 1) % n })); return; }
+        this.setState(st => ({ prizeIdx: (st.prizeIdx + (d < 0 ? 1 : -1) + n) % n }));
+      },
+      onDeckWheel: (e) => {
+        const now = Date.now();
+        if (this.wheelAt && now - this.wheelAt < 320) return;
+        this.wheelAt = now;
+        this.setState(st => ({ prizeIdx: (st.prizeIdx + (e.deltaY > 0 ? 1 : -1) + n) % n }));
+      },
+      myRank: 128, myPrizeTotal: '1,548',
+      toastOn: !!this.state.toast, toastMsg: this.state.toast,
+      rulesOpen: this.state.rulesOpen,
+      toggleRules: () => this.setState(st => ({ rulesOpen: !st.rulesOpen })),
+      recordsOpen: this.state.recordsOpen,
+      openRecords: () => this.setState({ recordsOpen: true }),
+      closeRecords: () => this.setState({ recordsOpen: false })
+    };
+  }
+}
+</script>
+
+<template id="__bundler_thumbnail">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#22063F"/><text x="100" y="118" font-family="Arial, sans-serif" font-size="64" font-weight="bold" fill="#F0D291" text-anchor="middle">LV</text></svg>
+</template>
+</body>
+</html>

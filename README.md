@@ -1,33 +1,38 @@
-# Crown Rush 活动落地页与需求文档
+# 789Bingo 需求与原型中心
 
-789Bingo 百关闯关活动（Crown Rush）的三个前台原型页面与开发需求文档，纯静态文件，无需构建。
+流水闯关活动（完整需求 + v1.0 / v1.1 / v1.2 迭代）与圣诞换肤需求的全部原型页面和文档，纯静态文件，无需构建。
 
-## 内容
+## 目录结构
 
-| 文件 | 说明 |
-| --- | --- |
-| `index.html` | 入口导航（左侧栏切换页面，PRD 带目录跳转） |
-| `pre-launch.html` | 活动预热页原型（英文版） |
-| `live.html` | 活动进行中页原型（英文版） |
-| `ended.html` | 活动结束页原型（英文版，领奖缓冲期） |
-| `prd.html` | 开发需求文档 PRD（中文，可打印为 PDF） |
-| `assets/` | 主视觉、奖品、游戏与弹窗素材 |
-| `support.js` / `doc-page.js` / `image-slot.js` | 页面运行时依赖 |
+```
+index.html                 入口：左侧按项目 › 版本 › 文件的树形目录，右侧显示内容
+项目导航.dc.html            项目导航页（默认首页）
+crown-rush/                流水闯关活动 · 完整需求（基线）
+  v1.0/                    v1.0 迭代：前台全量 + 后台精简
+  v1.1/                    v1.1 迭代：仅后台（库存与机器人完善）
+  v1.2/                    v1.2 迭代：仅后台（达到完整需求）
+xmas-skin/                 圣诞换肤：需求文档、后台与页面原型
+assets/                    图片素材
+support.js / doc-page.js / image-slot.js   页面运行时
+.nojekyll                  关闭 Jekyll 处理
+```
 
-## 使用
-
-- 打开 `index.html`，左侧栏点选即可在右侧区域切换四个页面。
-- 选中「开发需求文档 PRD」时，左侧栏下方展开章节目录，点击任意章节可直接跳转到文档对应位置。
-- 地址栏 hash 会记录当前页面与章节（如 `#prd:sec-8-3`），可直接分享定位链接。
-- 每个页面也可单独打开：`pre-launch.html`、`live.html`、`ended.html`、`prd.html`。
+每个版本目录包含：开发需求 PRD、需求速览、开发自查清单、后台操作手册、后台原型；完整需求与 v1.0 另含三个前台活动页。
 
 ## 部署到 GitHub Pages
 
-1. 新建仓库，将本目录内所有文件（含 `assets/`、`.nojekyll`）推送到 `main` 分支根目录。
-2. 仓库 Settings → Pages → Source 选择 `Deploy from a branch`，分支 `main`、目录 `/ (root)`。
-3. 构建完成后访问 `https://<用户名>.github.io/<仓库名>/`。
+1. 将本目录全部内容（包括 `.nojekyll`）推送到仓库根目录，例如 `main` 分支。
+2. 仓库 Settings → Pages → Build and deployment → Source 选择 `Deploy from a branch`，分支 `main`，目录 `/ (root)`。
+3. 等待部署完成后访问 `https://<用户名>.github.io/<仓库名>/`。
 
-放在子目录（如 `docs/`）时，第 2 步目录选择 `/docs` 即可。
+如需放在子目录（如 `docs/`），把本目录内容放进 `docs/`，第 2 步目录选 `/docs`。
+
+## 使用说明
+
+- 左侧目录按「项目 › 版本 › 文件」展开，点击文件在右侧打开；支持搜索。
+- 地址栏会记录当前打开的文件（如 `#/crown-rush/v1.0/Crown Rush PRD.dc.html`），可直接分享链接。
+- 页面内的跳转（如需求速览 → 查看 PRD）会同步更新左侧选中项。
+- 右上角「新窗口打开」可单独查看当前页面。
 
 ## 本地预览
 
@@ -36,4 +41,4 @@ python3 -m http.server 8080
 # 浏览器打开 http://localhost:8080
 ```
 
-建议使用本地服务器方式预览；直接双击 HTML 文件时，部分浏览器的本地文件策略会阻止脚本与 iframe 加载。
+请通过本地服务器访问；直接双击 HTML 文件时，浏览器的本地文件限制可能导致页面无法加载。

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  doc-page:not(:defined) { visibility: hidden; }
+  body { margin: 0; }
+  a { color: #B3122E; }
+  a:hover { color: #0F6B3A; }
+</style>
+<script src="../doc-page.js"></script>
+</helmet>
+
+<doc-page margin="0.8in">
+  <div style="font-family:'Noto Sans SC',sans-serif;color:#1B1720;font-size:14.5px;line-height:1.7">
+
+    <h1 style="font-family:'Noto Serif SC',serif;font-size:26px;line-height:1.35;margin:0 0 6px;color:#6B0A18">789Bingo 平台圣诞节主题皮肤 · 产品需求文档（PRD）</h1>
+    <div style="display:flex;flex-wrap:wrap;gap:14px;font-size:12.5px;color:#6A6076;border-bottom:2px solid #6B0A18;padding-bottom:12px;margin-bottom:20px">
+      <div>版本：v1.0</div><div>平台：789Bingo（PH）</div><div>端：H5 · PWA · Android · iOS · 运营后台</div><div>状态：待评审</div>
+    </div>
+    <div style="margin:0 0 18px;padding:10px 12px;border:1px dashed #D48806;border-radius:4px;background:#FFF7E6;color:#874D00;font-size:12.5px;line-height:1.7"><b>视觉说明：</b>本需求中的所有视觉效果（原型页面、示意图、配色与图标）均为示例，最终呈现效果以 UI 设计师产出的设计稿为准。</div>
+
+    <h2 style="font-family:'Noto Serif SC',serif;font-size:18px;margin:22px 0 8px;color:#6B0A18;border-left:4px solid #B3122E;padding-left:10px">1. 背景与目标</h2>
+    <p style="margin:0 0 8px">菲律宾是全球圣诞季最长的市场之一（通常从 9 月持续到 1 月初的三王节），节日氛围对用户活跃与充值意愿有明显带动。本需求将平台全站页面皮肤与桌面图标临时切换为圣诞主题，配合 12 月 Crown Rush 百关闯关等节日活动，营造统一的节日氛围。</p>
+    <ul style="margin:0 0 10px;padding-left:20px">
+      <li>营造节日氛围，提升首页停留时长与活动入口点击率。</li>
+      <li>皮肤可在后台<b>定时开启、定时恢复</b>，不依赖发版；后续春节、情人节等节日可复用同一套换肤机制（见第 12 节）。</li>
+      <li>换肤不改变任何业务逻辑、页面结构与交互，仅替换视觉资源。</li>
+    </ul>
+
+    <h2 style="font-family:'Noto Serif SC',serif;font-size:18px;margin:22px 0 8px;color:#6B0A18;border-left:4px solid #B3122E;padding-left:10px">2. 范围</h2>
+    <table style="width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 10px">
+      <thead><tr style="background:#FBEFF0"><th style="border:1px solid #E6D3D6;padding:7px 9px;text-align:left;width:26%">页面</th><th style="border:1px solid #E6D3D6;padding:7px 9px;text-align:left">调整范围</th></tr></thead>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">首页（重点）</td><td style="border:1px solid #E6D3D6;padding:7px 9px">整体改为圣诞主题配色，并按第 4 节逐项换肤；可选增加飘雪特效</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">注册 / 登录页</td><td style="border:1px solid #E6D3D6;padding:7px 9px">仅调整页面配色与首图</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">钱包、个人中心及其他二级页面</td><td style="border:1px solid #E6D3D6;padding:7px 9px">调整页面配色；页面中包含 Banner 或首图的，同步替换为圣诞版</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">活动详情页</td><td style="border:1px solid #E6D3D6;padding:7px 9px">页面内容与样式均不做修改；如技术与性能允许，可叠加飘雪动画特效增强节日氛围（须满足第 8 节性能要求）</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">桌面图标</td><td style="border:1px solid #E6D3D6;padding:7px 9px">iOS / Android 原生 App 图标、PWA 图标、iOS 主屏书签图标、Web favicon，<b>本期全部更换</b></td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">启动页与推送</td><td style="border:1px solid #E6D3D6;padding:7px 9px">App 启动页（含平台启动页动画）换肤为圣诞版；推送通知小图标换为圣诞版</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">不在范围</td><td style="border:1px solid #E6D3D6;padding:7px 9px">邀请页（不调整）；游戏封面图（由游戏厂商提供，不替换）；游戏内画面；支付 / 风控 / KYC 流程页；后台管理系统界面</td></tr>
+    </table>
+    <div style="margin:8px 0 12px;padding:10px 12px;border:1px dashed #D48806;background:#FFF7E6;color:#874D00;font-size:12.5px;line-height:1.7"><b>统一要求：</b>各页面中与圣诞风格冲突的视觉元素需一并优化，保证全站风格统一。</div>
+
+    <h2 style="font-family:'Noto Serif SC',serif;font-size:18px;margin:22px 0 8px;color:#6B0A18;border-left:4px solid #B3122E;padding-left:10px">3. 设计原则</h2>
+    <div style="margin:8px 0 12px;padding:10px 12px;border:1px dashed #D48806;background:#FFF7E6;color:#874D00;font-size:12.5px;line-height:1.7"><b>设计说明：</b>配色、图案、装饰元素、动效与全部素材规格均由 UI 设计师确定，以最终设计稿为准，本文档不做规定。</div>
+    <table style="width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 10px">
+      <thead><tr style="background:#FBEFF0"><th style="border:1px solid #E6D3D6;padding:7px 9px;text-align:left;width:26%">项</th><th style="border:1px solid #E6D3D6;padding:7px 9px;text-align:left">要求</th></tr></thead>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">主题</td><td style="border:1px solid #E6D3D6;padding:7px 9px">圣诞节主题，兼顾菲律宾本地节日氛围</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">统一性</td><td style="border:1px solid #E6D3D6;padding:7px 9px">全站公共组件与首页各模块风格统一，并与同期节日活动页保持一致</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">问候文案</td><td style="border:1px solid #E6D3D6;padding:7px 9px">使用「Merry Christmas」或菲律宾本地的「Maligayang Pasko」</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">可读性</td><td style="border:1px solid #E6D3D6;padding:7px 9px">文字与底色对比度不低于 4.5:1；装饰不得遮挡按钮、价格、余额等关键信息，也不得占用点击区域</td></tr>
+    </table>
+
+    <h2 style="font-family:'Noto Serif SC',serif;font-size:18px;margin:22px 0 8px;color:#6B0A18;border-left:4px solid #B3122E;padding-left:10px">4. 首页换肤清单</h2>
+    <p style="margin:0 0 6px;font-size:13px;color:#6A6076">以下区域需提供圣诞版皮肤，具体视觉方案由 UI 设计师确定。</p>
+    <table style="width:100%;border-collapse:collapse;font-size:12.5px;margin:6px 0 10px">
+      <thead><tr style="background:#FBEFF0"><th style="border:1px solid #E6D3D6;padding:7px 8px;text-align:left;width:6%">#</th><th style="border:1px solid #E6D3D6;padding:7px 8px;text-align:left;width:24%">区域</th><th style="border:1px solid #E6D3D6;padding:7px 8px;text-align:left">换肤范围</th></tr></thead>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 8px">1</td><td style="border:1px solid #E6D3D6;padding:7px 8px">整体配色</td><td style="border:1px solid #E6D3D6;padding:7px 8px">首页整体改为圣诞主题配色</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 8px">2</td><td style="border:1px solid #E6D3D6;padding:7px 8px">顶栏</td><td style="border:1px solid #E6D3D6;padding:7px 8px">顶栏内的图标与按钮</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 8px">3</td><td style="border:1px solid #E6D3D6;padding:7px 8px">游戏分类菜单栏</td><td style="border:1px solid #E6D3D6;padding:7px 8px">每个游戏分类的图标</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 8px">4</td><td style="border:1px solid #E6D3D6;padding:7px 8px">搜索框</td><td style="border:1px solid #E6D3D6;padding:7px 8px">搜索框样式</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 8px">5</td><td style="border:1px solid #E6D3D6;padding:7px 8px">侧边栏</td><td style="border:1px solid #E6D3D6;padding:7px 8px">隐藏与展开两种状态</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 8px">6</td><td style="border:1px solid #E6D3D6;padding:7px 8px">游戏厂商按钮</td><td style="border:1px solid #E6D3D6;padding:7px 8px">仅调整选项按钮背景</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 8px">7</td><td style="border:1px solid #E6D3D6;padding:7px 8px">游戏项</td><td style="border:1px solid #E6D3D6;padding:7px 8px">每个游戏项的边框配色与样式；游戏封面本身不替换</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 8px">8</td><td style="border:1px solid #E6D3D6;padding:7px 8px">底栏</td><td style="border:1px solid #E6D3D6;padding:7px 8px">底栏图标统一替换为圣诞版</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 8px">9</td><td style="border:1px solid #E6D3D6;padding:7px 8px">飘雪特效（可选）</td><td style="border:1px solid #E6D3D6;padding:7px 8px">如技术与性能允许，增加飘雪特效增强节日氛围；须满足第 8 节性能要求。特效方案由 UI 设计师与前端工程师确定，不在运营后台配置</td></tr>
+    </table>
+
+    <h2 style="font-family:'Noto Serif SC',serif;font-size:18px;margin:22px 0 8px;color:#6B0A18;border-left:4px solid #B3122E;padding-left:10px">5. 桌面图标</h2>
+    <h3 style="font-size:15px;margin:14px 0 6px">5.1 设计要求</h3>
+    <ul style="margin:0 0 10px;padding-left:20px">
+      <li>iOS / Android 原生 App、PWA、iOS 主屏书签与 Web favicon 同步提供圣诞版图标。</li>
+      <li>须保留 789 BINGO 品牌识别，小尺寸下清晰可辨。</li>
+      <li>图标设计方案与各端交付规格由 UI 设计师确定，并与客户端开发确认。</li>
+    </ul>
+    <h3 style="font-size:15px;margin:14px 0 6px">5.2 效果示意</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:6px 0 8px">
+      <div style="border:1px solid #E6D3D6;padding:12px">
+        <div style="font-weight:700;font-size:13px">桌面效果</div>
+        <div style="margin-top:10px;border-radius:14px;padding:14px 12px;background:linear-gradient(160deg,#1D2B4A,#0E1628);display:grid;grid-template-columns:repeat(4,1fr);gap:12px 6px"><div style="display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:46px;height:46px;border-radius:12px;background:#5A6B8C"></div><div style="color:#fff;font-size:10px;opacity:.9">相机</div></div><div style="display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:46px;height:46px;border-radius:12px;background:#7A8FB5"></div><div style="color:#fff;font-size:10px;opacity:.9">相册</div></div><div style="display:flex;flex-direction:column;align-items:center;gap:4px"><div style="box-sizing:border-box;width:46px;height:46px;border-radius:12px;overflow:hidden;box-shadow:0 0 0 2px #F0CE86"><img src="../assets/x7890/app-icon-xmas.png" alt="789 BINGO 圣诞版图标" style="display:block;width:100%;height:100%;object-fit:cover" /></div><div style="color:#fff;font-size:10px;opacity:.9">789 BINGO</div></div><div style="display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:46px;height:46px;border-radius:12px;background:#4C5670"></div><div style="color:#fff;font-size:10px;opacity:.9">设置</div></div><div style="display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:46px;height:46px;border-radius:12px;background:#3E7BD6"></div><div style="color:#fff;font-size:10px;opacity:.9">Chrome</div></div><div style="display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:46px;height:46px;border-radius:12px;background:#4DA36B"></div><div style="color:#fff;font-size:10px;opacity:.9">地图</div></div><div style="display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:46px;height:46px;border-radius:12px;background:#D8465A"></div><div style="color:#fff;font-size:10px;opacity:.9">音乐</div></div><div style="display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:46px;height:46px;border-radius:12px;background:#2E3440"></div><div style="color:#fff;font-size:10px;opacity:.9">时钟</div></div></div>
+        <div style="margin-top:8px;font-size:12px;color:#8A817B">金色描边为 789 BINGO 圣诞版图标，其余为系统或第三方应用。</div>
+      </div>
+      <div style="border:1px solid #E6D3D6;padding:12px">
+        <div style="font-weight:700;font-size:13px">图标对比</div>
+        <div style="margin-top:14px;display:flex;align-items:center;justify-content:center;gap:18px">
+          <div style="text-align:center"><div style="width:84px;height:84px;border-radius:20px;overflow:hidden;background:#fff;border:1px solid #E6D3D6;box-shadow:0 4px 12px rgba(0,0,0,.12)"><img src="../assets/x7890/app-icon-default.png" alt="789 BINGO 现有图标" style="display:block;width:100%;height:100%;object-fit:cover" /></div><div style="margin-top:6px;font-size:12px;color:#6B615B">默认</div></div>
+          <div style="color:#B3122E;font-size:20px;font-weight:900">→</div>
+          <div style="text-align:center"><div style="width:84px;height:84px;border-radius:20px;overflow:hidden;box-shadow:0 6px 16px rgba(156,14,36,.3)"><img src="../assets/x7890/app-icon-xmas.png" alt="789 BINGO 圣诞版图标" style="display:block;width:100%;height:100%;object-fit:cover" /></div><div style="margin-top:6px;font-size:12px;color:#B3122E;font-weight:700">圣诞版</div></div>
+        </div>
+        <div style="margin-top:12px;font-size:12px;color:#4A403B;line-height:1.7">示意图为示例，仅用于说明替换位置，最终图标以 UI 设计师产出结果为准。</div>
+      </div>
+    </div>
+    <h3 style="font-size:15px;margin:14px 0 6px">5.3 交付规格</h3>
+    <div style="margin:8px 0 12px;padding:10px 12px;border:1px dashed #D48806;background:#FFF7E6;color:#874D00;font-size:12.5px;line-height:1.7"><b>设计说明：</b>各端图标的尺寸、格式与数量由 UI 设计师结合客户端开发要求确定后统一交付。</div>
+    <h3 style="font-size:15px;margin:14px 0 6px">5.4 各端切换方式与限制</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 10px">
+      <thead><tr style="background:#FBEFF0"><th style="border:1px solid #E6D3D6;padding:7px 9px;text-align:left;width:22%">端</th><th style="border:1px solid #E6D3D6;padding:7px 9px;text-align:left">方式</th><th style="border:1px solid #E6D3D6;padding:7px 9px;text-align:left;width:34%">限制</th></tr></thead>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">iOS App</td><td style="border:1px solid #E6D3D6;padding:7px 9px">预置备用图标（Alternate App Icon），App 启动时读取皮肤配置后调用切换</td><td style="border:1px solid #E6D3D6;padding:7px 9px">切换时系统会弹窗提示用户；备用图标需随版本发布提前内置</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">Android App</td><td style="border:1px solid #E6D3D6;padding:7px 9px">预置 activity-alias，根据皮肤配置启用或停用对应入口</td><td style="border:1px solid #E6D3D6;padding:7px 9px">部分厂商桌面需重启才生效；切换时可能关闭当前进程，须安排在冷启动时执行</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">PWA / 主屏书签</td><td style="border:1px solid #E6D3D6;padding:7px 9px">更新 manifest 与 apple-touch-icon</td><td style="border:1px solid #E6D3D6;padding:7px 9px">已添加到主屏的图标不会自动刷新；新添加的用户才会看到圣诞版</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">Web favicon</td><td style="border:1px solid #E6D3D6;padding:7px 9px">皮肤开启时动态替换 link[rel=icon]</td><td style="border:1px solid #E6D3D6;padding:7px 9px">受浏览器缓存影响，需带版本号参数</td></tr>
+    </table>
+    <div style="margin:8px 0 12px;padding:10px 12px;border:1px dashed #D48806;background:#FFF7E6;color:#874D00;font-size:12.5px;line-height:1.7"><b>需求提示：</b>本期原生 App（iOS / Android）、PWA、iOS 主屏书签与 Web favicon 图标<b>全部更换为圣诞版</b>。原生 App 的图标切换依赖提前发版内置图标资源，客户端须在 12/01 前完成发版，排期见第 10 节。</div>
+
+    <h3 style="font-size:15px;margin:14px 0 6px">5.5 启动页与推送通知图标</h3>
+    <ul style="margin:0 0 10px;padding-left:20px">
+      <li><b>启动页</b>：App 启动页换为圣诞版，<b>平台启动页动画同步换肤</b>；动画时长不得延长现有启动耗时，皮肤关闭后恢复默认启动页与动画。</li>
+      <li><b>推送通知小图标</b>：Android 状态栏通知小图标与 iOS 推送图标同步换为圣诞版。</li>
+      <li>启动页、启动动画与推送图标的设计方案与交付规格由 UI 设计师确定，并与客户端开发确认；原生资源须随 12/01 前的版本一同内置。</li>
+    </ul>
+
+    <h2 style="font-family:'Noto Serif SC',serif;font-size:18px;margin:22px 0 8px;color:#6B0A18;border-left:4px solid #B3122E;padding-left:10px">6. 换肤机制</h2>
+    <ul style="margin:0 0 10px;padding-left:20px">
+      <li><b>皮肤资源包</b>：每套皮肤由「配色变量 + 图片资源 + 装饰层配置」组成，前端按皮肤 ID 加载；未开启时使用默认皮肤。</li>
+      <li><b>下发方式</b>：客户端启动和进入首页时请求皮肤配置接口，返回当前生效的皮肤 ID、资源包版本与 CDN 地址；资源预下载并缓存到本地，避免首屏闪烁。</li>
+      <li><b>定时生效</b>：按服务端时间（GMT+8）判断，本期默认 12/01 00:00:00 开启、01/06 23:59:59 自动恢复。<b>具体生效时间段由运营在后台自行调整</b>（如提前到 11 月中旬或延长到 1 月中旬），无需发版。</li>
+      <li><b>灰度</b>：灰度比例指新皮肤先对多少比例的用户开启。例如设为 5%，只有约 5% 的用户看到圣诞皮肤，其余用户仍看到默认皮肤；设为 100% 即全量上线。
+        <ul style="margin:4px 0 0;padding-left:18px">
+          <li>目的：先让少量用户使用，确认页面无错位、加载未变慢、无明显报错后，再逐步放大到 100%；发现问题时只影响少数用户，可快速关闭。</li>
+          <li>分组规则：按用户 ID 稳定分组，同一用户在灰度期间始终看到同一套皮肤，不因刷新或重新登录来回切换。</li>
+          <li>支持按用户比例、渠道或端开启；本期 11/28 先放量 5% 验证，12/01 00:00 全量生效（100%）。</li>
+          <li>如不需要分批上线，可直接设为 100%，皮肤到开始时间即对所有用户生效。</li>
+        </ul>
+      </li>
+      <li><b>回滚</b>：后台停用即恢复默认皮肤，客户端下次请求时生效，无需发版。</li>
+      <li><b>降级</b>：资源加载失败时，该区域回退到默认皮肤资源，不能显示空白或错位。</li>
+    </ul>
+
+    <h2 style="font-family:'Noto Serif SC',serif;font-size:18px;margin:22px 0 8px;color:#6B0A18;border-left:4px solid #B3122E;padding-left:10px">7. 运营后台：节日皮肤管理</h2>
+    <p style="margin:0 0 6px;font-size:13px;color:#6A6076">入口：后台「活动配置」栏目下新增「节日皮肤管理」子栏目。原型见《后台 · 节日皮肤管理》。</p>
+    <table style="width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 10px">
+      <thead><tr style="background:#FBEFF0"><th style="border:1px solid #E6D3D6;padding:7px 9px;text-align:left;width:22%">功能</th><th style="border:1px solid #E6D3D6;padding:7px 9px;text-align:left">说明</th></tr></thead>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">筛选</td><td style="border:1px solid #E6D3D6;padding:7px 9px">按皮肤名称（模糊匹配）、状态、适用端筛选；提供「确定」「重置」</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">皮肤列表</td><td style="border:1px solid #E6D3D6;padding:7px 9px">字段：序号、皮肤名称、资源包版本、适用端、生效时间（GMT+8）、灰度比例、桌面图标（切换 / 不切换）、状态、创建人、操作</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">状态</td><td style="border:1px solid #E6D3D6;padding:7px 9px">未开始 / 生效中 / 已结束 / 已停用；前三种由系统按当前时间与生效时间段自动计算，已停用由人工操作产生</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">新增 / 编辑</td><td style="border:1px solid #E6D3D6;padding:7px 9px">字段：皮肤名称（必填）、资源包版本（下拉选择，必填）、适用端（H5 / PWA / Android / iOS 多选，至少一项）、开始时间与结束时间（精确到秒，必填）、灰度比例（0–100%，默认 100%）、桌面图标是否切换</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">保存校验</td><td style="border:1px solid #E6D3D6;padding:7px 9px">结束时间须晚于开始时间；同一适用端上未停用的皮肤生效时间段不得重叠，重叠时提示与哪套皮肤冲突</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">启用 / 停用</td><td style="border:1px solid #E6D3D6;padding:7px 9px">列表中直接操作，须二次确认；停用后客户端下次请求配置时恢复默认皮肤</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">操作日志</td><td style="border:1px solid #E6D3D6;padding:7px 9px">记录新增、编辑、启用、停用的时间、操作人、皮肤名称与操作类型，可在列表页查看</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">资源来源</td><td style="border:1px solid #E6D3D6;padding:7px 9px">皮肤素材与图标由前端开发统一打包上传到 CDN，后台只选择资源包版本，不提供单张图片上传</td></tr>
+    </table>
+    <div style="margin:8px 0 12px;padding:10px 12px;border:1px dashed #D48806;background:#FFF7E6;color:#874D00;font-size:12.5px;line-height:1.7"><b>不在后台配置：</b>换肤生效的页面范围、飘雪等动效均由 UI 设计师与前端工程师确定，并打包在资源包内，后台不提供配置项。</div>
+
+    <h2 style="font-family:'Noto Serif SC',serif;font-size:18px;margin:22px 0 8px;color:#6B0A18;border-left:4px solid #B3122E;padding-left:10px">8. 性能与兼容</h2>
+    <ul style="margin:0 0 10px;padding-left:20px">
+      <li>皮肤资源包总体积 ≤ 1.5 MB；首屏新增资源 ≤ 300 KB。</li>
+      <li>开启皮肤后首页首屏加载时间的增幅不超过 10%。</li>
+      <li>飘雪等动效只用 transform / opacity 实现，低端机（内存 ≤ 3 GB）和开启了「减少动态效果」的设备自动关闭。</li>
+      <li>兼容 iOS 13+、Android 8+，覆盖主流屏幕尺寸（360–430 pt 宽）。</li>
+    </ul>
+
+    <h2 style="font-family:'Noto Serif SC',serif;font-size:18px;margin:22px 0 8px;color:#6B0A18;border-left:4px solid #B3122E;padding-left:10px">9. 数据埋点</h2>
+    <ul style="margin:0 0 10px;padding-left:20px">
+      <li>公共参数增加 <code>skin_id</code>，所有页面浏览和点击事件携带当前皮肤 ID。</li>
+      <li>对比指标：首页停留时长、Banner 点击率、悬浮活动入口点击率、次日留存；与 11 月同期的默认皮肤对比。</li>
+      <li>图标切换：记录原生 App 图标切换成功 / 失败（<code>app_icon_switch</code>，含失败原因），以及用户是否拒绝 iOS 切换提示。</li>
+    </ul>
+
+    <h2 style="font-family:'Noto Serif SC',serif;font-size:18px;margin:22px 0 8px;color:#6B0A18;border-left:4px solid #B3122E;padding-left:10px">10. 排期与生效节奏</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin:6px 0 10px">
+      <div style="padding:10px 12px;border:1px solid #E6D3D6;border-top:3px solid #8A817B"><div style="font-size:12px;color:#8A817B;font-weight:700">11/25 前</div><div style="margin-top:3px;font-weight:700;font-size:13.5px">素材交付与验收</div><div style="margin-top:3px;font-size:12px;color:#4A403B;line-height:1.6">设计交付全部皮肤素材与图标，前端完成资源包打包与联调</div></div>
+      <div style="padding:10px 12px;border:1px solid #E6D3D6;border-top:3px solid #D48806"><div style="font-size:12px;color:#D48806;font-weight:700">11/28</div><div style="margin-top:3px;font-weight:700;font-size:13.5px">灰度验证</div><div style="margin-top:3px;font-size:12px;color:#4A403B;line-height:1.6">后台对 5% 用户开启圣诞皮肤，观察性能与点击数据</div></div>
+      <div style="padding:10px 12px;border:1px solid #E6D3D6;border-top:3px solid #B3122E"><div style="font-size:12px;color:#B3122E;font-weight:700">12/01 00:00</div><div style="margin-top:3px;font-weight:700;font-size:13.5px">全量生效</div><div style="margin-top:3px;font-size:12px;color:#4A403B;line-height:1.6">页面皮肤与桌面图标同时切换为圣诞版（GMT+8）</div></div>
+      <div style="padding:10px 12px;border:1px solid #E6D3D6;border-top:3px solid #0F6B3A"><div style="font-size:12px;color:#0F6B3A;font-weight:700">01/06 23:59</div><div style="margin-top:3px;font-weight:700;font-size:13.5px">自动恢复</div><div style="margin-top:3px;font-size:12px;color:#4A403B;line-height:1.6">过三王节（Three Kings）后恢复默认皮肤与图标</div></div>
+    </div>
+    <h3 style="font-size:15px;margin:14px 0 6px">10.1 详细排期</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 10px">
+      <thead><tr style="background:#FBEFF0"><th style="border:1px solid #E6D3D6;padding:7px 9px;text-align:left;width:22%">时间</th><th style="border:1px solid #E6D3D6;padding:7px 9px;text-align:left">事项</th></tr></thead>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">10/31 前</td><td style="border:1px solid #E6D3D6;padding:7px 9px">设计出稿并评审（含桌面图标、启动页动画、推送图标）；客户端内置圣诞版图标、启动页与推送图标资源，随版本提交审核</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">11/25 前</td><td style="border:1px solid #E6D3D6;padding:7px 9px">素材全部交付；前端完成资源包打包与联调；测试完成</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">11/28</td><td style="border:1px solid #E6D3D6;padding:7px 9px">灰度比例设为 5%，观察性能与点击数据</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">12/01 00:00</td><td style="border:1px solid #E6D3D6;padding:7px 9px">灰度比例调至 100%，全量生效</td></tr>
+      <tr><td style="border:1px solid #E6D3D6;padding:7px 9px">01/06 23:59</td><td style="border:1px solid #E6D3D6;padding:7px 9px">自动恢复默认皮肤与图标</td></tr>
+    </table>
+
+    <h2 style="font-family:'Noto Serif SC',serif;font-size:18px;margin:22px 0 8px;color:#6B0A18;border-left:4px solid #B3122E;padding-left:10px">11. 验收标准</h2>
+    <ol style="margin:0 0 10px;padding-left:20px">
+      <li>第 2 节所列页面与第 4 节首页各区域均按 UI 最终设计稿呈现；邀请页与活动详情页内容保持不变，各端表现一致。</li>
+      <li>后台开启 / 停用后，客户端在下一次请求配置时正确切换，不需要发版。</li>
+      <li>到达定时结束时间后自动恢复默认皮肤，不残留圣诞资源。</li>
+      <li>资源加载失败时正确回退到默认皮肤，不出现空白或错位。</li>
+      <li>按钮、余额、金额等关键信息不被装饰层遮挡，点击区域不受影响。</li>
+      <li>性能满足第 8 节指标。</li>
+    </ol>
+
+    <h2 style="font-family:'Noto Serif SC',serif;font-size:18px;margin:22px 0 8px;color:#6B0A18;border-left:4px solid #B3122E;padding-left:10px">12. 延展需求（非本期重点）</h2>
+    <ul style="margin:0 0 10px;padding-left:20px">
+      <li>春节、情人节等后续节日复用本期换肤机制：新增节日只需上传新的皮肤资源包并在后台配置生效时间，无需改动前端逻辑。</li>
+      <li>后台支持预留多套皮肤，按时间段排期依次生效；同一端的多套皮肤生效时间段不得重叠（本期后台已做校验）。</li>
+      <li>本期开发时需将皮肤资源包结构、配置接口与启动页 / 图标切换能力做成通用方案，不写死圣诞专用逻辑，为后续节日预留扩展。</li>
+    </ul>
+  </div>
+</doc-page>
+</x-dc>
+</body>
+</html>

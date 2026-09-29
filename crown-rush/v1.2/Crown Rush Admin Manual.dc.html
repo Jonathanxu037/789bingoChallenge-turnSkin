@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>流水闯关活动 · 后台操作手册</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&amp;family=Noto+Serif+SC:wght@700;900&amp;display=swap" rel="stylesheet" />
+<style>
+  html, body { margin:0; padding:0; background:#F6F3EE; }
+  * { box-sizing:border-box; }
+  a { color:#8A5A12; text-decoration:none; }
+  a:hover { color:#16052F; }
+</style>
+</helmet>
+
+<div style="min-height:100vh;font-family:'Noto Sans SC',system-ui,sans-serif;color:#1F1A26;font-size:14px;line-height:1.7">
+  <div style="background:#16052F;color:#F5E6C0">
+    <div style="max-width:1160px;margin:0 auto;padding:28px 24px 22px">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <span style="font-size:12px;letter-spacing:.24em;color:#C89A3C;font-weight:700">789BINGO · 后台操作手册</span>
+        <span style="padding:1px 9px;border-radius:999px;background:#E8C06A;color:#16052F;font-size:12px;font-weight:800">{{ ver }}</span>
+      </div>
+      <h1 style="margin:8px 0 6px;font-family:'Noto Serif SC',serif;font-size:27px;line-height:1.3;color:#FFF6E2">流水闯关活动 · 后台操作手册</h1>
+      <div style="color:#CDBBEF;font-size:13.5px;max-width:780px;text-wrap:pretty">{{ intro }}</div>
+      <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+        <a href="./Crown Rush Admin.dc.html" style="padding:6px 14px;border-radius:999px;font-size:12.5px;font-weight:700;color:#16052F;background:#E8C06A">打开后台原型 ›</a>
+        <a href="./Crown Rush PRD.dc.html" style="padding:6px 14px;border-radius:999px;font-size:12.5px;font-weight:700;color:#F5E6C0;border:1px solid rgba(232,220,248,.4)">查看 PRD ›</a>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width:1160px;margin:0 auto;padding:20px 24px 60px;display:grid;grid-template-columns:220px minmax(0,1fr);gap:24px;align-items:start">
+    <div style="position:sticky;top:16px;padding:14px 12px;border-radius:10px;background:#fff;border:1px solid #ECE6F2">
+      <div style="font-size:12px;color:#8A7C99;font-weight:700;letter-spacing:.12em;padding:0 6px 6px">目录</div>
+      <sc-for list="{{ toc }}" as="t" hint-placeholder-count="7">
+        <div onClick="{{ t.go }}" style="padding:7px 8px;border-radius:6px;font-size:13px;cursor:pointer;color:#2E2638" style-hover="background:#F3EFF8;color:#16052F">{{ t.name }}</div>
+      </sc-for>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+      <div id="m-flow" style="padding:18px 20px;border-radius:10px;background:#fff;border:1px solid #ECE6F2">
+        <div style="font-family:'Noto Serif SC',serif;font-size:18px;font-weight:900;color:#16052F">整体操作流程</div>
+        <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+          <sc-for list="{{ flow }}" as="f" hint-placeholder-count="5">
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <span style="flex:none;width:22px;height:22px;border-radius:50%;background:#16052F;color:#E8C06A;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ f.n }}</span>
+              <span style="font-size:13.5px;color:#2E2638">{{ f.text }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <sc-for list="{{ modules }}" as="m" hint-placeholder-count="4">
+        <div id="{{ m.anchor }}" style="padding:18px 20px;border-radius:10px;background:#fff;border:1px solid #ECE6F2">
+          <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
+            <span style="flex:none;min-width:28px;height:22px;padding:0 7px;border-radius:6px;background:#16052F;color:#E8C06A;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center">{{ m.no }}</span>
+            <span style="font-family:'Noto Serif SC',serif;font-size:18px;font-weight:900;color:#16052F">{{ m.name }}</span>
+          </div>
+          <div style="margin-top:6px;color:#4A4056;font-size:13.5px">{{ m.purpose }}</div>
+
+          <div style="margin-top:14px;font-weight:700;color:#16052F;font-size:14px;display:flex;align-items:center;gap:8px"><span style="width:4px;height:14px;border-radius:2px;background:#16052F"></span>操作步骤</div>
+          <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ m.steps }}" as="st" hint-placeholder-count="3">
+              <div style="display:flex;gap:10px;padding:10px 12px;border-radius:8px;background:#FBF9FD;border:1px solid #F0EAF6">
+                <span style="flex:none;width:20px;height:20px;border-radius:50%;border:1.5px solid #C89A3C;color:#8A5A12;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ st.n }}</span>
+                <div style="min-width:0">
+                  <div style="font-weight:700;color:#16052F;font-size:13.5px">{{ st.title }}</div>
+                  <div style="margin-top:2px;color:#4A4056;font-size:13px">{{ st.text }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ m.hasFields }}">
+            <div style="margin-top:14px;font-weight:700;color:#16052F;font-size:14px;display:flex;align-items:center;gap:8px"><span style="width:4px;height:14px;border-radius:2px;background:#5A3A9A"></span>数据项说明</div>
+            <div style="margin-top:8px;border:1px solid #ECE6F2;border-radius:8px;overflow:hidden">
+              <sc-for list="{{ m.fields }}" as="fd" hint-placeholder-count="3">
+                <div style="display:grid;grid-template-columns:150px minmax(0,1fr);border-top:1px solid #F2EEF7">
+                  <div style="padding:8px 12px;background:#F7F4FB;font-weight:700;font-size:13px;color:#16052F">{{ fd.k }}</div>
+                  <div style="padding:8px 12px;font-size:13px;color:#2E2638">{{ fd.v }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ m.hasCautions }}">
+            <div style="margin-top:14px;padding:10px 14px;border-radius:8px;background:#FFF7E6;border:1px dashed #E6A23C">
+              <div style="font-weight:700;color:#AD4E00;font-size:13.5px">注意事项</div>
+              <ul style="margin:6px 0 0;padding-left:18px;color:#6A4A10;font-size:13px">
+                <sc-for list="{{ m.cautions }}" as="c" hint-placeholder-count="2"><li style="margin-bottom:2px">{{ c.text }}</li></sc-for>
+              </ul>
+            </div>
+          </sc-if>
+        </div>
+      </sc-for>
+
+      <sc-if value="{{ hasUpgrade }}">
+        <div id="m-upgrade" style="padding:18px 20px;border-radius:10px;background:#fff;border:1px solid #ECE6F2">
+          <div style="font-family:'Noto Serif SC',serif;font-size:18px;font-weight:900;color:#16052F">{{ upgradeTitle }}</div>
+          <ul style="margin:10px 0 0;padding-left:18px;font-size:13.5px;color:#2E2638">
+            <sc-for list="{{ upgrade }}" as="u" hint-placeholder-count="3"><li style="margin-bottom:4px">{{ u.text }}</li></sc-for>
+          </ul>
+        </div>
+      </sc-if>
+
+      <div id="m-faq" style="padding:18px 20px;border-radius:10px;background:#fff;border:1px solid #ECE6F2">
+        <div style="font-family:'Noto Serif SC',serif;font-size:18px;font-weight:900;color:#16052F">常见问题</div>
+        <div style="margin-top:10px;display:flex;flex-direction:column;gap:6px">
+          <sc-for list="{{ faq }}" as="q" hint-placeholder-count="4">
+            <div style="border:1px solid #ECE6F2;border-radius:8px;overflow:hidden">
+              <div onClick="{{ q.toggle }}" style="display:flex;align-items:center;gap:8px;padding:10px 12px;cursor:pointer;background:{{ q.bg }}">
+                <span style="color:#C89A3C;font-weight:900">Q</span>
+                <span style="flex:1;font-weight:700;font-size:13.5px;color:#16052F">{{ q.q }}</span>
+                <span style="color:#8A7C99;font-size:12px">{{ q.arrow }}</span>
+              </div>
+              <sc-if value="{{ q.open }}">
+                <div style="padding:10px 12px 12px 32px;font-size:13px;color:#4A4056;border-top:1px solid #F2EEF7">{{ q.a }}</div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { faqOpen: {} };
+  manual() {
+    return /*M*/{
+ "ver": "v1.2",
+ "intro": "本手册适用于 v1.2 后台（完整需求），在 v1.1 基础上增加游戏权重、活动预算、完整批量规则与三张数据表。页面中带「?」的数据项和按钮可点击查看说明。",
+ "flow": [
+  "在「奖品管理」录入实体奖品并入库。",
+  "在「活动管理」创建活动，配置关卡、游戏权重并确认预算。",
+  "在「机器人管理」为各关设置机器人比例与取整方式。",
+  "活动开始后在「奖品领取记录」处理实体奖品：确认库存 → 导出待发货 → 导入快递单号 → 确认签收。",
+  "在「活动数据列表」查看综合、运营、财务数据。"
+ ],
+ "modules": [
+  {
+   "name": "奖品管理",
+   "purpose": "统一管理平台实体奖品的库存，不区分活动。现金与彩金不在此管理。",
+   "steps": [
+    [
+     "新增奖品",
+     "点「新增奖品」，填写名称、初始库存、单件成本，保存后自动生成一条入库记录。"
+    ],
+    [
+     "调整库存",
+     "点「调整库存」，填写新增库存数量：正数为进货入库，负数为报损等减少（必须填写原因）。"
+    ],
+    [
+     "查看库存记录",
+     "点「库存记录」查看入库、报损、分配、预占、发货出库、退货入库等全部变动。"
+    ],
+    [
+     "修改奖品",
+     "只能修改单件成本；名称与在库量不可直接修改。"
+    ]
+   ],
+   "fields": [
+    [
+     "在库量",
+     "仓库实际件数；只在入库、报损、发货出库、退货入库时变化。"
+    ],
+    [
+     "已分配到活动",
+     "各活动关卡配置占用的名额总和。"
+    ],
+    [
+     "预占",
+     "已领取但未发货（待确认库存 + 待发货）的件数。"
+    ],
+    [
+     "已出库",
+     "已发货的件数。"
+    ],
+    [
+     "可分配余量",
+     "在库量 − 预占 − 各活动剩余名额，可用于新活动或改奖。"
+    ],
+    [
+     "单件成本",
+     "用于预算与成本核算，修改不影响历史活动。"
+    ]
+   ],
+   "cautions": [
+    "调整后在库量不能小于「预占 + 各活动剩余名额」。",
+    "后台不管理奖品图片，新增奖品需提供图片给前端随版本内置。"
+   ]
+  },
+  {
+   "name": "活动管理",
+   "purpose": "创建活动、配置关卡与奖励，控制活动状态与前台页面。",
+   "steps": [
+    [
+     "创建活动",
+     "填写名称、预热开始 / 活动开始 / 活动结束（日历卡片选择，GMT+8）、关卡数、状态、物流快递预留与活动总预算。"
+    ],
+    [
+     "配置关卡",
+     "点「关卡配置」，逐关或用批量设置设定 EXP 标准与奖励；实体关卡从奖品管理选择奖品与数量，并设置库存耗尽替代与达标处理。"
+    ],
+    [
+     "配置游戏权重",
+     "点「游戏权重」，勾选参与的游戏分类并设置权重。"
+    ],
+    [
+     "开启 / 关闭",
+     "在列表中直接开启或关闭，或在修改活动中修改状态。"
+    ]
+   ],
+   "fields": [
+    [
+     "活动状态",
+     "未开始 / 预热中 / 进行中 / 领奖缓冲 / 关闭，决定前台显示哪个页面。"
+    ],
+    [
+     "活动总预算",
+     "默认按关卡配置自动计算，进行中之前可手动修改。"
+    ],
+    [
+     "物流快递预留",
+     "直接输入金额，计入活动总预算。"
+    ],
+    [
+     "预计领取人数",
+     "彩金关卡预计领取人数，用于计算预计支出。"
+    ],
+    [
+     "达标处理",
+     "预计人数领满后继续或停止领取。"
+    ],
+    [
+     "库存耗尽替代",
+     "实体领完后改发彩金、换其他实体或无奖励。"
+    ]
+   ],
+   "cautions": [
+    "活动进入「进行中」后预算只读。",
+    "实体分配数量不能超过奖品的可分配余量。",
+    "进行中修改关卡或权重，只影响修改之后的投注与领取。"
+   ]
+  },
+  {
+   "name": "机器人管理",
+   "purpose": "为每个关卡设置机器人领取比例，营造领取氛围。",
+   "steps": [
+    [
+     "选择活动",
+     "选择要配置的活动，系统读取该活动全部关卡。"
+    ],
+    [
+     "筛选关卡",
+     "按实体 / 彩金 / 全部筛选，彩金可再按金额区间筛选。"
+    ],
+    [
+     "设置比例",
+     "每关填写机器人比例并选择取整方式。"
+    ],
+    [
+     "保存",
+     "点「保存配置」；切换活动时未保存的修改会暂存，「重置」恢复为上次保存。"
+    ]
+   ],
+   "fields": [
+    [
+     "计算基数",
+     "彩金关卡为真实领取人数；实体关卡为该关实体数量。"
+    ],
+    [
+     "机器人比例",
+     "每关机器人领取占比。"
+    ],
+    [
+     "取整方式",
+     "向上或向下取整，不足 1 名按 1 名。"
+    ],
+    [
+     "机器人领取数",
+     "按 基数 × 比例 取整得出。"
+    ]
+   ],
+   "cautions": [
+    "机器人领取不产生领取记录，无需处理。",
+    "实体关卡扣减活动名额，名额回到平台可分配余量，不消耗实物。",
+    "机器人数据不计入任何真实统计。"
+   ]
+  },
+  {
+   "name": "奖品领取记录",
+   "purpose": "处理实体奖品从领取到签收的全过程。",
+   "steps": [
+    [
+     "确认库存",
+     "对「待确认库存」记录核实实物后点「确认库存」（可勾选批量），状态变为待发货。库存为 0 时会弹窗提示，可点「修改奖品」换奖或改发现金 / 彩金。"
+    ],
+    [
+     "导出待发货",
+     "点「导出领取记录」，只导出实体 · 待发货记录。"
+    ],
+    [
+     "导入快递单号",
+     "在导出文件中填写快递公司与单号，点「导入快递信息」上传，填了单号的记录改为已发货并出库。"
+    ],
+    [
+     "确认签收",
+     "用户收到后点「确认签收」，可勾选批量。"
+    ],
+    [
+     "拒收 / 退回",
+     "已发货或已签收记录点「拒收/退回」，奖品回到平台可用库存。"
+    ],
+    [
+     "修改物流",
+     "待确认库存、待发货状态可修改，需填写原因。"
+    ]
+   ],
+   "fields": [
+    [
+     "待确认库存",
+     "用户已领取，待运营核实实物。"
+    ],
+    [
+     "待发货",
+     "已核实，等待行政发货。"
+    ],
+    [
+     "已发货",
+     "已填写快递单号并出库。"
+    ],
+    [
+     "已签收",
+     "用户已收到。"
+    ],
+    [
+     "已退回",
+     "拒收或退回，奖品回到平台可用库存。"
+    ],
+    [
+     "待派发奖品",
+     "顶部提示栏，所有活动待确认库存的记录数，点击直接筛选。"
+    ]
+   ],
+   "cautions": [
+    "确认库存后不能修改奖品；发货后不能修改物流。",
+    "批量操作前可在二次确认中取消部分记录，失败记录保持原状态。",
+    "待确认库存超 24 小时、待发货超 72 小时会告警。"
+   ]
+  },
+  {
+   "name": "活动数据列表",
+   "purpose": "按活动与日期查看综合、运营、财务三类数据。",
+   "steps": [
+    [
+     "选择条件",
+     "选择所属活动与统计日期，点「搜索」。"
+    ],
+    [
+     "切换数据表",
+     "在综合数据 / 运营数据 / 财务数据页签间切换。"
+    ],
+    [
+     "查看游戏详细",
+     "运营数据中点游戏行的「查看详细」，查看该游戏每日数据。"
+    ],
+    [
+     "导出",
+     "点「导出」下载当前数据。"
+    ]
+   ],
+   "fields": [
+    [
+     "综合数据",
+     "流量与转化、奖品履约、库存、风控与机器人。"
+    ],
+    [
+     "运营数据",
+     "参与、投注、分游戏活跃度、获客成本、按日明细。"
+    ],
+    [
+     "财务数据",
+     "预算、成本、毛收益、净收益、ROI。"
+    ],
+    [
+     "单用户获客成本",
+     "活动总成本 ÷ 新增参与人数。"
+    ],
+    [
+     "ROI",
+     "净收益 ÷ 活动总成本。"
+    ]
+   ],
+   "cautions": [
+    "所有真实指标不含机器人数据。",
+    "毛收益的抽水率口径以财务确认为准。"
+   ]
+  }
+ ],
+ "upgradeTitle": "从 v1.1 升级须知",
+ "upgrade": [
+  "活动管理新增「游戏权重」配置，替代固定权重；已进行中的活动沿用原权重。",
+  "新增活动总预算与物流快递预留；进行中之前可手动修改。",
+  "批量设置新增倍增、指数递增、按阶段，以及达标后继续 / 停止领取；库存耗尽替代新增「其他实体奖品」「无奖励」。",
+  "数据报表升级为「活动数据列表」，分综合、运营、财务三张表。"
+ ],
+ "faq": [
+  [
+   "用户说已领取实体奖品，后台找不到记录？",
+   "先检查活动与状态筛选条件；机器人领取不会产生记录。"
+  ],
+  [
+   "导入快递单号后部分记录没更新？",
+   "只更新填写了单号且状态为「待发货」的记录，导入结果会逐行说明未更新原因。"
+  ],
+  [
+   "实体奖品库存不够了怎么办？",
+   "在「奖品管理」调整库存入库；已领取但无库存的记录，在确认库存时修改奖品或改发现金 / 彩金。"
+  ],
+  [
+   "用户拒收或退回了怎么办？",
+   "在领取记录中点「拒收/退回」，奖品自动回到平台可用库存。"
+  ]
+ ]
+}/*END*/;
+  }
+  renderVals() {
+    const M = this.manual(), s = this.state;
+    const go = id => () => { const el = document.getElementById(id); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 12, behavior: 'smooth' }); };
+    const modules = M.modules.map((m, i) => ({
+      no: String(i + 1).padStart(2, '0'), name: m.name, purpose: m.purpose, anchor: 'm-' + i,
+      steps: m.steps.map((st, j) => ({ n: j + 1, title: st[0], text: st[1] })),
+      fields: (m.fields || []).map(([k, v]) => ({ k, v })), hasFields: !!(m.fields && m.fields.length),
+      cautions: (m.cautions || []).map(t => ({ text: t })), hasCautions: !!(m.cautions && m.cautions.length)
+    }));
+    const toc = [{ name: '整体操作流程', go: go('m-flow') }].concat(modules.map((m, i) => ({ name: m.no + ' ' + m.name, go: go('m-' + i) })));
+    if (M.upgrade.length) toc.push({ name: M.upgradeTitle, go: go('m-upgrade') });
+    toc.push({ name: '常见问题', go: go('m-faq') });
+    return {
+      ver: M.ver, intro: M.intro, toc, modules,
+      flow: M.flow.map((t, i) => ({ n: i + 1, text: t })),
+      hasUpgrade: M.upgrade.length > 0, upgradeTitle: M.upgradeTitle, upgrade: M.upgrade.map(t => ({ text: t })),
+      faq: M.faq.map(([q, a], i) => {
+        const open = !!s.faqOpen[i];
+        return { q, a, open, arrow: open ? '收起' : '展开', bg: open ? '#FBF9FD' : '#fff', toggle: () => this.setState(x => ({ faqOpen: Object.assign({}, x.faqOpen, { [i]: !x.faqOpen[i] }) })) };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

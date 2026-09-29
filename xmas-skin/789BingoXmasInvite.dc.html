@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Million Commission · 789Bingo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<style>
+  html, body { margin:0; padding:0; background:#1A0306; }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  a { color:#F4C658; text-decoration:none; }
+  a:hover { color:#FFE9A8; }
+  img { -webkit-user-drag:none; user-select:none; }
+  @keyframes ivSnow { 0% { transform:translate3d(0,-20px,0); } 100% { transform:translate3d(var(--dx),110vh,0); } }
+</style>
+</helmet>
+
+<div style="position:relative;max-width:430px;margin:0 auto;overflow-x:clip">
+  <div style="position:sticky;top:0;z-index:20;box-shadow:0 4px 12px rgba(0,0,0,.45)">
+    <img src="../assets/x7890/invite-head.png" alt="Million Commission" style="display:block;width:100%;height:auto" />
+  </div>
+  <div style="position:relative">
+    <img src="../assets/x7890/invite-body.png" alt="Invite More Earn More" style="display:block;width:100%;height:auto" />
+    <div onClick="{{ onCopy }}" style="position:absolute;left:9%;top:75.8%;width:40%;height:5.1%;cursor:pointer"></div>
+    <div onClick="{{ onCode }}" style="position:absolute;left:51%;top:75.8%;width:40%;height:5.1%;cursor:pointer"></div>
+  </div>
+  <div style="height:96px"></div>
+
+  <!-- BOTTOM NAV -->
+  <div style="position:fixed;bottom:0;left:50%;transform:translateX(-50%);z-index:20;width:100%;max-width:430px;display:flex;align-items:flex-end;padding:5px 4px 6px;background:radial-gradient(120% 140% at 50% 0%, #1F5A3A 0%, #0F3B25 55%, #082717 100%);border-top:2px solid #E8BF5A;box-shadow:0 -1px 0 rgba(255,236,180,.45) inset, 0 -6px 16px rgba(20,40,20,.28)">
+    <sc-for list="{{ navs }}" as="n" hint-placeholder-count="5">
+      <div onClick="{{ n.onClick }}" style="flex:1;display:flex;flex-direction:column;align-items:center;cursor:pointer">
+        <img src="{{ n.img }}?v=7" alt="" style="width:{{ n.size }};height:auto;margin-top:{{ n.lift }};filter:drop-shadow(0 2px 3px rgba(0,0,0,.45)) drop-shadow(0 0 6px rgba(255,214,120,.25))" />
+        <span style="font-size:11.5px;font-weight:900;color:{{ n.color }};text-shadow:0 1px 2px rgba(0,0,0,.5)">{{ n.name }}</span>
+        <span style="width:18px;height:3px;border-radius:2px;background:{{ n.bar }};margin-top:2px"></span>
+      </div>
+    </sc-for>
+  </div>
+
+
+  <div style="position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:5">{{ snow }}</div>
+
+  <sc-if value="{{ hasToast }}">
+    <div style="position:fixed;left:50%;bottom:150px;transform:translateX(-50%);z-index:40;padding:9px 16px;border-radius:999px;background:rgba(40,3,8,.9);border:1px solid #E8BF5A;color:#FFF3D6;font-family:system-ui,sans-serif;font-size:12.5px;font-weight:800;white-space:nowrap">{{ toast }}</div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:430,&quot;height&quot;:932}}">
+class Component extends DCLogic {
+  state = { toast: '' };
+  componentWillUnmount() { clearTimeout(this.tt); }
+  flash(t) { clearTimeout(this.tt); this.setState({ toast: t }); this.tt = setTimeout(() => this.setState({ toast: '' }), 1800); }
+  renderVals() {
+    if (!this.flakes) {
+      this.flakes = React.createElement(React.Fragment, null, Array.from({ length: 46 }, (_, i) => {
+        const size = 2.5 + (i * 7 % 5) * 1.2;
+        return React.createElement('span', { key: i, style: {
+          position: 'absolute', top: '-20px', left: ((i * 37) % 100) + '%',
+          width: size + 'px', height: size + 'px', borderRadius: '50%',
+          background: 'rgba(255,255,255,.95)', boxShadow: '0 0 6px rgba(255,255,255,.85)',
+          opacity: 0.45 + (i % 5) * 0.11, '--dx': ((i % 7) - 3) * 14 + 'px',
+          animation: 'ivSnow ' + (7 + (i * 13 % 9)) + 's linear infinite',
+          animationDelay: '-' + ((i * 1.7) % 12).toFixed(1) + 's'
+        } });
+      }));
+    }
+    const navNames = ['Home', 'Chat', 'Invite', 'Wallet', 'Account'];
+    return {
+      snow: this.flakes,
+      navs: navNames.map((n, i) => {
+        const mid = i === 2, on = i === 2;
+        return { name: n, img: '../assets/x7890/nav' + i + '.png', size: mid ? '78px' : '38px', lift: mid ? '-34px' : '0', color: on ? '#FFD66B' : '#FFF3D6', bar: on ? '#FFD66B' : 'transparent',
+          onClick: () => {
+            if (i === 0) { window.location.href = './789BingoXmasSkinLoggedIn.dc.html'; return; }
+            if (i === 1) { window.location.href = './789BingoXmasChat.dc.html'; return; }
+            if (i === 2) return;
+            if (i === 3) { window.location.href = './789BingoXmasWallet.dc.html'; return; }
+            if (i === 4) { window.location.href = './789BingoXmasAccount.dc.html'; return; }
+            this.flash('Opening ' + n + '…');
+          } };
+      }),
+      onCopy: () => this.flash('Invite link copied'),
+      onCode: () => this.flash('Invite code: 789XMAS'),
+      toast: this.state.toast, hasToast: !!this.state.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

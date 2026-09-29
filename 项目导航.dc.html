@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>项目导航</title>
+<style>
+  html, body { margin:0; padding:0; background:#F6F3EE; font-family:system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+  * { box-sizing:border-box; }
+  a { color:#8E0F17; text-decoration:none; }
+  a:hover { color:#B3141C; }
+</style>
+</helmet>
+
+<div style="max-width:1180px;margin:0 auto;padding:36px 20px 60px">
+  <div style="font-size:22px;font-weight:800;color:#2A1A10">项目导航</div>
+  <div style="margin-top:6px;font-size:13px;color:#7A6A58">选择要查看或修改的页面与文档</div>
+
+  <div style="margin-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:18px;align-items:start">
+    <sc-for list="{{ projects }}" as="pj" hint-placeholder-count="2">
+      <div style="border-radius:14px;background:#fff;border:1px solid #E6DED2;overflow:hidden">
+        <div style="padding:14px 16px;background:{{ pj.headBg }};color:#FFF6E2">
+          <div style="font-size:17px;font-weight:800">{{ pj.title }}</div>
+          <div style="margin-top:3px;font-size:12px;opacity:.85">{{ pj.folder }}</div>
+        </div>
+        <div style="padding:6px 8px 10px;display:flex;flex-direction:column;gap:4px">
+          <sc-for list="{{ pj.subs }}" as="g" hint-placeholder-count="1">
+            <div>
+              <div onClick="{{ g.toggle }}" style="display:flex;align-items:center;gap:8px;padding:10px 10px 8px;cursor:pointer;border-radius:8px" style-hover="background:#FAF6EF">
+                <span style="flex:none;width:6px;height:16px;border-radius:3px;background:{{ g.color }}"></span>
+                <span style="font-size:14px;font-weight:800;color:#2A1A10">{{ g.title }}</span>
+                <span style="font-size:11.5px;color:#9A8A72">{{ g.desc }}</span>
+                <span style="margin-left:auto;color:#B9A88E;font-size:12px">{{ g.arrow }}</span>
+              </div>
+              <sc-if value="{{ g.open }}" hint-placeholder-val="{{ true }}">
+                <div style="padding:0 0 6px 14px;border-left:1px dashed #E6DED2;margin-left:12px">
+                  <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="4">
+                    <a href="{{ it.href }}" style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 10px;border-radius:8px" style-hover="background:#F6F1E8">
+                      <span style="display:flex;align-items:center;gap:9px;min-width:0">
+                        <span style="flex:none;padding:2px 7px;border-radius:6px;font-size:10.5px;font-weight:800;background:{{ it.tagBg }};color:{{ it.tagColor }}">{{ it.tag }}</span>
+                        <span style="font-size:13.5px;font-weight:700;color:#2A1A10;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ it.name }}</span>
+                      </span>
+                      <span style="flex:none;color:#B9A88E;font-size:13px">›</span>
+                    </a>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ pj.hasNote }}">
+          <div style="margin:0 12px 12px;padding:8px 10px;border:1px dashed #D48806;border-radius:6px;background:#FFF7E6;color:#874D00;font-size:12px;line-height:1.6">所有原型页面的视觉效果均为示例，最终呈现效果以 UI 设计师产出结果为准。</div>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { closed: {} };
+  renderVals() {
+    const s = this.state;
+    const tag = t => t === '文档'
+      ? { tag: t, tagBg: '#E7F1EA', tagColor: '#0F6B3A' }
+      : t === '后台' ? { tag: t, tagBg: '#EEE8F7', tagColor: '#5A3A9A' }
+      : { tag: t, tagBg: '#FBE9E9', tagColor: '#9A0F18' };
+    const mk = (folder, list) => list.map(([name, file, t]) => ({ name, href: './' + folder + '/' + file, ...tag(t) }));
+    const crFiles = [
+      ['开发需求 PRD', 'Crown Rush PRD.dc.html', '文档'],
+      ['需求速览', 'Crown Rush PRD Overview.dc.html', '文档'],
+      ['开发自查清单', 'Crown Rush Dev Checklist.dc.html', '文档'],
+      ['后台操作手册', 'Crown Rush Admin Manual.dc.html', '文档'],
+      ['活动预热页', 'Crown Rush Pre-Launch.dc.html', '页面'],
+      ['活动进行中页', 'Crown Rush Live.dc.html', '页面'],
+      ['活动结束页', 'Crown Rush Ended.dc.html', '页面'],
+      ['后台管理 · 流水闯关活动', 'Crown Rush Admin.dc.html', '后台']
+    ];
+    const sub = (key, title, desc, color, items) => {
+      const open = !s.closed[key];
+      return { title, desc, color, items, open, arrow: open ? '收起 ︿' : '展开 ﹀', toggle: () => this.setState(x => ({ closed: Object.assign({}, x.closed, { [key]: !x.closed[key] }) })) };
+    };
+    return {
+      projects: [
+        {
+          title: '流水闯关活动', folder: 'crown-rush/', headBg: 'linear-gradient(135deg,#3A1170,#16052F)',
+          subs: [
+            sub('full', '完整需求', '基线 · 全部功能', '#C89A3C', mk('crown-rush', crFiles)),
+            sub('v1.0', 'v1.0 迭代', '前台全量 + 后台精简 · 11/5 上线', '#1F6FB5', mk('crown-rush/v1.0', crFiles)),
+            sub('v1.1', 'v1.1 迭代', '仅后台 · 库存与机器人完善', '#0F6B3A', mk('crown-rush/v1.1', crFiles.filter(f => f[2] !== '页面'))),
+            sub('v1.2', 'v1.2 迭代', '仅后台 · 达到完整需求', '#8A5A12', mk('crown-rush/v1.2', crFiles.filter(f => f[2] !== '页面')))
+          ]
+        },
+        {
+          title: '圣诞换肤', folder: 'xmas-skin/', hasNote: true, headBg: 'linear-gradient(135deg,#C21F28,#6A0A12)',
+          subs: [
+            sub('skin', '换肤需求', '页面与文档', '#C21F28', mk('xmas-skin', [
+              ['换肤需求 PRD', '789BingoSkinPRD.dc.html', '文档'],
+              ['后台 · 节日皮肤管理', 'Skin Admin.dc.html', '后台'],
+              ['首页 · 未登录', '789BingoXmasSkin.dc.html', '页面'],
+              ['首页 · 已登录', '789BingoXmasSkinLoggedIn.dc.html', '页面'],
+              ['登录页', '789BingoMaxSkinLogin.dc.html', '页面'],
+              ['Promotions', '789BingoXmasPromotions.dc.html', '页面'],
+              ['钱包', '789BingoXmasWallet.dc.html', '页面'],
+              ['个人中心', '789BingoXmasAccount.dc.html', '页面'],
+              ['等级中心', '789BingoXmasLevel.dc.html', '页面'],
+              ['聊天室', '789BingoXmasChat.dc.html', '页面'],
+              ['邀请', '789BingoXmasInvite.dc.html', '页面'],
+              ['游戏查询', '789BingoXmasSearch.dc.html', '页面']
+            ]))
+          ]
+        }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

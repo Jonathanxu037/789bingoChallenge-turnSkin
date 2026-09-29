@@ -1,0 +1,21 @@
+{
+  "name": "789 Bingo",
+  "short_name": "789 Bingo",
+  "start_url": "./7890Bingo%20Home.dc.html",
+  "display": "standalone",
+  "background_color": "#8E1013",
+  "theme_color": "#8E1013",
+  "icons": [
+    {
+      "src": "app-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "app-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

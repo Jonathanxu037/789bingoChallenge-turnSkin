@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  doc-page:not(:defined) { visibility: hidden; }
+  body { margin: 0; }
+  a { color: #8A5E14; }
+  a:hover { color: #C89A3C; }
+</style>
+<script src="../doc-page.js"></script>
+</helmet>
+
+<doc-page margin="0.8in">
+  <div style="font-family:'Noto Sans SC',sans-serif;color:#1B1720;font-size:14.5px;line-height:1.7">
+
+    <h1 style="font-family:'Noto Serif SC',serif;font-size:27px;line-height:1.35;margin:0 0 6px;color:#16052F">Crown Rush 百关闯关活动 · 产品开发需求文档（PRD）</h1>
+    <div style="display:flex;flex-wrap:wrap;gap:14px;font-size:12.5px;color:#6A6076;border-bottom:2px solid #16052F;padding-bottom:12px;margin-bottom:20px">
+      <div>版本：v1.0</div><div>平台：789Bingo（PH）</div><div>端：H5 活动页 + 运营后台</div><div>状态：待评审</div>
+    </div>
+
+    <table style="width:100%;border-collapse:collapse;font-size:12.5px;margin:0 0 18px">
+      <thead><tr style="background:#F3EFF8"><th style="border:1px solid #D9D2E4;padding:7px 9px;vertical-align:top;text-align:left" width="9%">版本号</th><th style="border:1px solid #D9D2E4;padding:7px 9px;vertical-align:top;text-align:left" width="13%">时间</th><th style="border:1px solid #D9D2E4;padding:7px 9px;vertical-align:top;text-align:left" width="12%">修改人</th><th style="border:1px solid #D9D2E4;padding:7px 9px;vertical-align:top;text-align:left">概述</th><th style="border:1px solid #D9D2E4;padding:7px 9px;vertical-align:top;text-align:left" width="13%">涉及章节</th></tr></thead>
+      <tbody>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px;vertical-align:top;font-weight:700;color:#16052F">v1.0</td><td style="border:1px solid #D9D2E4;padding:7px 9px;vertical-align:top">2026-09-29</td><td style="border:1px solid #D9D2E4;padding:7px 9px;vertical-align:top">Joshua</td><td style="border:1px solid #D9D2E4;padding:7px 9px;vertical-align:top">创建需求</td><td style="border:1px solid #D9D2E4;padding:7px 9px;vertical-align:top">全文</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px;vertical-align:top;height:34px"></td><td style="border:1px solid #D9D2E4;padding:7px 9px;vertical-align:top"></td><td style="border:1px solid #D9D2E4;padding:7px 9px;vertical-align:top"></td><td style="border:1px solid #D9D2E4;padding:7px 9px;vertical-align:top"></td><td style="border:1px solid #D9D2E4;padding:7px 9px;vertical-align:top"></td></tr>
+      </tbody>
+    </table>
+
+    <h2 style="font-family:'Noto Serif SC',serif;font-size:18px;margin:22px 0 8px;color:#16052F;border-left:4px solid #C89A3C;padding-left:10px" id="sec-1-">1. 项目概述</h2>
+    <p style="margin:0 0 10px">Crown Rush（百关闯关）是以「投注累积经验值 → 闯关成功 → 领取奖励」为核心的长周期留存活动。活动共 100 个关卡，关卡奖励以现金为主，在 8 个里程碑关卡配置限量实体大奖。活动包含<b>三个前台页面</b>（活动预热页、活动进行中页、活动结束页）与一套运营后台配置能力，三页按活动状态自动切换。</p>
+    <table style="width:100%;border-collapse:collapse;font-size:13px;margin:12px 0 4px">
+      <thead><tr style="background:#F3EFF8"><th style="border:1px solid #D9D2E4;padding:7px 9px;text-align:left;width:22%">项目</th><th style="border:1px solid #D9D2E4;padding:7px 9px;text-align:left">说明</th></tr></thead>
+      <tbody>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">活动周期</td><td style="border:1px solid #D9D2E4;padding:7px 9px">以自然月为一期，示例期 12/01 00:00:00 - 12/31 23:59:59（GMT+8）</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">目标用户</td><td style="border:1px solid #D9D2E4;padding:7px 9px">全体已注册真实用户，支持后台配置准入条件</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">页面状态机</td><td style="border:1px solid #D9D2E4;padding:7px 9px">pending（预热页）→ running（进行中页，12/01 00:00:00 自动切换）→ ended（活动结束页，12/31 23:59:59 自动切换）。状态以服务端时间为准，前端倒计时归零后需请求活动状态接口确认再切页</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">核心指标</td><td style="border:1px solid #D9D2E4;padding:7px 9px">活跃留存、日均有效投注、活动参与率、实体奖品曝光转化、奖励领取率</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">语言</td><td style="border:1px solid #D9D2E4;padding:7px 9px">当前原型三个前台页面均为中文；正式上线的前台语言（英文 / 中英双语）待运营确认，后台为中文</td></tr>
+      </tbody>
+    </table>
+
+    <h2 style="font-family:'Noto Serif SC',serif;font-size:18px;margin:22px 0 8px;color:#16052F;border-left:4px solid #C89A3C;padding-left:10px" id="sec-2-">2. 整体业务流程</h2>
+
+    <h3 style="font-size:15px;margin:14px 0 8px" id="sec-2-1">2.1 主流程（用户视角）</h3>
+    <div style="break-inside:avoid;display:flex;flex-direction:column;gap:7px;margin:0 0 14px">
+      <div style="display:flex;align-items:stretch;gap:10px">
+        <div style="flex:none;width:26px;height:26px;border-radius:50%;background:#16052F;color:#F0D291;font-size:12.5px;font-weight:700;display:flex;align-items:center;justify-content:center">1</div>
+        <div style="flex:1;border:1px solid #D9D2E4;border-left:3px solid #C89A3C;border-radius:6px;padding:8px 11px;background:#FBF9FD"><b>活动预热</b>　用户进入预热页 → 查看倒计时、奖池与规则 → 先行热身试玩（不计 EXP）</div>
+      </div>
+      <div style="padding-left:12px;color:#C89A3C">↓</div>
+      <div style="display:flex;align-items:stretch;gap:10px">
+        <div style="flex:none;width:26px;height:26px;border-radius:50%;background:#16052F;color:#F0D291;font-size:12.5px;font-weight:700;display:flex;align-items:center;justify-content:center">2</div>
+        <div style="flex:1;border:1px solid #D9D2E4;border-left:3px solid #C89A3C;border-radius:6px;padding:8px 11px;background:#FBF9FD"><b>活动开启</b>　到达 12/01 00:00（GMT+8）→ 预热页倒计时归零，页面<b>自动切换为进行中页</b>（无需手动刷新，以服务端时间为准）→ 用户无需报名，投注即参与</div>
+      </div>
+      <div style="padding-left:12px;color:#C89A3C">↓</div>
+      <div style="display:flex;align-items:stretch;gap:10px">
+        <div style="flex:none;width:26px;height:26px;border-radius:50%;background:#16052F;color:#F0D291;font-size:12.5px;font-weight:700;display:flex;align-items:center;justify-content:center">3</div>
+        <div style="flex:1;border:1px solid #D9D2E4;border-left:3px solid #C89A3C;border-radius:6px;padding:8px 11px;background:#FBF9FD"><b>投注计算</b>　注单结算 → 判定有效投注 → 按游戏类型权重折算 EXP → 累计至用户活动账户</div>
+      </div>
+      <div style="padding-left:12px;color:#C89A3C">↓</div>
+      <div style="display:flex;align-items:stretch;gap:10px">
+        <div style="flex:none;width:26px;height:26px;border-radius:50%;background:#16052F;color:#F0D291;font-size:12.5px;font-weight:700;display:flex;align-items:center;justify-content:center">4</div>
+        <div style="flex:1;border:1px solid #D9D2E4;border-left:3px solid #C89A3C;border-radius:6px;padding:8px 11px;background:#FBF9FD"><b>闯关判定</b>　EXP 达到门槛 → 闯关成功（支持跨级）→ 关卡奖励置为「可领取」</div>
+      </div>
+      <div style="padding-left:12px;color:#C89A3C">↓</div>
+      <div style="display:flex;align-items:stretch;gap:10px">
+        <div style="flex:none;width:26px;height:26px;border-radius:50%;background:#8A1020;color:#FFE9A8;font-size:12.5px;font-weight:700;display:flex;align-items:center;justify-content:center">5</div>
+        <div style="flex:1;border:1px solid #D9A0A0;border-left:3px solid #8A1020;border-radius:6px;padding:8px 11px;background:#FDF6F6"><b>奖励领取（分叉）</b>　用户在活动页手动领取，现金与实体走不同链路（见 2.2）</div>
+      </div>
+    </div>
+
+    <h3 style="font-size:15px;margin:16px 0 8px" id="sec-2-2">2.2 领取分支</h3>
+    <div style="break-inside:avoid;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 14px">
+      <div style="border:1px solid #D9D2E4;border-radius:8px;padding:10px 12px;background:#FBF9FD">
+        <div style="font-weight:700;color:#16052F;margin-bottom:6px">A · 现金奖励</div>
+        <div style="font-size:12.5px;line-height:1.85">点击领取 / 一键领取现金<br /><span style="color:#C89A3C">↓</span><br />校验关卡与幂等<br /><span style="color:#C89A3C">↓</span><br />即时存入账户余额<br /><span style="color:#C89A3C">↓</span><br />打码量达标后可提现<br /><span style="color:#6A6076">（1 倍打码 · 前台不展示）</span></div>
+      </div>
+      <div style="border:1px solid #D9D2E4;border-radius:8px;padding:10px 12px;background:#FBF9FD">
+        <div style="font-weight:700;color:#16052F;margin-bottom:6px">B · 实体奖励</div>
+        <div style="font-size:12.5px;line-height:1.85">单条目点击领取（不参与一键领取）<br /><span style="color:#C89A3C">↓</span><br />校验库存名额 + 登录状态<br /><span style="color:#C89A3C">↓</span><br />判断是否已绑定物流信息<br /><span style="color:#6A6076">未绑定 → 填写弹窗；已绑定 → 二次确认弹窗</span><br /><span style="color:#C89A3C">↓</span><br />二次确认（可「修改地址」，需短信验证码）<br /><span style="color:#C89A3C">↓</span><br />确认领取 → 库存原子扣减 → 生成发货工单<br /><span style="color:#C89A3C">↓</span><br />人工复核 → 发货 → 回填单号</div>
+      </div>
+    </div>
+
+    <h3 style="font-size:15px;margin:16px 0 8px" id="sec-2-3">2.3 物流信息修改流程</h3>
+    <div style="break-inside:avoid;border:1px solid #D9D2E4;border-radius:8px;padding:10px 12px;background:#FBF9FD;font-size:13px;margin:0 0 14px">
+      用户点击「修改地址」 <span style="color:#C89A3C">→</span> 系统向账号绑定手机号发送短信验证码 <span style="color:#C89A3C">→</span> 用户输入验证码校验通过 <span style="color:#C89A3C">→</span> 前台开放编辑表单 <span style="color:#C89A3C">→</span> 用户自行修改并保存 <span style="color:#C89A3C">→</span> 系统记录修改日志（时间 / 修改前后值 / 设备） <span style="color:#C89A3C">→</span> 前台展示更新后的物流信息。奖品已进入发货流程时地址冻结，此时才需联系客服。
+    </div>
+
+    <h3 style="font-size:15px;margin:16px 0 8px" id="sec-2-4">2.4 系统时序（后端视角）</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:12.5px;margin:0 0 6px">
+      <thead><tr style="background:#F3EFF8"><th style="border:1px solid #D9D2E4;padding:6px 9px;text-align:left;width:20%">触发</th><th style="border:1px solid #D9D2E4;padding:6px 9px;text-align:left;width:26%">执行方</th><th style="border:1px solid #D9D2E4;padding:6px 9px;text-align:left">动作</th></tr></thead>
+      <tbody>
+        <tr><td style="border:1px solid #D9D2E4;padding:6px 9px">注单结算</td><td style="border:1px solid #D9D2E4;padding:6px 9px">投注流水服务</td><td style="border:1px solid #D9D2E4;padding:6px 9px">推送有效投注 → 活动服务折算 EXP、写入流水明细</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:6px 9px">EXP 变更</td><td style="border:1px solid #D9D2E4;padding:6px 9px">活动服务</td><td style="border:1px solid #D9D2E4;padding:6px 9px">比对关卡门槛 → 闯关成功 → 生成可领取奖励记录</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:6px 9px">用户领取</td><td style="border:1px solid #D9D2E4;padding:6px 9px">活动服务 / 钱包</td><td style="border:1px solid #D9D2E4;padding:6px 9px">幂等校验 → 现金入账或实体库存原子扣减 → 写领取记录</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:6px 9px">每小时定时</td><td style="border:1px solid #D9D2E4;padding:6px 9px">排行榜任务</td><td style="border:1px solid #D9D2E4;padding:6px 9px">重算 TOP 100 并写入缓存，剔除风控标记账号</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:6px 9px">活动结束</td><td style="border:1px solid #D9D2E4;padding:6px 9px">活动服务</td><td style="border:1px solid #D9D2E4;padding:6px 9px">活动状态置 ended → 停止 EXP 累计与关卡推进 → 页面自动切换至活动结束页 → <b>领取入口保持开放（当前无截止时间）</b> → 榜单封存最终结果</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:6px 9px">新一期开启</td><td style="border:1px solid #D9D2E4;padding:6px 9px">活动服务</td><td style="border:1px solid #D9D2E4;padding:6px 9px">归档上期数据 → EXP 与关卡进度全量清零 → 上期未领取奖励失效 → 所有用户从第 1 关 0 EXP 重新开始</td></tr>
+      </tbody>
+    </table>
+
+    <h2 style="font-family:'Noto Serif SC',serif;font-size:18px;margin:22px 0 8px;color:#16052F;border-left:4px solid #C89A3C;padding-left:10px" id="sec-3-">3. 业务规则</h2>
+    <h3 style="font-size:15px;margin:14px 0 6px" id="sec-3-1">3.1 经验值（EXP）</h3>
+    <ul style="margin:0 0 10px;padding-left:20px">
+      <li>EXP = 有效投注额 ÷ 游戏类型流水权重；老虎机 1:1，真人娱乐场 20:1（权重由后台配置）。</li>
+      <li>仅统计活动周期内、参与游戏范围内的有效投注；取消注单、对冲注单不计入。</li>
+      <li>EXP 实时累计，用户无需报名。</li>
+      <li><b>跨期清零</b>：活动以自然月为一期，新一期开启时 EXP 全部清零、关卡进度<b>不继承</b>，下一期所有用户统一从第 1 关、0 EXP 重新开始；上一期已领取的奖励不受影响，未领取的奖励在新一期开启时失效（活动结束至新一期开启之间为领奖缓冲期，可随时领取）。</li>
+    </ul>
+    <h3 style="font-size:15px;margin:14px 0 6px" id="sec-3-2">3.2 关卡</h3>
+    <ul style="margin:0 0 10px;padding-left:20px">
+      <li>共第 1 关 - 第 100 关，每关配置累计投注门槛与对应奖励；EXP 达标即闯关成功，关卡只进不退。</li>
+      <li>可跨关闯过（单笔大额投注可一次连闯多关），跳过的关卡奖励仍可补领。</li>
+    </ul>
+    <h3 style="font-size:15px;margin:14px 0 6px" id="sec-3-3">3.3 奖励</h3>
+    <ul style="margin:0 0 10px;padding-left:20px">
+      <li><b>现金奖励</b>：闯关成功后需在活动页手动领取，支持「一键领取现金」批量领取全部已闯关成功的现金关卡，领取后即时存入账户余额。一键领取<b>不包含实体奖励关卡</b>，实体关卡必须在各自条目单独领取并完成物流校验。</li>
+      <li><b>实体奖励</b>：绑定 8 个里程碑关卡，每个关卡对应一件实体奖品（<b>不附带现金</b>）。限量发放、先到先得。<b>当某关卡的实体奖品库存领完后，后续闯过该关卡的用户不再展示实体奖品，该关卡自动转为「彩金奖励」</b>：卡片降级为普通关卡样式，文案显示「实体奖品已领完 · 改发彩金 ₱X」，领取即现金入账，且可参与「一键领取现金」。彩金替代金额由后台按关卡单独配置。</li>
+      <li><b>领取时限</b>：活动结束后进入领奖缓冲期，页面自动切换为活动结束页，已闯关卡的未领取奖励<b>不设截止时间，可随时领取</b>；新一期开启时上期未领取的奖励失效（届时如需设定明确截止日，由后台配置并在结束页统一展示）。</li>
+      <li><b>提现打码要求（前台不展示）</b>：用户领取的任何奖金（含关卡现金、彩金替代）均需完成<b>该笔奖金 1 倍的打码量</b>后方可提现。此规则<b>不在预热页、进行中页及规则弹窗中展示</b>，前台不做任何提示，由后台在钱包侧静默计算与拦截。</li>
+    </ul>
+    <h3 style="font-size:15px;margin:14px 0 6px" id="sec-3-4">3.4 风控</h3>
+    <p style="margin:0 0 10px">如发现对冲、套利、同设备/同 IP 多账号等异常行为，平台有权取消参与资格并回收已发放奖励。实体大奖发放前需人工复核。</p>
+
+    <h2 style="font-family:'Noto Serif SC',serif;font-size:18px;margin:22px 0 8px;color:#16052F;border-left:4px solid #C89A3C;padding-left:10px" id="sec-4-">4. 前台页面一：活动预热页</h2>
+    <p style="margin:0 0 10px">活动开始前展示，目标是制造期待、引导用户提前熟悉规则与参与方式。<b>预热页倒计时结束（12/01 00:00 GMT+8）后，落地页自动切换显示为「活动进行中页」</b>：前端倒计时归零即请求活动状态接口，服务端返回 running 后无刷新替换页面内容；若用户此时正停留在页面上，同样即时切换。活动状态一律以服务端时间为准。</p>
+    <table style="width:100%;border-collapse:collapse;font-size:13px;margin:10px 0">
+      <thead><tr style="background:#F3EFF8"><th style="border:1px solid #D9D2E4;padding:7px 9px;text-align:left;width:26%">模块</th><th style="border:1px solid #D9D2E4;padding:7px 9px;text-align:left">功能与交互要求</th></tr></thead>
+      <tbody>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">主视觉 Banner</td><td style="border:1px solid #D9D2E4;padding:7px 9px">节日主视觉大图，底部渐隐过渡至倒计时模块，无中间标题分隔<br /><b style="color:#B3122E">备注：活动首页 Banner 图需按平台圣诞版皮肤的风格设计，与同期圣诞换肤保持统一。</b></td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">开始倒计时</td><td style="border:1px solid #D9D2E4;padding:7px 9px">按用户系统时间计算至 12/01 00:00（GMT+8）的天/时/分/秒；下方显示活动区间 12/01 - 12/31。<b>倒计时归零后落地页自动切换为「活动进行中页」，无需用户手动刷新</b>（前端倒计时结束触发重新拉取活动状态；同时以服务端时间为准做二次校验，防止本地时间被篡改）</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">开赛提示</td><td style="border:1px solid #D9D2E4;padding:7px 9px">文案说明：活动开始即可累计 EXP 闯关并领取奖励；越早参与越早解锁限量实体奖品，领完即止（不含预约功能）</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">奖品总览</td><td style="border:1px solid #D9D2E4;padding:7px 9px">整图形式展示奖池，图片背景需与页面底色融合无白边；下方为奖金说明面板（带图标）</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">关卡奖励预览</td><td style="border:1px solid #D9D2E4;padding:7px 9px">仅展示前 3 关，其后以省略号（明暗渐变动效）代替；未开始按钮含锁图标。该预览与实体奖励关卡列表融合为同一模块，不做视觉分段</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">实体奖励关卡</td><td style="border:1px solid #D9D2E4;padding:7px 9px">叠放式卡组，每屏展示约 1.5 张、支持左右滑动切换并每 5 秒自动轮播（切换动效柔和）；每卡含奖品实拍图（透明底）、关卡、奖品名称、库存进度条与阶段标签（小试牛刀 → 进阶奖励 → 终极大奖）。奖品文案不含现金金额，实体与现金奖励分开表述</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">参与方式</td><td style="border:1px solid #D9D2E4;padding:7px 9px">三步递进（投注 → 闯关成功 → 领取），第三步展开现金与实体两条领取链路。「累计 EXP」后置「?」图标，点击打开规则弹窗并自动定位至「投注与 EXP 说明」段落，按游戏分类列出投注折算 EXP 的规则；模块内不再单列老虎机 / 真人娱乐场的折算说明</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">先行热身</td><td style="border:1px solid #D9D2E4;padding:7px 9px">多游戏分类标签切换（老虎机 / 真人娱乐场 / eBingo / 捕鱼 / Poker / 街机等，分类由后台配置），每个分类固定展示 6 款推荐游戏；点击「查看全部」跳转对应分类的游戏列表页</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">活动规则</td><td style="border:1px solid #D9D2E4;padding:7px 9px">按钮带图标，点击弹出规则抽屉</td></tr>
+      </tbody>
+    </table>
+
+    <h2 style="font-family:'Noto Serif SC',serif;font-size:18px;margin:22px 0 8px;color:#16052F;border-left:4px solid #C89A3C;padding-left:10px" id="sec-5-">5. 前台页面二：活动进行中页</h2>
+    <table style="width:100%;border-collapse:collapse;font-size:13px;margin:10px 0">
+      <thead><tr style="background:#F3EFF8"><th style="border:1px solid #D9D2E4;padding:7px 9px;text-align:left;width:26%">模块</th><th style="border:1px solid #D9D2E4;padding:7px 9px;text-align:left">功能与交互要求</th></tr></thead>
+      <tbody>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">顶部导航</td><td style="border:1px solid #D9D2E4;padding:7px 9px">活动名、LIVE 状态标识、规则入口（带图标）</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">状态条</td><td style="border:1px solid #D9D2E4;padding:7px 9px">「进行中」条（脉冲动效 + 活动区间）与「结束倒计时」条（警示配色、闹钟动效、天/时/分/秒、本期进度百分比与进度条）；倒计时按系统时间计算至 12/31 23:59（GMT+8）</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">我的进度</td><td style="border:1px solid #D9D2E4;padding:7px 9px">关卡徽章（旋转金属外环 + 进度环，徽章内两行显示「数字 / STAGE」）、脱敏用户名（前 2 位 + **** + 后 3 位）、下一关及该关奖励内容；当前 EXP 与「还需 X EXP」合并显示在同一条进度条内（条内左右双标签）；未登录时隐藏用户名并显示「登录后查看进度」引导</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">有效投注</td><td style="border:1px solid #D9D2E4;padding:7px 9px">当前版本已从「我的进度」模块移除（信息合并入进度条）。保留后台能力：如需恢复，按配置的游戏类型渲染（≤2 种并排卡片、&gt;2 种叠放卡组），每卡含金额、贡献 EXP、占比条与跳转对应分类游戏列表页的 CTA</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">关卡任务列表</td><td style="border:1px solid #D9D2E4;padding:7px 9px">与实体奖品余量模块合并为同一模块。顶部为通栏「一键领取现金」按钮（仅统计现金关卡的可领数量与总额，排除实体关卡；无可领时置灰为「暂无可领取的现金奖励」），「领奖记录」以超链接样式置于模块底部右对齐。列表固定 6 条高度可滚动、行间距 2px，包含已闯关成功的历史关卡（进入页面自动定位至首个未领取关卡，向上滚动可回看，不再显示文字提示）；每行进度条内同时显示「已投注 / 目标投注」与完成百分比（17px 胶囊条，填充带高光与斜纹肌理，文字色与填充色互补以保证对比度）；实体奖励关卡使用奖品卡样式并显示库存进度；状态为 未闯关（锁图标）/ 领取 / 已领取</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">领取后行为</td><td style="border:1px solid #D9D2E4;padding:7px 9px">领取项保留在列表中，5 秒后列表自动滚动至首个未领取关卡；顶部提示可回看已领取关卡</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">实体奖励卡组</td><td style="border:1px solid #D9D2E4;padding:7px 9px">叠放卡组紧接列表下方；当列表可视区出现某实体关卡时，卡组自动将其下一实体奖品置顶</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">领奖记录</td><td style="border:1px solid #D9D2E4;padding:7px 9px">抽屉式；首行汇总已领取奖金总额、笔数与活动周期，下方列表固定 6 条高度可滚动</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">热门推荐</td><td style="border:1px solid #D9D2E4;padding:7px 9px">单行横向滑动游戏列表（原「最近参与」），推荐游戏、图标与跳转链接均由运营后台配置；不显示滑动提示与 EXP 折算比例</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">闯关榜</td><td style="border:1px solid #D9D2E4;padding:7px 9px">TOP 100，字段：排名 / 玩家（脱敏）/ <b>已领实体奖品</b> / 关卡 / 累计奖励。实体奖品列以缩略图展示该玩家<b>已完成领取流程</b>的实体奖品，按关卡从低到高自左向右排列，库存已领完的关卡不计入，悬停显示「第 X 关 · 奖品名」；底部固定「我的排名」行同规则展示；每小时自动刷新 + 手动刷新图标按钮</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">热门活动</td><td style="border:1px solid #D9D2E4;padding:7px 9px">横向滑动 Banner 卡片，内容由后台活动 Banner 配置填充</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="font-size:15px;margin:16px 0 6px" id="sec-5-1">5.1 物流信息流程</h3>
+    <p style="margin:0 0 8px"><b>领取实体奖品时的判定：</b>点击实体奖品「领取」→ 系统判断该账号是否已绑定物流信息。未绑定 → 弹出物流信息填写弹窗，完成填写后进入二次确认；已绑定 → 直接进入二次确认弹窗，展示当前物流信息，用户确认后才真正领取并生成发货工单。二次确认弹窗内提供「修改地址」入口，用户点击后需通过账号手机号短信验证码校验，验证通过即可自行修改并保存，无需联系客服。</p>
+    <ol style="margin:0 0 10px;padding-left:20px">
+      <li>用户点击「填写物流信息」；未登录则跳转登录页，登录后返回继续填写。</li>
+      <li>弹窗中展示当前账号用户名（不可修改），提示「该物流信息将绑定此账号」。</li>
+      <li>提交后物流信息绑定账号；页面入口变为「查看物流信息」，修改需经短信验证码校验。</li>
+      <li>如需修改，用户点击「修改地址」，系统向账号绑定手机号发送短信验证码；校验通过后用户可在页面内自行编辑并保存，系统记录修改日志（时间、修改前后值、IP/设备）。</li>
+    </ol>
+
+    <h3 style="font-size:14.5px;margin:18px 0 6px;color:#3A1B5E" id="sec-5-2">5.2 一键领取结果弹窗</h3>
+    <p style="margin:0 0 8px;line-height:1.75">点击「一键领取现金」成功后以弹窗反馈结果，<b>不使用 toast 提示</b>。弹窗为圣诞节日风格：矩形卡片为主体，顶部积雪铃铛花环与木牌为突破矩形边界的装饰层，木牌上显示「MALIGAYANG PASKO」问候语（菲律宾本地化），卡内飘雪与金色星点为氛围动效。</p>
+    <table style="width:100%;border-collapse:collapse;font-size:12.5px;margin:0 0 10px">
+      <tr style="background:#F1E9DA"><td style="border:1px solid #D9D2E4;padding:7px 9px" width="130">区块</td><td style="border:1px solid #D9D2E4;padding:7px 9px">要求</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">领取成功区</td><td style="border:1px solid #D9D2E4;padding:7px 9px">「CLAIM SUCCESSFUL / REWARD CREDITED」主视觉图（透明底、带弹入动效）+ 金框金额面板：本次领取项数、到账总金额、「✓ 已存入账户余额」标识</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">领取明细</td><td style="border:1px solid #D9D2E4;padding:7px 9px">独立面板，标题行显示「N 项 · 实体奖品需单独领取」；固定 5 条高度，超出可滚动；每行为「第 X 关 — 现金 ₱Y」</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">关闭机制</td><td style="border:1px solid #D9D2E4;padding:7px 9px">30 秒倒计时自动关闭；倒计时以「驯鹿拉雪橇沿雪道驶向圣诞树」的进度条呈现（雪橇后有扬雪粒子特效），秒数同时显示在确认按钮标签上（「N s 后关闭」）；用户亦可点击「知道了」立即关闭</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">尺寸约束</td><td style="border:1px solid #D9D2E4;padding:7px 9px">宽度固定（约 318px），高度自适应内容并受视口上限约束；顶部预留装饰溢出空间，矮屏下确认按钮与倒计时须始终可见可点击</td></tr>
+    </table>
+
+    <h3 style="font-size:14.5px;margin:18px 0 6px;color:#3A1B5E" id="sec-5-3">5.3 实体奖品库存耗尽的降级规则</h3>
+    <p style="margin:0 0 10px;line-height:1.75">当某实体关卡库存归零后，后续闯过该关卡的用户<b>不再展示实体奖品</b>：该关卡在列表中降级为普通关卡样式，文案显示「实体奖品已领完 · 改发彩金 ₱X」，可直接领取现金并纳入「一键领取现金」批量领取范围。彩金替代金额由后台按关卡单独配置。闯关榜的实体奖品列同样不再计入该关卡。</p>
+    <table style="width:100%;border-collapse:collapse;font-size:12.5px;margin:0 0 10px">
+      <tr style="background:#F1E9DA"><td style="border:1px solid #D9D2E4;padding:7px 9px" width="130">项目</td><td style="border:1px solid #D9D2E4;padding:7px 9px">规则</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">触发条件</td><td style="border:1px solid #D9D2E4;padding:7px 9px">该实体关卡实时库存 = 0（含已锁定待发货的名额）时，对<b>尚未完成领取</b>的用户生效；已完成领取的用户不受影响</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">前台表现</td><td style="border:1px solid #D9D2E4;padding:7px 9px">卡片降级为普通关卡样式，文案「实体奖品已领完 · 改发彩金 ₱X」，按钮为普通「领取」，不再进入物流信息流程</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">发放方式</td><td style="border:1px solid #D9D2E4;padding:7px 9px">领取后彩金即时存入账户余额，可参与「一键领取现金」批量领取</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">打码要求</td><td style="border:1px solid #D9D2E4;padding:7px 9px">该笔彩金同样需完成<b>1 倍打码量</b>后方可提现，与关卡现金奖励口径一致；<b>前台不展示、不提示</b>，由钱包侧静默计算与拦截（详见 3.3）</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">记录</td><td style="border:1px solid #D9D2E4;padding:7px 9px">领奖记录中记为现金奖励，备注来源为「第 X 关实体奖品彩金替代」，供客服与风控追溯</td></tr>
+    </table>
+
+    <h2 style="font-family:'Noto Serif SC',serif;font-size:18px;margin:22px 0 8px;color:#16052F;border-left:4px solid #C89A3C;padding-left:10px" id="sec-6-">6. 前台页面三：活动结束页（领奖缓冲）</h2>
+    <p style="margin:0 0 8px;line-height:1.75"><b>页面切换：</b>活动结束时间（12/31 23:59:59 GMT+8）到达后，进行中页<b>自动切换为活动结束页</b>——前端倒计时归零即请求活动状态接口，服务端返回 <code>ended</code> 后跳转；用户此时若停留在页面上同样即时切换。状态一律以服务端时间为准，防止本地时间被篡改。</p>
+    <p style="margin:0 0 8px;line-height:1.75"><b>页面目标：</b>为已参与但尚未领奖的用户提供领奖通道。<b>当前无领奖截止时间限制</b>，页面不展示任何截止倒计时或失效提示；如后续需要设定截止，由后台配置并在该页统一展示。</p>
+    <table style="width:100%;border-collapse:collapse;font-size:12.5px;margin:0 0 10px">
+      <tr style="background:#F1E9DA"><td style="border:1px solid #D9D2E4;padding:7px 9px" width="130">模块</td><td style="border:1px solid #D9D2E4;padding:7px 9px">与进行中页的差异</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">顶部与状态条</td><td style="border:1px solid #D9D2E4;padding:7px 9px">状态标识改为「已结束」；状态条显示「本期活动已结束 · 奖励可继续领取」，并以静态提示条说明「奖励领取窗口开放中 / 未领取的奖励可随时领取」；<b>移除结束倒计时与本期进度</b></td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">我的成绩</td><td style="border:1px solid #D9D2E4;padding:7px 9px">徽章显示最终关卡；EXP 条改为「本期累计 EXP · 已停止累计」（满格、不再显示还需 EXP）；新增「待领取奖励 N 项 · ₱X」与「已领取 N 项」汇总</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">EXP 累计</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><b>停止累计</b>：活动结束后的投注不再产生 EXP，关卡不再推进</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">关卡列表</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><b>仅显示已闯过的关卡</b>，未解锁关卡不再渲染；列表上方标注「本期已闯关卡 · 共 N 关 / 未解锁关卡不再显示」；状态仅有 领取 / 已领取；无可领时按钮为「奖励已全部领取完毕」</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">实体奖品</td><td style="border:1px solid #D9D2E4;padding:7px 9px">库存卡组与奖品叠卡均<b>仅展示用户已闯过的实体奖品关卡</b>；领取、物流信息、二次确认、短信验证改址等流程完整保留</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">榜单</td><td style="border:1px solid #D9D2E4;padding:7px 9px">改为「本期最终榜 TOP 100」，数据封存不再实时变动（保留手动刷新以获取最终结果）</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">导流模块</td><td style="border:1px solid #D9D2E4;padding:7px 9px">热门推荐与热门活动保留，用于活动结束后的留存承接</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">未登录</td><td style="border:1px solid #D9D2E4;padding:7px 9px">隐藏成绩信息，显示「登录后领取奖励」引导</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">主视觉</td><td style="border:1px solid #D9D2E4;padding:7px 9px">需提供结束态主视觉（或遮罩掉进行中版本上的 LIVE 角标与活动区间），避免已结束页面出现进行中文案</td></tr>
+    </table>
+    <p style="margin:0 0 10px;line-height:1.75;font-size:12.5px"><b>埋点补充：</b>结束页沿用 8.3 事件清单，<code>page</code> 取值增加 <code>ended</code>；新增 <code>cr_page_autoswitch</code> 的 <code>from_status=running / to_status=ended</code> 参数，用于统计自动切换成功率与缓冲期领奖转化。</p>
+
+    <h2 style="font-family:'Noto Serif SC',serif;font-size:18px;margin:22px 0 8px;color:#16052F;border-left:4px solid #C89A3C;padding-left:10px" id="sec-7-">7. 运营后台需求</h2>
+    <p style="margin:0 0 8px;line-height:1.75">后台入口为「活动中心 › 流水闯关活动」，按活动配置顺序包含五个模块：<b>奖品管理 → 活动管理 → 机器人管理 → 奖品领取记录 → 活动数据列表</b>，进入后默认显示「活动管理」。所有金额显示千位符与 ₱ 符号；所有时间输入均使用日历卡片选择（GMT+8）。原型见《后台 · 流水闯关活动》。</p>
+    <table style="width:100%;border-collapse:collapse;font-size:12.5px;margin:6px 0 12px"><thead><tr style="background:#F3EFF8"><th style="border:1px solid #D9D2E4;padding:7px 9px;text-align:left" width="22%">公共能力</th><th style="border:1px solid #D9D2E4;padding:7px 9px;text-align:left">说明</th></tr></thead><tbody><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">顶部提示栏</td><td style="border:1px solid #D9D2E4;padding:7px 9px">在平台原有提示项后增加「待派发奖品：N」，N 为所有活动中状态为「待确认库存」的实体奖品记录数；点击数量跳转至「奖品领取记录」并自动筛选该状态的记录。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">帮助提示</td><td style="border:1px solid #D9D2E4;padding:7px 9px">操作按钮、非常见数据项及新增 / 编辑弹窗中的字段（活动状态、各时间节点、关卡数、参与游戏 / EXP 权重、物流快递预留、活动总预算、领取结果弹窗关闭秒数、单件成本、库存变动各字段、快递公司与单号、修改原因等）旁显示「?」图标，点击弹出该项的含义、计算方式或操作规则（内容见 7.9 帮助提示内容）。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">操作日志</td><td style="border:1px solid #D9D2E4;padding:7px 9px">启停活动、修改配置、库存变动、改奖、批量操作等均记录操作人与时间。</td></tr></tbody></table>
+
+    <h3 style="font-size:15px;margin:16px 0 6px" id="sec-7-1">7.1 奖品管理</h3>
+    <p style="margin:0 0 6px;line-height:1.75">奖品管理<b>不区分活动</b>，统一管理平台实体奖品的库存；平台彩金 / 现金奖励不在此管理。活动关卡配置实体奖品时，只能从奖品管理中选择，且分配数量不得超过该奖品的可分配余量。</p>
+    <table style="width:100%;border-collapse:collapse;font-size:12.5px;margin:6px 0 12px"><thead><tr style="background:#F3EFF8"><th style="border:1px solid #D9D2E4;padding:7px 9px;text-align:left" width="22%">功能</th><th style="border:1px solid #D9D2E4;padding:7px 9px;text-align:left">说明</th></tr></thead><tbody><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">奖品列表</td><td style="border:1px solid #D9D2E4;padding:7px 9px">字段：奖品编号、奖品名称、单件成本、<b>在库量、已分配到活动、预占、已出库、可分配余量</b>、分配明细（各活动分配数量）、状态、操作。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">新增 / 修改奖品</td><td style="border:1px solid #D9D2E4;padding:7px 9px">名称、单件成本、奖品图片。修改时<b>名称与在库量不可修改</b>；单件成本修改后只影响之后发生的领取与预算核算，历史活动成本不变（活动按创建时的成本快照核算）。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">奖品图片</td><td style="border:1px solid #D9D2E4;padding:7px 9px">上传框数量动态增加：每上传一张自动生成新的上传框，点击调取本地文件，上传成功显示缩略图；前台按图片名在对应区域调取显示。<b>图片规格限制由前端工程师提供。</b></td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">库存变动</td><td style="border:1px solid #D9D2E4;padding:7px 9px">填写「新增库存数量」，在当前在库量基础上累加。仅可输入非 0 整数，正数为进货入库，负数为报损等减少；<b>负数时备注必填</b>。调整后在库量不得小于「预占 + 各活动剩余名额」。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">库存记录</td><td style="border:1px solid #D9D2E4;padding:7px 9px">记录时间、类型、数量、对应活动、变动后在库量、操作人、备注。类型：入库 / 出库（报损）/ 分配至活动 / 释放分配 / 领取预占 / 预占释放 / 发货出库 / 退货入库 / 成本调整。</td></tr></tbody></table>
+
+    <h3 style="font-size:15px;margin:16px 0 6px" id="sec-7-2">7.2 活动管理</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:12.5px;margin:6px 0 12px"><thead><tr style="background:#F3EFF8"><th style="border:1px solid #D9D2E4;padding:7px 9px;text-align:left" width="22%">功能</th><th style="border:1px solid #D9D2E4;padding:7px 9px;text-align:left">说明</th></tr></thead><tbody><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">活动状态</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><b>未开始</b>：前台不显示活动页；<b>预热中</b>：前台显示预热页；<b>进行中</b>：前台显示进行中页；<b>领奖缓冲</b>：前台显示活动结束页；<b>关闭</b>：前台不显示。列表可直接开启 / 关闭活动，也可在修改活动中直接修改状态。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">创建 / 修改活动</td><td style="border:1px solid #D9D2E4;padding:7px 9px">活动名称、预热开始 / 活动开始 / 活动结束时间（日历卡片，精确到秒）、关卡数、活动状态、物流快递预留（直接输入金额，位于活动总预算上方）、活动总预算。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">关卡列表详情</td><td style="border:1px solid #D9D2E4;padding:7px 9px">填写关卡数后可查看：每关 EXP 标准、奖励类型（实体奖品 / 彩金）、奖励内容。实体奖品只显示名称，从奖品管理选择并校验可分配余量；彩金关卡设置金额与<b>预计领取人数</b>（显示该关预计支出）。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">库存耗尽替代</td><td style="border:1px solid #D9D2E4;padding:7px 9px">实体关卡可设置库存耗尽后的替代：彩金替代（金额与预计领取人数跟随彩金批量规则）/ 无奖励 / 其他实体奖品（显示该奖品当前可分配余量）。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">达标处理</td><td style="border:1px solid #D9D2E4;padding:7px 9px">彩金关卡与彩金替代均可设置「预计领取人数达标后」继续领取或停止领取；支持批量统一设置。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">批量设置</td><td style="border:1px solid #D9D2E4;padding:7px 9px">① 每隔 N 关设为实体奖品（N 可设置）；② 彩金金额：统一金额（默认）/ 倍增（设置第一关与最后一关金额）/ 指数递增（设置第一关金额与增长指数）/ 按阶段（每阶段可选统一、倍增或指数）；③ 彩金预计领取人数：统一 / 按规则递减 / 按阶段（默认未设置）；④ 达标处理统一设置。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">游戏权重配置</td><td style="border:1px solid #D9D2E4;padding:7px 9px">列表操作栏进入，展示平台全部游戏分类，勾选本活动参与的分类并设置对应 EXP 权重。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">活动总预算</td><td style="border:1px solid #D9D2E4;padding:7px 9px">按关卡配置自动计算默认值（公式见 7.8），活动进入「进行中」之前可手动修改；手动修改后显示「手动」标记，可一键恢复自动值。<b>预算核算逻辑待运营确认。</b></td></tr></tbody></table>
+
+    <h3 style="font-size:15px;margin:16px 0 6px" id="sec-7-3">7.3 机器人管理</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:12.5px;margin:6px 0 12px"><thead><tr style="background:#F3EFF8"><th style="border:1px solid #D9D2E4;padding:7px 9px;text-align:left" width="22%">功能</th><th style="border:1px solid #D9D2E4;padding:7px 9px;text-align:left">说明</th></tr></thead><tbody><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">选择活动</td><td style="border:1px solid #D9D2E4;padding:7px 9px">选择活动后读取该活动每个关卡的奖励内容；可筛选只显示实体奖励 / 只显示彩金奖励 / 全部，显示彩金时可再按金额区间筛选。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">关卡机器人配置</td><td style="border:1px solid #D9D2E4;padding:7px 9px">每个关卡设置机器人比例与取整方式（向上取整 / 向下取整）。彩金关卡以<b>真实领取人数</b>为计算基数，实体关卡以<b>该关卡实体库存总量</b>为计算基数；计算结果不足 1 名时按 1 名计算。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">机器人领取逻辑</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><b>机器人领取不产生奖品领取记录</b>，后台不需要人员处理；前台对应关卡的剩余名额随之减少。库存上：扣减该活动对应奖品的分配名额，扣回的名额<b>恢复至平台奖品总库存中未被活动占用的部分</b>（可分配余量 +1），在库量不变，不产生预占、出库与物流。凡涉及机器人领取的数据（库存记录、奖品分配、成本、数据列表中的领取数 / 人数等）均须<b>标识为「机器人」数据</b>，不计入真实成本与各项真实统计；需要时可单独查看机器人数据。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">保存与重置</td><td style="border:1px solid #D9D2E4;padding:7px 9px">按活动独立保存；切换活动时未保存的修改暂存，重置恢复为上次保存的配置。</td></tr></tbody></table>
+
+    <h3 style="font-size:15px;margin:16px 0 6px" id="sec-7-4">7.4 奖品领取记录</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:12.5px;margin:6px 0 12px"><thead><tr style="background:#F3EFF8"><th style="border:1px solid #D9D2E4;padding:7px 9px;text-align:left" width="22%">功能</th><th style="border:1px solid #D9D2E4;padding:7px 9px;text-align:left">说明</th></tr></thead><tbody><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">筛选与列表</td><td style="border:1px solid #D9D2E4;padding:7px 9px">按活动名称、用户名、奖品类型、状态筛选。字段：记录编号、活动名称、用户名、关卡、奖品类型、奖品内容、领取时间、收件人 / 手机号、收货地址、快递单号、状态、操作。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">状态流转</td><td style="border:1px solid #D9D2E4;padding:7px 9px">实体：<b>待确认库存 → 待发货 → 已发货 → 已签收</b>，拒收 / 退回为「已退回」；现金 / 彩金：领取即「已到账」。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">确认库存</td><td style="border:1px solid #D9D2E4;padding:7px 9px">只核实实物库存，<b>不扣减数量</b>，状态改为「待发货」。在库量为 0 时弹窗「该奖品目前无库存，请确认库存！」，可修改奖品。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">修改奖品</td><td style="border:1px solid #D9D2E4;padding:7px 9px">仅「待确认库存」可修改；确认库存后奖品锁定。可选范围：可分配余量 > 0 的实体奖品；无库存时还可改为现金奖励或彩金奖励（填写金额，保存后状态「已到账」）。需填写修改原因。原奖品释放预占，新实体奖品预占 1 件。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">修改物流</td><td style="border:1px solid #D9D2E4;padding:7px 9px">仅「待确认库存」「待发货」可修改；发货后不可修改。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">发货</td><td style="border:1px solid #D9D2E4;padding:7px 9px">单条发货或导入快递单号：预占 −1、已出库 +1、在库量 −1，写入「发货出库」记录，状态「已发货」。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">拒收 / 退回</td><td style="border:1px solid #D9D2E4;padding:7px 9px">「已发货」「已签收」可登记：已出库 −1、在库量 +1，写入「退货入库」，并从原活动分配中扣回 1 件——<b>奖品回到平台可用库存</b>，状态「已退回」。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">导出 / 导入</td><td style="border:1px solid #D9D2E4;padding:7px 9px">导出仅包含奖品类型为「实体」且状态为「待发货」的记录，文件为 Excel 可读写格式，文件名含导出时间、导出人、活动名称。导入仅更新填写了快递单号的「待发货」记录：写入快递单号并改为「已发货」，同时出库；其他记录不更新并在结果中逐行说明原因。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">批量操作</td><td style="border:1px solid #D9D2E4;padding:7px 9px">勾选「待确认库存」「已发货」记录，支持「批量确认库存」（待确认库存 → 待发货，校验在库量）与「批量确认签收」（已发货 → 已签收）。执行前弹出二次确认，可取消勾选部分记录；执行后显示本次处理 / 成功 / 失败数量及逐条失败原因，失败与未勾选记录保持原状态。</td></tr></tbody></table>
+    <div style="margin:6px 0 12px;padding:9px 12px;border:1px dashed #C89A3C;background:#FBF6EC;color:#6A4A10;font-size:12.5px;line-height:1.7"><b>库存时间差控制：</b>用户领取即预占、确认库存只核实、发货时才出库，保证领取到发货期间账面与实物一致；前台领取只校验活动剩余名额，不依赖后台处理，互不阻塞。系统须保证同一用户同一关卡只生成一条领取记录（幂等）；「待确认库存」超 24 小时、「待发货」超 72 小时在后台告警提醒；每日自动对账，行政定期盘点，差异通过入库 / 报损调整并留痕。</div>
+
+    <h3 style="font-size:15px;margin:16px 0 6px" id="sec-7-5">7.5 活动数据列表</h3>
+    <p style="margin:0 0 6px;line-height:1.75">按所属活动与统计日期筛选，分为三个数据表（页签顺序）：</p>
+    <table style="width:100%;border-collapse:collapse;font-size:12.5px;margin:6px 0 12px"><thead><tr style="background:#F3EFF8"><th style="border:1px solid #D9D2E4;padding:7px 9px;text-align:left" width="22%">数据表</th><th style="border:1px solid #D9D2E4;padding:7px 9px;text-align:left" width="18%">查看角色</th><th style="border:1px solid #D9D2E4;padding:7px 9px;text-align:left">内容</th></tr></thead><tbody><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">综合数据</td><td style="border:1px solid #D9D2E4;padding:7px 9px">技术 / 运营 / 产品</td><td style="border:1px solid #D9D2E4;padding:7px 9px">流量与转化（UV、参与人数、转化率、闯关人次、人均闯关数、最高关卡）；奖品履约（各状态记录数、超时未处理）；库存（在库、预占、已出库、已分配、平台可用、对账结果）；风控与机器人（机器人领取、异常账号剔除、风控拦截等）。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">运营数据</td><td style="border:1px solid #D9D2E4;padding:7px 9px">运营</td><td style="border:1px solid #D9D2E4;padding:7px 9px">指标卡（参与人数、活动游戏总有效投注、闯关人次、现金发放、实体领取 / 发货、单用户获客成本、单参与用户成本）；<b>参与游戏有效投注与用户活跃度</b>表（按该活动勾选的游戏分类：EXP 权重、有效投注、投注占比、活跃用户数、活跃率、日均活跃、人均有效投注，可「查看详细」该游戏每日数据）；按日明细（UV、参与、新增参与、单用户获客成本、EXP、闯关人次、现金、彩金替代、实体领取、实体奖励成本、人均关卡、最高关卡）；活动成本与预算对比。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">财务数据</td><td style="border:1px solid #D9D2E4;padding:7px 9px">财务</td><td style="border:1px solid #D9D2E4;padding:7px 9px">指标卡（活动总预算、已发生成本、预算使用率、剩余预算、平台毛收益、活动净收益、ROI）；按日明细（有效投注、毛收益、现金、彩金替代、实体成本、物流、总成本、净收益、ROI）；活动成本与预算对比。</td></tr></tbody></table>
+
+    <h3 style="font-size:15px;margin:16px 0 6px" id="sec-7-6">7.6 活动总预算与成本口径</h3>
+    <p style="margin:0 0 10px;line-height:1.75">实体奖品成本按<b>领取发生时</b>的单件成本核算（活动创建时生成成本快照，单件成本调整不追溯）；物流快递按活动配置的预留金额计入预算，实际发生额按发货件数核算；彩金替代与现金奖励按实际发放金额计入。机器人领取的彩金与实体均不计入成本、预算使用率及各项真实统计。</p>
+
+    <h3 style="font-size:15px;margin:16px 0 6px" id="sec-7-8">7.7 其他前台配置</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:12.5px;margin:6px 0 12px"><thead><tr style="background:#F3EFF8"><th style="border:1px solid #D9D2E4;padding:7px 9px;text-align:left" width="22%">功能</th><th style="border:1px solid #D9D2E4;padding:7px 9px;text-align:left">说明</th></tr></thead><tbody>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">先行热身配置</td><td style="border:1px solid #D9D2E4;padding:7px 9px">配置预热页游戏分类（老虎机 / 真人娱乐场等）及每个分类的 6 个推荐游戏，「查看全部」跳转对应游戏列表页。</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">热门推荐</td><td style="border:1px solid #D9D2E4;padding:7px 9px">进行中页「热门推荐」游戏列表由后台配置。</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">领取结果弹窗</td><td style="border:1px solid #D9D2E4;padding:7px 9px">可配置弹窗自动关闭秒数（默认 30 秒）与问候文案。</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">闯关榜</td><td style="border:1px solid #D9D2E4;padding:7px 9px">刷新频率配置（默认每小时）、手动刷新、异常账号剔除、用户名脱敏；控制是否展示已领实体奖品缩略图列。</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">结束页配置</td><td style="border:1px solid #D9D2E4;padding:7px 9px">结束态主视觉素材、提示文案、榜单封存快照。</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">期次管理</td><td style="border:1px solid #D9D2E4;padding:7px 9px">新一期开启时间、上期数据归档与清零执行、上期领奖通道在新一期开启时失效。</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">物流信息管理</td><td style="border:1px solid #D9D2E4;padding:7px 9px">一账号一份物流信息；列表支持按账号 / 手机号检索；用户修改需通过账号绑定手机号的短信验证码校验。</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">活动 Banner 配置</td><td style="border:1px solid #D9D2E4;padding:7px 9px">热门活动位的标题、金额文案、标签、跳转链接与排序。</td></tr>
+    </tbody></table>
+
+    <h3 style="font-size:15px;margin:16px 0 6px" id="sec-7-7">7.8 数据计算公式</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:12px;margin:6px 0 12px"><thead><tr style="background:#F3EFF8"><th style="border:1px solid #D9D2E4;padding:7px 9px;text-align:left" width="22%">数据项</th><th style="border:1px solid #D9D2E4;padding:7px 9px;text-align:left">计算公式</th><th style="border:1px solid #D9D2E4;padding:7px 9px;text-align:left" width="28%">说明</th></tr></thead><tbody><tr><td style="border:1px solid #D9D2E4;padding:7px 9px"><b>库存</b></td><td style="border:1px solid #D9D2E4;padding:7px 9px"></td><td style="border:1px solid #D9D2E4;padding:7px 9px"></td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">前台剩余名额（单活动单奖品）</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">活动分配 − 预占 − 已出库</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px">前台关卡卡片显示的剩余份数</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">活动剩余名额</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">max(0, 活动分配 − 预占 − 已出库)</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px">已分配但尚未被领取的名额</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">可分配余量</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">在库量 − 预占 − 各活动剩余名额之和</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px">可用于新活动分配或改奖</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">库存变动下限</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">调整后在库量 ≥ 预占 + 各活动剩余名额之和</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px">报损 / 减少库存校验</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">发货出库</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">预占 −1；已出库 +1；在库量 −1</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px"></td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">拒收 / 退回</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">已出库 −1；在库量 +1；原活动分配 −1</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px">回到平台可用库存</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">对账校验</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">在库量 ≥ 预占 + 活动剩余名额；已出库 = 已发货记录数</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px">每日自动执行，不一致告警</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px"><b>闯关</b></td><td style="border:1px solid #D9D2E4;padding:7px 9px"></td><td style="border:1px solid #D9D2E4;padding:7px 9px"></td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">EXP</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">Σ（各游戏分类有效投注 ÷ 该分类 EXP 权重）</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px">权重在「游戏权重配置」设置</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">人均闯关数</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">闯关总人次 ÷ 参与人数</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px"></td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">UV → 参与转化率</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">参与人数 ÷ 活动页 UV</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px"></td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px"><b>机器人</b></td><td style="border:1px solid #D9D2E4;padding:7px 9px"></td><td style="border:1px solid #D9D2E4;padding:7px 9px"></td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">彩金关卡机器人数</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">取整（真实领取人数 × 机器人比例）</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px">不足 1 名按 1 名</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">实体关卡机器人数</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">取整（该关卡实体库存总量 × 机器人比例）</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px">取整方式按关卡设置</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">机器人领取实体</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">活动分配 −1；在库量不变；可分配余量 +1</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px">不产生领取记录；数据标识为机器人，不计入真实成本与统计</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px"><b>预算与成本</b></td><td style="border:1px solid #D9D2E4;padding:7px 9px"></td><td style="border:1px solid #D9D2E4;padding:7px 9px"></td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">关卡彩金预计支出</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">彩金金额 × 预计领取人数</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px">彩金替代同理</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">实体奖品成本（预算）</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">Σ（关卡分配数量 × 单件成本快照）</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px"></td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">活动总预算（默认）</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">Σ 彩金预计支出 + Σ 彩金替代预计支出 + 实体奖品成本 + 物流快递预留</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px">进行中前可手动修改</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">活动总成本（已发生）</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">现金奖励 + 彩金替代 + 实体奖品成本（已领取件数 × 单件成本）+ 物流快递</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px"></td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">预算使用率</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">活动总成本 ÷ 活动总预算</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px">≥70% 橙色、≥90% 红色提醒</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">剩余预算</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">活动总预算 − 活动总成本</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px"></td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px"><b>收益（口径待财务确认）</b></td><td style="border:1px solid #D9D2E4;padding:7px 9px"></td><td style="border:1px solid #D9D2E4;padding:7px 9px"></td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">平台毛收益（估算）</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">Σ（各游戏分类有效投注 × 该分类抽水率）</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px">原型示例：老虎机 5%、真人 1.2%</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">活动净收益</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">平台毛收益 − 活动总成本</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px"></td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">ROI</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">活动净收益 ÷ 活动总成本</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px"></td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px"><b>运营</b></td><td style="border:1px solid #D9D2E4;padding:7px 9px"></td><td style="border:1px solid #D9D2E4;padding:7px 9px"></td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">单用户获客成本</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">活动总成本 ÷ 新增参与人数</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px">新增参与 = 首次参与本活动的用户</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">单参与用户成本</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">活动总成本 ÷ 累计参与人数（去重）</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px"></td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">游戏投注占比</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">该分类有效投注 ÷ 活动游戏总有效投注</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px"></td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">游戏活跃率</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">该分类活跃用户数 ÷ 活动参与人数</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px">用户可同时活跃于多个分类</td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">日均活跃用户</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">统计期内每日该分类去重活跃用户之和 ÷ 天数</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px"></td></tr><tr><td style="border:1px solid #D9D2E4;padding:7px 9px">人均有效投注</td><td style="border:1px solid #D9D2E4;padding:7px 9px"><code style="background:#F3EFF8;padding:1px 5px;border-radius:3px">该分类有效投注 ÷ 该分类活跃用户数</code></td><td style="border:1px solid #D9D2E4;padding:7px 9px"></td></tr></tbody></table>
+
+    <h3 style="font-size:15px;margin:16px 0 6px" id="sec-7-9">7.9 帮助提示内容</h3>
+    <p style="margin:0 0 6px;line-height:1.75">后台各处「?」图标点击后弹出的说明文案如下，开发按此内容实现，文案调整以本表为准。</p>
+    <table style="width:100%;border-collapse:collapse;font-size:12px;margin:6px 0 12px"><thead><tr style="background:#F3EFF8"><th style="border:1px solid #D9D2E4;padding:6px 9px;text-align:left" width="24%">数据项 / 操作</th><th style="border:1px solid #D9D2E4;padding:6px 9px;text-align:left">说明内容</th></tr></thead><tbody><tr><td colspan="2" style="border:1px solid #D9D2E4;padding:6px 9px;background:#F1E9DA;font-weight:700;color:#16052F">公共</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">待派发奖品</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">所有活动中状态为「待确认库存」的实体奖品记录数量。点击数量可跳转到奖品领取记录并自动筛选这些记录。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">领取状态</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">实体奖品：待确认库存 → 待发货 → 已发货 → 已签收；拒收或退回为「已退回」。<br />现金 / 彩金：领取即「已到账」。<br />确认库存后不可修改奖品，发货后不可修改物流信息。</td></tr><tr><td colspan="2" style="border:1px solid #D9D2E4;padding:6px 9px;background:#F1E9DA;font-weight:700;color:#16052F">奖品管理</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">在库量</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">仓库中实际存放的件数。只在入库、报损、发货出库、退货入库时变化；用户已领取但尚未发货的奖品仍计入在库量。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">已分配到活动</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">各活动关卡配置中为该奖品设置的名额之和。名额被占用后不能再分配给其他活动或用于改奖。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">预占</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">用户已在前台领取、尚未发货的件数（待确认库存 + 待发货）。<br />领取时即预占 1 件；改奖或改为现金 / 彩金时释放；发货时转为出库。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">已出库</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">已发货出库的累计件数。拒收 / 退回登记后相应减少，并退回在库量。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">可分配余量</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">可分配余量 = 在库量 − 预占 − 各活动剩余名额。<br />可用于新活动的关卡分配，或领取记录中的修改奖品。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">单件成本</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">用于活动预算与成本核算。修改后只影响之后发生的领取与预算，历史活动已核算的成本不变。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">新增库存数量</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">在当前总库存基础上累加。只能填非 0 整数：正数为进货入库；负数为报损等减少，此时备注必填。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">调整后总库存</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">自动计算：当前总库存 + 新增库存数量。不得小于「预占 + 各活动剩余名额」。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">备注</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">记录本次库存变动的原因，会写入库存记录。新增库存数量为负数时必填。</td></tr><tr><td colspan="2" style="border:1px solid #D9D2E4;padding:6px 9px;background:#F1E9DA;font-weight:700;color:#16052F">活动管理</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">活动状态</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">未开始：前台不显示活动页；预热中：前台显示预热页；进行中：前台显示进行中页；领奖缓冲：前台显示活动结束页，只能领奖不再累计 EXP；关闭：前台不显示。修改后前台按新状态切换页面。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">预热开始时间</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">到达该时间后活动自动进入「预热中」，前台显示预热页与开始倒计时。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">活动开始时间</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">到达该时间后自动进入「进行中」，前台预热页自动切换为进行中页，开始累计 EXP。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">活动结束时间</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">到达该时间后自动进入「领奖缓冲」，前台切换为活动结束页：停止累计 EXP，已闯关未领取的奖励仍可领取。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">关卡数</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">本活动的关卡总数。填写后可点击「查看关卡列表详情」配置每关的 EXP 标准与奖励。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">参与游戏 / EXP 权重</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">勾选计入本活动 EXP 的游戏分类，并设置每个分类的权重。EXP = Σ（各分类有效投注 ÷ 权重），例如权重 20 表示每 ₱20 有效投注累计 1 EXP。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">物流快递预留预算</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">直接输入金额，作为实体奖品物流快递费用的预留，计入活动总预算。输入框下方会显示建议值（实体成本的 5%）供参考。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">活动总预算</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">默认按关卡配置自动计算：彩金 + 彩金替代 + 实体奖品成本 + 物流快递预留。<br />活动进入「进行中」之前可手动修改；具体核算逻辑待运营确认。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">领取结果弹窗关闭秒数</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">前台「一键领取」结果弹窗的自动关闭倒计时，默认 30 秒。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">库存耗尽替代 / 达标处理</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">库存耗尽替代：实体奖品领完后，该关卡改发彩金、换其他实体奖品或无奖励。<br />达标处理：预计领取人数达标后，该关卡继续领取或停止领取。</td></tr><tr><td colspan="2" style="border:1px solid #D9D2E4;padding:6px 9px;background:#F1E9DA;font-weight:700;color:#16052F">机器人管理</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">机器人领取逻辑</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">机器人按每关设置的比例与取整方式触发领取：<br />· 不产生奖品领取记录，后台无需人员处理；<br />· 前台对应关卡的剩余名额随之减少；<br />· 实体关卡扣减该活动的分配名额，名额回到平台未被活动占用的库存（在库量不变，不产生预占、出库与物流）；<br />· 所有相关数据标识为「机器人」，不计入真实成本与真实统计。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">机器人领取数</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">按「计算基数 × 机器人比例」并按所选方式取整得出的机器人领取数量，不足 1 名按 1 名。该数量只影响前台剩余名额与活动分配，不生成领取记录。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">当前基数</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">彩金关卡为该关当前真实领取人数（不含机器人）；实体关卡为该关当前实体库存总量（活动分配名额）。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">机器人领取（彩金）</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">统计期内机器人领取彩金的次数。标识为机器人数据，不计入现金发放、活动成本、预算使用率与领取人数等真实指标。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">机器人领取（实体）</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">统计期内机器人领取实体奖品的件数。每件扣减该活动分配名额并回到平台可分配余量，不消耗实物，不计入实体领取、实体成本与履约数据。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">机器人比例</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">按关卡设置机器人领取占比。<br />彩金关卡：按该关卡真实领取人数 × 比例计算机器人数量；<br />实体关卡：按该关卡实体库存总量 × 比例计算。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">取整方式</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">机器人数量计算结果不是整数时的处理方式：向上取整或向下取整。计算结果不足 1 名时按 1 名计算。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">计算基数</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">机器人数量的计算依据：彩金关卡为真实领取人数，实体关卡为该关卡实体库存总量。</td></tr><tr><td colspan="2" style="border:1px solid #D9D2E4;padding:6px 9px;background:#F1E9DA;font-weight:700;color:#16052F">奖品领取记录</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">导出领取记录</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">只导出奖品类型为「实体」、状态为「待发货」的记录（可按活动筛选）。在导出文件中填写快递公司与快递单号后，通过「导入快递信息」上传。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">导入快递信息</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">上传填写好的导出文件：只更新填写了快递单号的「待发货」记录，写入单号并改为「已发货」，同时出库（预占 −1、在库量 −1）。未填单号或其他状态的记录不更新。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">批量确认库存</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">对勾选的「待确认库存」记录批量核实实物库存。执行前可在二次确认中取消部分记录；在库量为 0 的记录会失败并保持原状态。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">批量确认签收</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">对勾选的「已发货」记录批量改为「已签收」。执行前可在二次确认中取消部分记录。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">快递公司</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">选择承运快递公司，与快递单号一起同步给用户。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">快递单号</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">填写后状态改为「已发货」，同时出库（预占 −1、在库量 −1），用户可在前台查看物流信息。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">修改原因</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">修改用户物流信息须填写原因，记录在操作日志中。发货后不可再修改物流信息。</td></tr><tr><td colspan="2" style="border:1px solid #D9D2E4;padding:6px 9px;background:#F1E9DA;font-weight:700;color:#16052F">活动数据列表</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">EXP 权重</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">有效投注折算 EXP 的比例，例如「1 EXP / ₱20」表示每 ₱20 有效投注累计 1 EXP。在活动的「游戏权重配置」中设置。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">活跃率</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">活跃率 = 该游戏分类活跃用户数 ÷ 活动参与人数。同一用户可同时活跃于多个分类，各分类之和可能超过 100%。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">日均活跃用户</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">统计期内每天在该游戏分类产生有效投注的去重用户数的平均值。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">平台毛收益（估算）</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">平台毛收益 = 各游戏有效投注 × 对应抽水率（示例：老虎机 5%、真人 1.2%）。抽水率口径待财务确认。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">净收益</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">净收益 = 平台毛收益 − 活动总成本（现金奖励 + 彩金替代 + 实体奖品成本 + 物流快递）。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">ROI</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">ROI = 净收益 ÷ 活动总成本，用于衡量每投入 ₱1 活动成本带来的净收益。</td></tr><tr><td style="border:1px solid #D9D2E4;padding:6px 9px">单用户获客成本</td><td style="border:1px solid #D9D2E4;padding:6px 9px;line-height:1.7">单用户获客成本 = 活动总成本 ÷ 新增参与人数（首次参与本活动的用户）。</td></tr></tbody></table>
+
+    <h2 style="font-family:'Noto Serif SC',serif;font-size:18px;margin:22px 0 8px;color:#16052F;border-left:4px solid #C89A3C;padding-left:10px" id="sec-8-">8. 数据埋点需求</h2>
+
+    <h3 style="font-size:15px;margin:14px 0 6px" id="sec-8-1">8.1 分析目标</h3>
+    <ul style="margin:0 0 10px;padding-left:20px;line-height:1.85">
+      <li><b>拉新与触达</b>：预热期各渠道进入量、预热页到活动页的承接率。</li>
+      <li><b>激活转化</b>：浏览 → 首次投注（首次获得 EXP）→ 首次闯关成功 → 首次领取的漏斗转化。</li>
+      <li><b>留存与深度</b>：日活跃参与人数、人均闯关数、关卡分布与卡点（哪一关流失最多）。</li>
+      <li><b>奖励效率</b>：现金派出总额、实体奖品消耗速度与剩余预估、彩金替代占比、ROI（活动期投注增量 ÷ 奖励成本）。</li>
+      <li><b>体验阻塞</b>：领取失败率、物流信息填写与验证码流程的流失点、未登录点击领取的比例。</li>
+      <li><b>导流效果</b>：热门推荐 / 先行热身 / 热门活动各位置的点击与后续投注贡献。</li>
+    </ul>
+
+    <h3 style="font-size:15px;margin:14px 0 6px" id="sec-8-2">8.2 公共参数（所有事件默认携带）</h3>
+    <p style="margin:0 0 10px;line-height:1.75;font-size:12.5px">
+      <code>activity_id</code>、<code>season</code>（活动期号，如 2025-12）、<code>page</code>（prelaunch / live）、<code>user_id</code>（未登录为空）、<code>is_login</code>、<code>user_stage</code>（当前关卡）、<code>user_exp</code>、<code>vip_level</code>、<code>channel</code> / <code>utm_source</code>、<code>device</code>、<code>os</code>、<code>app_version</code>、<code>client_ts</code> 与 <code>server_ts</code>。
+    </p>
+
+    <h3 style="font-size:15px;margin:14px 0 6px" id="sec-8-3">8.3 事件清单</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:12px;margin:0 0 12px">
+      <thead><tr style="background:#F3EFF8"><th style="border:1px solid #D9D2E4;padding:6px 9px;text-align:left" width="22%">事件名</th><th style="border:1px solid #D9D2E4;padding:6px 9px;text-align:left" width="20%">触发时机</th><th style="border:1px solid #D9D2E4;padding:6px 9px;text-align:left">关键参数</th></tr></thead>
+      <tbody>
+        <tr><td colspan="3" style="border:1px solid #D9D2E4;padding:6px 9px;background:#F1E9DA;font-weight:700;color:#16052F">A · 页面与曝光</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">cr_page_view</td><td style="border:1px solid #D9D2E4;padding:7px 9px">页面加载完成</td><td style="border:1px solid #D9D2E4;padding:7px 9px">page、entry_source、activity_status（pending / running / ended）、countdown_left</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">cr_module_expose</td><td style="border:1px solid #D9D2E4;padding:7px 9px">模块进入视口 ≥1 秒</td><td style="border:1px solid #D9D2E4;padding:7px 9px">module_id（progress / stage_list / prize_deck / hot_recommend / warmup / ranking / hot_promos）、expose_duration</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">cr_page_autoswitch</td><td style="border:1px solid #D9D2E4;padding:7px 9px">预热页倒计时归零自动切换为进行中页</td><td style="border:1px solid #D9D2E4;padding:7px 9px">switch_type（client_timer / server_poll）、stay_duration</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">cr_page_leave</td><td style="border:1px solid #D9D2E4;padding:7px 9px">页面关闭或切后台</td><td style="border:1px solid #D9D2E4;padding:7px 9px">stay_duration、max_scroll_depth</td></tr>
+
+        <tr><td colspan="3" style="border:1px solid #D9D2E4;padding:6px 9px;background:#F1E9DA;font-weight:700;color:#16052F">B · 闯关与奖励</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">cr_stage_up</td><td style="border:1px solid #D9D2E4;padding:7px 9px">服务端判定闯关成功（服务端上报）</td><td style="border:1px solid #D9D2E4;padding:7px 9px">from_stage、to_stage、exp_total、elapsed_since_last_stage</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">cr_claim_click</td><td style="border:1px solid #D9D2E4;padding:7px 9px">点击单关「领取」</td><td style="border:1px solid #D9D2E4;padding:7px 9px">stage、reward_type（cash / physical / fallback_cash）、reward_amount、prize_name、stock_left</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">cr_claim_all_click</td><td style="border:1px solid #D9D2E4;padding:7px 9px">点击「一键领取现金」</td><td style="border:1px solid #D9D2E4;padding:7px 9px">claimable_count、claimable_amount</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">cr_claim_result</td><td style="border:1px solid #D9D2E4;padding:7px 9px">领取接口返回</td><td style="border:1px solid #D9D2E4;padding:7px 9px">result（success / fail）、fail_reason（未登录 / 未达关卡 / 已领取 / 库存不足 / 风控拦截 / 系统异常）、claimed_count、claimed_amount、order_id</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">cr_claim_dialog</td><td style="border:1px solid #D9D2E4;padding:7px 9px">领取结果弹窗曝光与关闭</td><td style="border:1px solid #D9D2E4;padding:7px 9px">action（expose / confirm_click / auto_close）、item_count、total_amount、close_after_seconds、detail_scrolled</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">cr_fallback_cash</td><td style="border:1px solid #D9D2E4;padding:7px 9px">实体奖品售罄降级为彩金并领取</td><td style="border:1px solid #D9D2E4;padding:7px 9px">stage、prize_name、fallback_amount</td></tr>
+
+        <tr><td colspan="3" style="border:1px solid #D9D2E4;padding:6px 9px;background:#F1E9DA;font-weight:700;color:#16052F">C · 物流信息流程</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">cr_ship_form_open</td><td style="border:1px solid #D9D2E4;padding:7px 9px">物流信息填写弹窗打开</td><td style="border:1px solid #D9D2E4;padding:7px 9px">source（claim / manual_entry）、stage、is_login</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">cr_ship_submit</td><td style="border:1px solid #D9D2E4;padding:7px 9px">提交物流信息</td><td style="border:1px solid #D9D2E4;padding:7px 9px">result、fail_reason（必填缺失 / 格式错误 / 接口异常）、fill_duration</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">cr_ship_confirm</td><td style="border:1px solid #D9D2E4;padding:7px 9px">领取前二次确认弹窗</td><td style="border:1px solid #D9D2E4;padding:7px 9px">action（expose / confirm / edit_click / cancel）、stage、prize_name</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">cr_ship_otp</td><td style="border:1px solid #D9D2E4;padding:7px 9px">修改地址短信验证</td><td style="border:1px solid #D9D2E4;padding:7px 9px">action（send / resend / verify）、result、fail_reason（验证码错误 / 过期 / 发送频率限制）、attempt_count</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">cr_ship_update</td><td style="border:1px solid #D9D2E4;padding:7px 9px">物流信息修改保存成功</td><td style="border:1px solid #D9D2E4;padding:7px 9px">changed_fields、stage</td></tr>
+
+        <tr><td colspan="3" style="border:1px solid #D9D2E4;padding:6px 9px;background:#F1E9DA;font-weight:700;color:#16052F">D · 导流与互动</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">cr_game_click</td><td style="border:1px solid #D9D2E4;padding:7px 9px">点击热门推荐 / 先行热身游戏卡</td><td style="border:1px solid #D9D2E4;padding:7px 9px">module_id、game_id、game_name、game_category、position</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">cr_view_all_click</td><td style="border:1px solid #D9D2E4;padding:7px 9px">点击「查看全部」</td><td style="border:1px solid #D9D2E4;padding:7px 9px">game_category、target_url</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">cr_promo_click</td><td style="border:1px solid #D9D2E4;padding:7px 9px">点击热门活动 Banner</td><td style="border:1px solid #D9D2E4;padding:7px 9px">banner_id、banner_name、position</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">cr_prize_deck_swipe</td><td style="border:1px solid #D9D2E4;padding:7px 9px">实体奖品叠卡切换</td><td style="border:1px solid #D9D2E4;padding:7px 9px">trigger（swipe / auto / click）、stage、prize_name</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">cr_rules_open</td><td style="border:1px solid #D9D2E4;padding:7px 9px">打开规则弹窗</td><td style="border:1px solid #D9D2E4;padding:7px 9px">source（top_bar / exp_question_icon）、anchor_section</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">cr_records_open</td><td style="border:1px solid #D9D2E4;padding:7px 9px">打开领奖记录</td><td style="border:1px solid #D9D2E4;padding:7px 9px">total_amount、record_count</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">cr_ranking_refresh</td><td style="border:1px solid #D9D2E4;padding:7px 9px">闯关榜刷新</td><td style="border:1px solid #D9D2E4;padding:7px 9px">trigger（manual / auto）、my_rank、my_stage</td></tr>
+        <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">cr_login_guide_click</td><td style="border:1px solid #D9D2E4;padding:7px 9px">未登录点击领取或登录引导</td><td style="border:1px solid #D9D2E4;padding:7px 9px">source_module、target（login / register）</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="font-size:15px;margin:14px 0 6px" id="sec-8-4">8.4 运营看板指标</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:12.5px;margin:0 0 10px">
+      <tr style="background:#F1E9DA"><td style="border:1px solid #D9D2E4;padding:7px 9px" width="130">看板</td><td style="border:1px solid #D9D2E4;padding:7px 9px">核心指标</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">总览</td><td style="border:1px solid #D9D2E4;padding:7px 9px">活动 UV / 参与人数（有 EXP 产生）/ 参与率、人均投注、投注增量对比活动前同周期、奖励成本与 ROI</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">转化漏斗</td><td style="border:1px solid #D9D2E4;padding:7px 9px">页面曝光 → 首次投注 → 首关达成 → 首次领取 → 二次领取，各环节人数与流失率</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">关卡分布</td><td style="border:1px solid #D9D2E4;padding:7px 9px">各关卡在线人数与卡点关卡 TOP10、平均闯关耗时、到达 8 个里程碑关卡的人数</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">奖励发放</td><td style="border:1px solid #D9D2E4;padding:7px 9px">现金派出（按关卡 / 按日）、实体奖品领取与剩余、彩金替代金额与占比、一键领取使用率</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">流程健康</td><td style="border:1px solid #D9D2E4;padding:7px 9px">领取失败率及原因分布、物流填写完成率、验证码成功率、未登录点击领取比例</td></tr>
+      <tr><td style="border:1px solid #D9D2E4;padding:7px 9px">导流效果</td><td style="border:1px solid #D9D2E4;padding:7px 9px">各推荐位点击率与点击后 24 小时内投注转化、分游戏分类贡献 EXP 占比</td></tr>
+    </table>
+
+    <h3 style="font-size:15px;margin:14px 0 6px" id="sec-8-5">8.5 埋点实施要求</h3>
+    <ul style="margin:0 0 10px;padding-left:20px;line-height:1.85">
+      <li>金额与奖励发放类事件<b>以服务端上报为准</b>（cr_stage_up、cr_claim_result、cr_fallback_cash），前端事件仅用于行为分析，避免刷单与重复计数。</li>
+      <li>所有领取类事件携带 <code>order_id</code> 做幂等去重，与钱包流水可对账。</li>
+      <li>曝光事件做节流：同一模块同一次页面会话内只上报一次，滑动类事件合并上报间隔 ≥500ms。</li>
+      <li>未登录用户以设备 ID 归因，登录后需回溯绑定 user_id，保证漏斗可串联。</li>
+      <li><b>打码量规则相关的任何字段与提示均不得下发至前端</b>，仅在服务端与看板内部使用。</li>
+      <li>事件命名统一前缀 <code>cr_</code>，上线前需与数据团队确认埋点文档版本与测试环境校验通过。</li>
+    </ul>
+
+    <h2 style="font-family:'Noto Serif SC',serif;font-size:18px;margin:22px 0 8px;color:#16052F;border-left:4px solid #C89A3C;padding-left:10px" id="sec-9-">9. 接口与异常</h2>
+    <ul style="margin:0 0 10px;padding-left:20px">
+      <li>核心接口：活动信息、用户进度、关卡任务列表、领取（单项/一键）、领奖记录、排行榜、物流信息提交与查询、验证码发送与校验。</li>
+      <li>领取接口需幂等，防止重复领取；实体奖品领取需库存原子扣减。</li>
+      <li>异常态：未登录、活动未开始/已结束、库存售罄、领取失败、网络异常，均需前端明确提示文案。</li>
+      <li><b>活动状态接口</b>：返回 <code>status</code>（pending / running / ended）、<code>server_ts</code>、本期起止时间与下一期信息。前端在倒计时归零、页面进入前台、以及每 60 秒轮询时调用；<b>切页一律以该接口为准</b>，不得仅依赖本地倒计时。</li>
+      <li><b>结束态接口差异</b>：进度接口在 ended 状态下返回封存后的最终 EXP 与最终关卡（不再随投注变化）；关卡任务接口<b>仅返回已闯过的关卡</b>；实体奖品接口仅返回用户已闯过的奖品关卡；榜单接口返回封存的最终排名。</li>
+      <li><b>ended 状态下仍需支持</b>：单项领取、一键领取现金、物流信息提交 / 查询 / 修改、短信验证码、领奖记录查询。</li>
+    </ul>
+
+    <h2 style="font-family:'Noto Serif SC',serif;font-size:18px;margin:22px 0 8px;color:#16052F;border-left:4px solid #C89A3C;padding-left:10px" id="sec-10-">10. 待确认事项</h2>
+    <ol style="margin:0 0 10px;padding-left:20px">
+      <li>热门活动位的真实活动清单、金额与跳转链接（当前为占位内容）。</li>
+      <li>游戏封面图资源与各游戏列表页的最终 URL 路径。</li>
+      <li>实体奖品的实际库存数量与物流承运方案。</li>
+      <li>结束页是否需要设定明确的领奖截止日（当前按「无截止、新一期开启时失效」实现）。</li>
+      <li>结束态主视觉素材是否单独出图。</li>
+      <li>正式上线的前台语言（中文 / 英文 / 双语）。</li>
+    </ol>
+
+    <h2 style="font-family:'Noto Serif SC',serif;font-size:18px;margin:22px 0 8px;color:#16052F;border-left:4px solid #C89A3C;padding-left:10px" id="sec-11-">11. 各角色协作 Tips</h2>
+    <p style="margin:0 0 10px;line-height:1.75">以下为结合本项目特点（长周期、强奖励、限量实体奖品、多弹窗流程、菲律宾本地市场）给各角色的实操建议，非硬性需求，但能显著减少返工与线上风险。</p>
+
+    <div style="margin:0 0 12px;border:1px solid #D9D2E4;border-left:4px solid #C89A3C;border-radius:8px;padding:11px 14px;background:#FBF9FD">
+      <div style="font-weight:700;color:#16052F;margin-bottom:6px;font-size:13.5px">UI / 视觉设计</div>
+      <ul style="margin:0;padding-left:18px;line-height:1.8;font-size:12.5px">
+        <li><b>先定关卡卡片的状态矩阵</b>：未闯关 / 可领取 / 已领取 / 实体关卡 / 实体售罄降级，共 5 种，一次出全比事后补状态省时。</li>
+        <li><b>进度条内文字必须与填充色互补</b>：本项目踩过「绿字压绿条」的坑，凡是条内标签都要同时校验 0% 与 100% 两个极端的对比度（≥4.5:1）。</li>
+        <li><b>节日素材统一走透明底 PNG</b>：奖品图、主视觉、装饰件都需抠底并裁至主体，切图前先确认最终渲染尺寸，按 2-3 倍导出即可，避免上传 1700px 原图导致弹窗白屏。</li>
+        <li><b>弹窗按「高度预算」设计</b>：主视觉 + 金额 + 列表 + 按钮的总高必须在 75-90% 视口内闭合，列表条数用固定值（如 5 条）而非「自适应」，否则小屏必然挤掉按钮。</li>
+        <li><b>菲律宾本地化元素要真实而非符号化</b>：Parol 星灯、Maligayang Pasko 问候、₱ 货币符号优于泛化的圣诞树图标；同时避免过度装饰压住核心信息。</li>
+        <li><b>为空态与售罄态出图</b>：「暂无可领取的现金奖励」「已领完」「未登录」这三种状态最容易被漏掉，却是用户高频看到的界面。</li>
+      </ul>
+    </div>
+
+    <div style="margin:0 0 12px;border:1px solid #D9D2E4;border-left:4px solid #6A2BB8;border-radius:8px;padding:11px 14px;background:#FBF9FD">
+      <div style="font-weight:700;color:#16052F;margin-bottom:6px;font-size:13.5px">前端开发</div>
+      <ul style="margin:0;padding-left:18px;line-height:1.8;font-size:12.5px">
+        <li><b>活动状态一律以服务端为准</b>：倒计时仅用于展示，归零后必须请求活动状态接口再切页，防止本地改时间提前进入。</li>
+        <li><b>领取按钮做防抖 + 幂等</b>：一键领取与单关领取都要禁用二次点击并携带 order_id，网络重试不能造成重复入账。</li>
+        <li><b>弹窗层级与滚动隔离</b>：物流填写 → 二次确认 → 短信验证三层弹窗会叠加，需统一 z-index 规范并锁定背景滚动。</li>
+        <li><b>列表滚动定位用 scrollTo 而非 scrollIntoView</b>：容器内定位到「首个未领取关卡」时，scrollIntoView 会带动整页跳动。</li>
+        <li><b>装饰动效走 transform / opacity</b>：飘雪、雪橇、脉冲都用 GPU 属性，避免 top/left 动画在中低端安卓机上掉帧。</li>
+        <li><b>图片资源按渲染尺寸出</b>：弹窗内 70px 高的图不要引用 560px 以上的源图，首屏与弹窗素材建议预加载。</li>
+        <li><b>打码规则相关字段绝不接入前端</b>：接口若返回也需忽略，避免被抓包反推规则。</li>
+      </ul>
+    </div>
+
+    <div style="margin:0 0 12px;border:1px solid #D9D2E4;border-left:4px solid #1560A8;border-radius:8px;padding:11px 14px;background:#FBF9FD">
+      <div style="font-weight:700;color:#16052F;margin-bottom:6px;font-size:13.5px">后端开发</div>
+      <ul style="margin:0;padding-left:18px;line-height:1.8;font-size:12.5px">
+        <li><b>库存扣减必须走分布式锁或数据库行锁</b>：8 个里程碑关卡是典型秒杀场景，先锁定名额再生成工单，超时未完成则释放。</li>
+        <li><b>EXP 计算与注单结算解耦</b>：用消息队列消费注单，支持重放与补算；取消注单、对冲注单需可回退 EXP。</li>
+        <li><b>关卡只升不降</b>：EXP 回退时保留已达成关卡与已领奖励，避免用户资产被回收引发客诉。</li>
+        <li><b>彩金替代金额与打码倍数做配置化</b>：不要写死在代码里，运营需要在活动中期调整。</li>
+        <li><b>物流信息修改留全量日志</b>：时间、修改前后值、IP、设备、验证码校验记录，便于风控与客服追溯。</li>
+        <li><b>验证码接口做频率与次数限制</b>：同手机号 60 秒一次、单日上限、连续失败锁定，防短信轰炸与撞库。</li>
+        <li><b>榜单用缓存 + 定时计算</b>：TOP 100 每小时刷新即可，不要实时查库；同时为「我的排名」单独提供轻量接口。</li>
+      </ul>
+    </div>
+
+    <div style="margin:0 0 12px;border:1px solid #D9D2E4;border-left:4px solid #1B7A4C;border-radius:8px;padding:11px 14px;background:#FBF9FD">
+      <div style="font-weight:700;color:#16052F;margin-bottom:6px;font-size:13.5px">测试</div>
+      <ul style="margin:0;padding-left:18px;line-height:1.8;font-size:12.5px">
+        <li><b>时间类用例优先</b>：活动开始前 1 分钟 / 归零瞬间 / 活动结束瞬间、跨时区、本地时间被改早或改晚，共 6 组必测。</li>
+        <li><b>库存并发场景</b>：多人同时领取最后一件实体奖品，验证只有一人成功、其余降级为彩金且金额正确。</li>
+        <li><b>领取幂等</b>：断网重连、重复点击、接口超时重试后核对钱包流水笔数与金额。</li>
+        <li><b>物流三层弹窗全路径</b>：未登录点击领取、填写中放弃、二次确认取消、验证码错误/过期/重发、绑定后再次进入应变为「查看物流信息」。</li>
+        <li><b>降级态回归</b>：把某关卡库存设为 0，验证列表卡片样式、文案、按钮行为、一键领取是否纳入、榜单实物列是否剔除。</li>
+        <li><b>小屏与长文本</b>：360×640 等小屏下弹窗按钮是否可见可点；超长用户名、超大金额（7 位数）是否截断错位。</li>
+        <li><b>三态自动切页</b>：预热→进行中（12/01 00:00:00）、进行中→结束（12/31 23:59:59）两个切换点；本地时间改早/改晚均应由服务端状态纠正。</li>
+        <li><b>结束页专项</b>：未解锁关卡不显示、EXP 停止累计、库存卡组与叠卡仅含已闯关卡、结束态仍可完成领取与物流全流程。</li>
+        <li><b>埋点校验</b>：按 8.3 清单逐事件核对参数完整性，重点验证服务端上报事件与前端事件不重复计数。</li>
+      </ul>
+    </div>
+
+    <div style="margin:0 0 12px;border:1px solid #D9D2E4;border-left:4px solid #B5601A;border-radius:8px;padding:11px 14px;background:#FBF9FD">
+      <div style="font-weight:700;color:#16052F;margin-bottom:6px;font-size:13.5px">运维 / 运营支持</div>
+      <ul style="margin:0;padding-left:18px;line-height:1.8;font-size:12.5px">
+        <li><b>活动首日与整点做扩容预案</b>：0 点开赛、每小时榜单刷新、发薪日是三个流量尖峰，提前评估数据库与缓存容量。</li>
+        <li><b>关键告警阈值</b>：领取失败率 &gt;1%、库存接口响应 &gt;500ms、短信发送成功率 &lt;95%、钱包入账延迟 &gt;10s，均需即时告警。</li>
+        <li><b>准备一键降级开关</b>：榜单、热门推荐、热门活动等非核心模块可独立关闭，保障领取主链路。</li>
+        <li><b>奖励发放对账每日跑批</b>：活动侧领取记录与钱包流水按 order_id 双向核对，差异当日处理。</li>
+        <li><b>实体奖品库存预警</b>：剩余 ≤20% 时通知运营，提前决定补货或启用彩金替代。</li>
+        <li><b>上线前演练回滚</b>：活动配置、关卡奖励表支持快速回滚到上一版本；保留活动暂停能力（暂停后 EXP 继续累计但停止领取）。</li>
+        <li><b>客服话术与后台权限先就位</b>：物流修改、补发、异常领取三类工单的处理流程与权限边界在开赛前确认。</li>
+      </ul>
+    </div>
+
+
+  </div>
+</doc-page>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() { this.tries = 0; this.onHash = () => this.apply(); window.addEventListener('hashchange', this.onHash); this.t = setTimeout(() => this.apply(), 500); }
+  componentWillUnmount() { clearTimeout(this.t); window.removeEventListener('hashchange', this.onHash); this.clear(); }
+  findAll(txt, words) {
+    const hits = [];
+    let i = 0;
+    while (i < txt.length) {
+      let best = null;
+      for (const w of words) { if (txt.startsWith(w, i) && (!best || w.length > best.length)) best = w; }
+      if (best) { hits.push([i, best]); i += best.length; } else { i++; }
+    }
+    return hits;
+  }
+  apply() {
+    const KW = {"F1":["活动状态","未开始","预热中","进行中","领奖缓冲","预热页","进行中页","结束页","自动切换","倒计时"],"F2":["EXP","经验值","闯关成功","有效投注","跨期清零","跨关"],"F3":["现金奖励","一键领取","单项领取","已到账"],"F4":["实体奖品","物流信息","预占","待确认库存","剩余名额"],"F5":["库存耗尽","彩金替代","降级","已领完"],"F6":["修改地址","验证码","短信"],"F7":["结果弹窗","自动关闭","驯鹿"],"F8":["闯关榜","排行榜","TOP 100"],"F9":["结束页","领奖缓冲","领奖通道"],"F10":["打码"],"B1":["奖品管理","在库量","预占","已出库","可分配余量","库存记录","单件成本","报损","成本快照"],"B2":["关卡列表详情","批量设置","预计领取人数","达标处理","倍增","指数递增","关卡配置","创建活动"],"B3":["游戏权重","EXP 权重"],"B4":["活动总预算","物流快递预留","预算使用率","剩余预算"],"B5":["机器人"],"B6":["奖品领取记录","领取记录","确认库存","待发货","已发货","已签收","拒收","退回","快递单号","批量确认","修改奖品","改奖","导出","导入"],"B7":["帮助提示","「?」"],"D1":["活动数据列表","综合数据","运营数据","财务数据","毛收益","净收益","ROI","获客成本","活跃率"],"D2":["埋点","公共参数","事件清单"]}, NAMES = {"F1":"活动状态与页面切换","F2":"EXP 累计与闯关","F3":"现金奖励领取","F4":"实体奖品领取与物流信息","F5":"实体库存耗尽降级","F6":"物流信息修改","F7":"一键领取结果弹窗","F8":"闯关榜","F9":"活动结束页","F10":"提现打码要求","B1":"奖品管理与库存模型","B2":"活动创建与关卡配置","B3":"游戏权重配置","B4":"活动总预算","B5":"机器人管理","B6":"奖品领取记录与履约","B7":"帮助提示","D1":"活动数据列表","D2":"数据埋点"};
+    const src = (window.location.hash || '') + '&' + (window.location.search || '');
+    const mt = src.match(/hl=([A-Z][0-9]+)/);
+    this.clear();
+    if (!mt || !KW[mt[1]]) return;
+    const id = mt[1], words = KW[id], root = document.querySelector('doc-page') || document.body;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: n => (!n.nodeValue.trim() || /^(SCRIPT|STYLE|MARK)$/.test(n.parentNode.nodeName)) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT });
+    const nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
+    if (!nodes.length && this.tries++ < 10) { this.t = setTimeout(() => this.apply(), 400); return; }
+    let count = 0;
+    nodes.forEach(n => {
+      const txt = n.nodeValue, hits = this.findAll(txt, words);
+      if (!hits.length) return;
+      const frag = document.createDocumentFragment(); let last = 0;
+      hits.forEach(([pos, w]) => {
+        if (pos > last) frag.appendChild(document.createTextNode(txt.slice(last, pos)));
+        const mk = document.createElement('mark');
+        mk.setAttribute('data-hl', '1');
+        mk.style.cssText = 'background:#FF6EC7;color:#1B1720;padding:0 2px;border-radius:2px;box-shadow:0 0 0 1px #FF4FB8';
+        mk.textContent = w; frag.appendChild(mk); count++;
+        last = pos + w.length;
+      });
+      if (last < txt.length) frag.appendChild(document.createTextNode(txt.slice(last)));
+      n.parentNode.replaceChild(frag, n);
+    });
+    const bar = document.createElement('div');
+    bar.id = 'prd-hl-bar';
+    bar.style.cssText = 'position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:9999;display:flex;align-items:center;gap:10px;padding:8px 14px;border-radius:999px;background:#16052F;color:#FFF6E2;font:13px system-ui,sans-serif;box-shadow:0 6px 18px rgba(22,5,47,.3);white-space:nowrap';
+    const dot = document.createElement('span'); dot.style.cssText = 'width:10px;height:10px;border-radius:50%;background:#FF6EC7'; bar.appendChild(dot);
+    const lab = document.createElement('span'); lab.textContent = '功能点 ' + id + ' · ' + NAMES[id] + '：已标出 ' + count + ' 处'; bar.appendChild(lab);
+    const marks = () => Array.from(document.querySelectorAll('mark[data-hl]'));
+    this.idx = 0;
+    const goTo = i => { const ms = marks(); if (!ms.length) return; this.idx = (i + ms.length) % ms.length; const r = ms[this.idx].getBoundingClientRect(); window.scrollTo({ top: window.scrollY + r.top - 120, behavior: 'smooth' }); };
+    const mkBtn = (label, fn) => { const b = document.createElement('span'); b.textContent = label; b.style.cssText = 'padding:2px 10px;border-radius:999px;background:rgba(255,255,255,.14);cursor:pointer'; b.onclick = fn; bar.appendChild(b); };
+    mkBtn('← 返回速览', () => { window.location.href = './Crown Rush PRD Overview.dc.html'; });
+    mkBtn('‹ 上一处', () => goTo(this.idx - 1));
+    mkBtn('下一处 ›', () => goTo(this.idx + 1));
+    mkBtn('清除', () => { history.replaceState(null, '', window.location.pathname + window.location.search); this.clear(); });
+    document.body.appendChild(bar);
+    if (count) setTimeout(() => goTo(0), 80);
+  }
+  clear() {
+    const b = document.getElementById('prd-hl-bar'); if (b) b.remove();
+    document.querySelectorAll('mark[data-hl]').forEach(mk => { mk.parentNode.replaceChild(document.createTextNode(mk.textContent), mk); });
+  }
+  renderVals() { return {}; }
+}
+</script>
+
+
+<template id="__bundler_thumbnail">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#2A1500"/><text x="100" y="118" font-family="Arial, sans-serif" font-size="64" font-weight="bold" fill="#F0D291" text-anchor="middle">PRD</text></svg>
+</template>
+</body>
+</html>

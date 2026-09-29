@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../../support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@600;700;800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+<script src="../../image-slot.js"></script>
+<style>
+  html, body { margin:0; padding:0; background:#100322; }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  a { color:#E8C06A; text-decoration:none; }
+  a:hover { color:#F5DCA4; }
+  @keyframes crShine { 0% { transform:translateX(-140%);} 60%,100% { transform:translateX(360%);} }
+  @keyframes crFloat { 0%,100% { transform:translateY(0);} 50% { transform:translateY(-5px);} }
+  @keyframes crDots { 0%,100% { opacity:.25;} 50% { opacity:1;} }
+  @keyframes crNudge { 0%,100% { transform:translateX(0);} 50% { transform:translateX(3px);} }
+  @keyframes crBokeh { 0%,100% { opacity:.35; transform:scale(1);} 50% { opacity:.85; transform:scale(1.12);} }
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#0D0220;display:flex;justify-content:center;font-family:Barlow, sans-serif">
+<div style="width:100%;max-width:430px;background:linear-gradient(180deg,#2A0A56 0%,#1C0640 32%,#140430 70%,#0D0220 100%);position:relative;overflow:hidden;padding-bottom:30px">
+
+  <!-- top bar -->
+  <div style="position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:linear-gradient(180deg,rgba(13,2,32,.92),rgba(13,2,32,.35));backdrop-filter:blur(10px)">
+    <div style="display:flex;align-items:center;gap:9px">
+      <div style="width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;line-height:1;cursor:pointer" style-hover="background:rgba(255,255,255,.16)">‹</div>
+      <div style="color:#F3EAFF;font-weight:700;font-size:15px;letter-spacing:.06em">Crown Rush</div>
+    </div>
+    <div onClick="{{ toggleRules }}" style="display:flex;align-items:center;gap:6px;padding:6px 13px;border-radius:8px;background:rgba(232,192,106,.12);border:1px solid rgba(232,192,106,.45);color:#E8C06A;font-weight:700;font-size:12px;letter-spacing:.04em;cursor:pointer" style-hover="background:rgba(232,192,106,.2)">
+      <svg width="13" height="14" viewBox="0 0 14 15" fill="none" aria-hidden="true">
+        <path d="M3 1.6h6.2L12 4.4v9H3z" stroke="#E8C06A" stroke-width="1.3" stroke-linejoin="round" />
+        <path d="M9 1.6v3h3" stroke="#E8C06A" stroke-width="1.3" stroke-linejoin="round" />
+        <path d="M5.2 7.3h4.2M5.2 9.8h4.2" stroke="#E8C06A" stroke-width="1.3" stroke-linecap="round" />
+      </svg>
+      <span>Event Rules</span>
+    </div>
+  </div>
+
+  <!-- ===== KV BANNER ===== -->
+  <div style="position:relative;overflow:hidden;padding-bottom:26px;background:radial-gradient(62% 78% at 50% 42%, #58178F 0%, #340A6B 48%, #1C0640 100%)">
+    <div style="position:absolute;inset:0;background:radial-gradient(26% 36% at 13% 26%, rgba(168,26,35,.4), transparent 72%), radial-gradient(26% 36% at 88% 24%, rgba(20,98,74,.4), transparent 72%), radial-gradient(52% 58% at 50% 62%, rgba(232,192,106,.26), transparent 74%);pointer-events:none"></div>
+    <div style="position:absolute;inset:0;pointer-events:none">
+      <sc-for list="{{ bokeh }}" as="b" hint-placeholder-count="10">
+        <div style="position:absolute;border-radius:50%;filter:blur(6px);left:{{ b.x }};top:{{ b.y }};width:{{ b.size }};height:{{ b.size }};background:{{ b.color }};animation:crBokeh 5s ease-in-out infinite;animation-delay:{{ b.delay }}"></div>
+      </sc-for>
+    </div>
+    <img src="../../assets/kv-prelaunch.png" alt="Crown Rush" style="display:block;position:relative;width:100%;height:auto;filter:drop-shadow(0 14px 26px rgba(8,0,22,.6))" />
+    <div style="position:absolute;left:0;right:0;bottom:0;height:26px;background:linear-gradient(180deg,rgba(28,6,64,0) 0%,#1C0640 100%);pointer-events:none"></div>
+  </div>
+
+  <!-- ===== COUNTDOWN ===== -->
+  <div style="position:relative;margin:2px 14px 0;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.03));border:1px solid rgba(232,192,106,.32);padding:16px 14px 14px;backdrop-filter:blur(6px);box-shadow:0 18px 40px rgba(6,0,18,.5)">
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px">
+      <div style="height:1px;width:34px;background:linear-gradient(90deg,transparent,rgba(232,192,106,.7))"></div>
+      <div style="color:#E8C06A;font-weight:700;font-size:12.5px;letter-spacing:.24em">STARTS IN</div>
+      <div style="height:1px;width:34px;background:linear-gradient(90deg,rgba(232,192,106,.7),transparent)"></div>
+    </div>
+    <div style="margin-top:12px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+      <div style="text-align:center;padding:10px 0;border-radius:11px;background:rgba(8,1,22,.55);border:1px solid rgba(255,255,255,.08)">
+        <div style="font-family:Anton, sans-serif;font-size:30px;line-height:1;color:#F5E6C0">{{ cdD }}</div>
+        <div style="font-size:10.5px;color:#A991D6;margin-top:5px;letter-spacing:.1em">DAYS</div>
+      </div>
+      <div style="text-align:center;padding:10px 0;border-radius:11px;background:rgba(8,1,22,.55);border:1px solid rgba(255,255,255,.08)">
+        <div style="font-family:Anton, sans-serif;font-size:30px;line-height:1;color:#F5E6C0">{{ cdH }}</div>
+        <div style="font-size:10.5px;color:#A991D6;margin-top:5px;letter-spacing:.1em">HRS</div>
+      </div>
+      <div style="text-align:center;padding:10px 0;border-radius:11px;background:rgba(8,1,22,.55);border:1px solid rgba(255,255,255,.08)">
+        <div style="font-family:Anton, sans-serif;font-size:30px;line-height:1;color:#F5E6C0">{{ cdM }}</div>
+        <div style="font-size:10.5px;color:#A991D6;margin-top:5px;letter-spacing:.1em">MIN</div>
+      </div>
+      <div style="text-align:center;padding:10px 0;border-radius:11px;background:rgba(8,1,22,.55);border:1px solid rgba(232,192,106,.35)">
+        <div style="font-family:Anton, sans-serif;font-size:30px;line-height:1;color:#E8C06A">{{ cdS }}</div>
+        <div style="font-size:10.5px;color:#A991D6;margin-top:5px;letter-spacing:.1em">SEC</div>
+      </div>
+    </div>
+    <div style="margin-top:9px;text-align:center;color:#C6B4EE;font-size:12px;font-weight:700;letter-spacing:.1em">12/01 - 12/31</div>
+    <div style="margin-top:11px;padding:11px 12px;border-radius:11px;background:rgba(8,1,22,.5);border:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;gap:7px">
+      <div style="display:flex;gap:9px;align-items:flex-start">
+        <div style="width:4px;height:4px;flex:none;border-radius:50%;background:#E8C06A;margin-top:7px"></div>
+        <div style="color:#DED2F5;font-size:12px;line-height:1.6">Once the event starts, every bet earns EXP toward the next stage — clear a stage and claim its reward.</div>
+      </div>
+      <div style="display:flex;gap:9px;align-items:flex-start">
+        <div style="width:4px;height:4px;flex:none;border-radius:50%;background:#E8C06A;margin-top:7px"></div>
+        <div style="color:#DED2F5;font-size:12px;line-height:1.6">Join early to unlock the limited physical prizes sooner — <span style="color:#E8C06A;font-weight:800">while stocks last</span>, first come, first served.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PRIZE STAGE ===== -->
+  <div style="position:relative;margin:8px 0 0">
+    <div style="position:absolute;inset:8% 6% 14% 6%;background:radial-gradient(60% 55% at 50% 45%, rgba(232,192,106,.2), rgba(88,23,143,.2) 55%, transparent 78%);filter:blur(16px);pointer-events:none"></div>
+    <img src="../../assets/prizes-stage-v2.png" alt="Physical grand prizes: Stage 100 BMW X3, Stage 90 Luxury Motorcycle, Stage 80 MacBook Pro, Stage 70 iPhone 18 Pro Max, Stage 60 DJI Drone, Stage 50 Tablet, Stage 40 Apple AirPods, Stage 30 Huawei Smart Watch — 8 prizes, 71 units" style="display:block;position:relative;width:100%;height:auto;-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 4%,#000 98%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,#000 4%,#000 98%,transparent 100%)" />
+    <div style="position:relative;margin:-4px 14px 0;padding:11px 14px;border-radius:14px;background:rgba(8,1,22,.55);border:1px solid rgba(232,192,106,.28);display:flex;align-items:center;gap:12px">
+      <div style="flex:none;width:34px;height:34px;border-radius:10px;background:rgba(232,192,106,.14);border:1px solid rgba(232,192,106,.4);display:flex;align-items:center;justify-content:center">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <circle cx="10" cy="10" r="7.4" stroke="#E8C06A" stroke-width="1.5" />
+          <path d="M12.3 7.4c-.5-.7-1.3-1.1-2.3-1.1-1.5 0-2.5.9-2.5 2 0 2.5 4.9 1.1 4.9 3.6 0 1.1-1 2-2.5 2-1 0-1.8-.4-2.3-1.1" stroke="#E8C06A" stroke-width="1.5" stroke-linecap="round" />
+          <path d="M10 4.6v1.4M10 14v1.4" stroke="#E8C06A" stroke-width="1.5" stroke-linecap="round" />
+        </svg>
+      </div>
+      <div style="flex:1;min-width:0">
+        <div style="color:#F3EAFF;font-weight:700;font-size:12.5px">Every stage also pays cash</div>
+        <div style="color:#8E78BE;font-size:11px;margin-top:3px">Claimed on top of the physical prizes</div>
+      </div>
+      <div style="flex:none;text-align:right">
+        <div style="color:#E8C06A;font-family:Anton,sans-serif;font-size:17px;line-height:1;letter-spacing:.02em">₱3 → ₱100,000</div>
+        <div style="color:#A991D6;font-size:10.5px;margin-top:4px">Up to ₱1,000,000+ in total</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HOW TO JOIN ===== -->
+  <div style="margin:16px 14px 0;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.1);padding:15px 14px">
+    <div style="color:#E8C06A;font-weight:700;font-size:12.5px;letter-spacing:.24em">HOW IT WORKS</div>
+    <div style="position:relative;margin-top:14px;padding-left:30px">
+      <div style="position:absolute;left:12px;top:8px;bottom:26px;width:2px;background:linear-gradient(180deg,rgba(232,192,106,.15),rgba(232,192,106,.7) 45%,#E8C06A)"></div>
+
+      <div style="position:relative;display:flex;flex-direction:column;gap:14px">
+        <div style="position:relative">
+          <div style="position:absolute;left:-30px;top:1px;width:24px;height:24px;border-radius:50%;background:rgba(8,1,22,.9);border:1px solid rgba(232,192,106,.45);color:#E8C06A;font-family:Anton,sans-serif;font-size:13px;display:flex;align-items:center;justify-content:center">1</div>
+          <div style="display:flex;align-items:center;gap:6px">
+            <span style="color:#F3EAFF;font-weight:700;font-size:13.5px">Bet → Earn EXP</span>
+            <span onClick="{{ openExpRules }}" title="See how each game category earns EXP" style="flex:none;width:16px;height:16px;border-radius:50%;background:rgba(232,192,106,.16);border:1px solid rgba(232,192,106,.45);color:#E8C06A;font-size:10.5px;font-weight:800;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:rgba(232,192,106,.3)">?</span>
+          </div>
+          <div style="color:#A991D6;font-size:11.5px;margin-top:3px;line-height:1.55">Valid bets convert to EXP automatically — real time, no sign-up needed</div>
+        </div>
+
+        <div style="position:relative">
+          <div style="position:absolute;left:-30px;top:1px;width:24px;height:24px;border-radius:50%;background:rgba(8,1,22,.9);border:1px solid rgba(232,192,106,.45);color:#E8C06A;font-family:Anton,sans-serif;font-size:13px;display:flex;align-items:center;justify-content:center">2</div>
+          <div style="color:#F3EAFF;font-weight:700;font-size:13.5px">Hit the EXP target → Stage cleared</div>
+          <div style="color:#A991D6;font-size:11.5px;margin-top:3px;line-height:1.55">Clear Stage 1 through Stage 100 — every cleared stage unlocks a reward, and stages never reset</div>
+        </div>
+
+        <div style="position:relative">
+          <div style="position:absolute;left:-30px;top:1px;width:24px;height:24px;border-radius:50%;background:linear-gradient(180deg,#F0D291,#C89A3C);color:#2A1500;font-family:Anton,sans-serif;font-size:13px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px rgba(232,192,106,.12)">3</div>
+          <div style="color:#E8C06A;font-weight:800;font-size:14px">Stage cleared → Claim your reward</div>
+          <div style="color:#A991D6;font-size:11.5px;margin-top:3px;line-height:1.55">Rewards are not auto-credited — tap to claim them on this page</div>
+
+          <div style="margin-top:9px;display:flex;flex-direction:column;gap:8px">
+            <div style="padding:11px 12px;border-radius:12px;background:rgba(232,192,106,.08);border:1px solid rgba(232,192,106,.3)">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div style="color:#F5E6C0;font-weight:700;font-size:12.5px">Cash Rewards</div>
+                <div style="color:#E8C06A;font-size:11px;font-weight:700">Claim all in one tap</div>
+              </div>
+              <div style="margin-top:8px;display:flex;align-items:center;gap:6px;color:#CDBBEF;font-size:11px;flex-wrap:wrap">
+                <span>Stage cleared</span><span style="color:#E8C06A">→</span><span>Tap claim</span><span style="color:#E8C06A">→</span><span style="color:#F3EAFF;font-weight:700">Cash credited instantly</span>
+              </div>
+            </div>
+            <div style="padding:11px 12px;border-radius:12px;background:rgba(168,26,35,.1);border:1px solid rgba(232,192,106,.22)">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div style="color:#F5E6C0;font-weight:700;font-size:12.5px">Physical Prizes</div>
+                <div style="color:#FFB3B3;font-size:11px;font-weight:700">Limited · while stocks last</div>
+              </div>
+              <div style="margin-top:8px;display:flex;align-items:center;gap:6px;color:#CDBBEF;font-size:11px;flex-wrap:wrap">
+                <span>Clear the stage within quota</span><span style="color:#E8C06A">→</span><span style="color:#F5E6C0;font-weight:700">Shipping details</span><span style="color:#E8C06A">→</span><span>Stock confirmed</span><span style="color:#E8C06A">→</span><span style="color:#F3EAFF;font-weight:700">Shipped</span>
+              </div>
+              <div onClick="{{ openShip }}" style="margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 14px;border-radius:11px;background:linear-gradient(180deg,#F0D291,#C89A3C);border:1px solid #FFF1C8;color:#2A1500;font-weight:800;font-size:13.5px;letter-spacing:.02em;cursor:pointer;box-shadow:0 6px 16px rgba(200,154,60,.34), inset 0 1px 0 rgba(255,255,255,.55)" style-hover="filter:brightness(1.07)">
+                <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M2.6 7.2 10 3.4l7.4 3.8v7.6L10 18.6 2.6 14.8z" stroke="#2A1500" stroke-width="1.5" stroke-linejoin="round" />
+                  <path d="M2.6 7.2 10 11l7.4-3.8M10 11v7.6" stroke="#2A1500" stroke-width="1.5" stroke-linejoin="round" />
+                </svg>
+                <span>{{ shipLinkLabel }}</span>
+                <span style="display:inline-block;animation:crNudge 1.4s ease-in-out infinite">›</span>
+              </div>
+              <div style="margin-top:6px;text-align:center;color:#A991D6;font-size:10.5px">Add it now so your prize ships the moment you win</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TASK PREVIEW ===== -->
+  <div style="margin:16px 14px 0;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.1);padding:15px 14px">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div style="color:#E8C06A;font-weight:700;font-size:12.5px;letter-spacing:.24em">REWARD PREVIEW</div>
+      <div style="font-size:11px;color:#8E78BE">8 stages with physical prizes · 71 units</div>
+    </div>
+    <div style="margin-top:9px;display:flex;flex-direction:column;gap:4px">
+      <sc-for list="{{ preview }}" as="t" hint-placeholder-count="3">
+        <div style="display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:9px;background:rgba(8,1,22,.45);border:1px solid rgba(255,255,255,.07)">
+          <div style="width:26px;height:26px;flex:none;border-radius:7px;background:rgba(232,192,106,.12);border:1px solid rgba(232,192,106,.32);color:#E8C06A;font-family:Anton,sans-serif;font-size:13px;display:flex;align-items:center;justify-content:center">{{ t.lv }}</div>
+          <div style="flex:1;min-width:0;display:flex;align-items:baseline;gap:8px">
+            <span style="color:#F3EAFF;font-weight:700;font-size:12px;white-space:nowrap">Total bets {{ t.bet }}</span>
+            <span style="color:#A991D6;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ t.reward }}</span>
+          </div>
+          <div style="flex:none;display:flex;align-items:center;gap:4px;padding:4px 9px;border-radius:7px;background:rgba(255,255,255,.06);color:#8E78BE;font-weight:700;font-size:10.5px">
+            <svg width="10" height="11" viewBox="0 0 12 14" fill="none" aria-hidden="true">
+              <path d="M3 6V4.2C3 2.4 4.3 1 6 1s3 1.4 3 3.2V6" stroke="#8E78BE" stroke-width="1.4" stroke-linecap="round" />
+              <rect x="1.4" y="6" width="9.2" height="7" rx="1.8" fill="#8E78BE" opacity="0.85" />
+            </svg>
+            <span>Not started</span>
+          </div>
+        </div>
+      </sc-for>
+      <div style="display:flex;justify-content:center;align-items:center;gap:7px;padding:3px 0 5px">
+        <div style="width:5px;height:5px;border-radius:50%;background:#A991D6;animation:crDots 1.6s ease-in-out infinite"></div>
+        <div style="width:5px;height:5px;border-radius:50%;background:#A991D6;animation:crDots 1.6s ease-in-out infinite;animation-delay:.22s"></div>
+        <div style="width:5px;height:5px;border-radius:50%;background:#A991D6;animation:crDots 1.6s ease-in-out infinite;animation-delay:.44s"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:0 2px">
+        <div style="color:#E8C06A;font-weight:800;font-size:12.5px">Physical prize stages <span style="color:#8E78BE;font-weight:500;font-size:11px">{{ physicalIndexLabel }}</span></div>
+        <div style="display:flex;gap:6px">
+          <div onClick="{{ prevPrize }}" style="width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);color:#E8C06A;font-size:12px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:rgba(232,192,106,.18)">‹</div>
+          <div onClick="{{ nextPrize }}" style="width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);color:#E8C06A;font-size:12px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:rgba(232,192,106,.18)">›</div>
+        </div>
+      </div>
+
+      <div onPointerDown="{{ onDeckDown }}" onPointerUp="{{ onDeckUp }}" style="position:relative;height:242px;margin-top:8px;padding-bottom:6px;overflow:hidden;touch-action:pan-y;cursor:grab">
+        <sc-for list="{{ deck }}" as="g" hint-placeholder-count="0">
+          <div style="position:absolute;top:0;left:0;width:64%;border-radius:14px;overflow:hidden;background:linear-gradient(180deg,rgba(64,20,112,.97),rgba(22,5,47,.97));border:1px solid rgba(232,192,106,.32);box-shadow:0 12px 26px rgba(6,0,18,.55);transform-origin:left center;transition:transform .85s cubic-bezier(.33,.9,.28,1), opacity .85s cubic-bezier(.4,0,.2,1);transform:{{ g.transform }};opacity:{{ g.opacity }};z-index:{{ g.z }}">
+            <div style="position:relative;height:112px;background:radial-gradient(70% 70% at 50% 45%, rgba(232,192,106,.16), transparent 72%);display:flex;align-items:center;justify-content:center;padding:8px">
+              <div style="position:absolute;top:8px;left:8px;color:#2A1500;background:linear-gradient(180deg,#F0D291,#C89A3C);border-radius:6px;padding:2px 7px;font-family:Anton,sans-serif;font-size:12px;letter-spacing:.02em">Stage {{ g.lv }}</div>
+              <div role="img" aria-label="{{ g.name }}" style="width:100%;height:94px;background-image:{{ g.bgImg }};background-size:contain;background-position:center;background-repeat:no-repeat"></div>
+            </div>
+            <div style="padding:9px 11px 11px;border-top:1px solid rgba(255,255,255,.07)">
+              <div style="color:#F3EAFF;font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ g.name }}</div>
+              <div style="color:#A991D6;font-size:11px;margin-top:3px">Total bets {{ g.bet }}</div>
+              <div style="margin-top:8px;height:6px;border-radius:999px;background:rgba(8,1,22,.6);overflow:hidden"><div style="height:100%;border-radius:999px;background:linear-gradient(90deg,#C89A3C,#F0D291);width:{{ g.pct }}"></div></div>
+              <div style="margin-top:6px;display:flex;justify-content:space-between;align-items:center;gap:8px">
+                <span style="color:#8E78BE;font-size:10.5px">{{ g.qty }} units only</span>
+                <span style="flex:none;padding:4px 9px;border-radius:999px;background:rgba(232,192,106,.14);border:1px solid rgba(232,192,106,.4);color:#E8C06A;font-size:10.5px;font-weight:700">{{ g.stage }}</span>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="display:flex;justify-content:center;gap:6px;padding-top:8px">
+        <sc-for list="{{ prizeDots }}" as="dot" hint-placeholder-count="8">
+          <div onClick="{{ dot.onClick }}" style="width:6px;height:6px;border-radius:50%;cursor:pointer;background:{{ dot.color }}"></div>
+        </sc-for>
+      </div>
+
+    </div>
+
+    <div style="margin-top:11px;text-align:center;color:#8E78BE;font-size:11px">The full 100-stage reward table opens when the event starts</div>
+  </div>
+
+  <!-- ===== WARM UP ===== -->
+  <div style="margin:16px 14px 0;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.1);padding:15px 14px">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <div style="color:#E8C06A;font-weight:700;font-size:12.5px;letter-spacing:.24em">WARM UP</div>
+        <div style="color:#8E78BE;font-size:11px;margin-top:4px">Get familiar with the games that earn EXP before kickoff</div>
+      </div>
+      <div onClick="{{ viewAllGames }}" style="flex:none;color:#A991D6;font-size:11.5px;cursor:pointer" style-hover="color:#E8C06A">View all ›</div>
+    </div>
+
+    <div style="margin-top:12px;display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px">
+      <sc-for list="{{ gameTabs }}" as="tab" hint-placeholder-count="5">
+        <div onClick="{{ tab.onClick }}" style="flex:none;padding:6px 14px;border-radius:999px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;background:{{ tab.bg }};border:1px solid {{ tab.border }};color:{{ tab.color }}">{{ tab.label }}</div>
+      </sc-for>
+    </div>
+
+    <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px">
+      <sc-for list="{{ games }}" as="gm" hint-placeholder-count="0">
+        <div style="cursor:pointer">
+          <div style="position:relative;aspect-ratio:1/1;border-radius:11px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:rgba(8,1,22,.55)">
+            <div role="img" aria-label="{{ gm.name }}" style="width:100%;height:100%;background-image:{{ gm.bgImg }};background-size:cover;background-position:center"></div>
+          </div>
+          <div style="margin-top:5px;color:#DED2F5;font-size:10.5px;font-weight:700;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ gm.name }}</div>
+          <div style="color:#8E78BE;font-size:10px;text-align:center">{{ gm.exp }}</div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div onClick="{{ viewAllGames }}" style="margin-top:12px;text-align:center;padding:11px 0;border-radius:11px;background:rgba(232,192,106,.1);border:1px solid rgba(232,192,106,.32);color:#E8C06A;font-weight:800;font-size:13px;cursor:pointer" style-hover="background:rgba(232,192,106,.18)">{{ viewAllLabel }}</div>
+  </div>
+
+  <div style="margin-top:18px;text-align:center;color:rgba(255,255,255,.35);font-size:10.5px;line-height:1.7">18+ Play responsibly · The platform reserves final interpretation of this event</div>
+
+  <!-- ===== SHIPPING FORM ===== -->
+  <sc-if value="{{ shipOpen }}">
+    <div style="position:fixed;inset:0;z-index:65;background:rgba(6,0,18,.78);display:flex;align-items:center;justify-content:center;padding:18px">
+      <div style="width:100%;max-width:360px;border-radius:18px;background:#16052F;border:1px solid rgba(232,192,106,.35);padding:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="color:#E8C06A;font-weight:700;font-size:14px;letter-spacing:.16em">{{ shipTitle }}</div>
+          <div onClick="{{ closeShip }}" style="width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.08);color:#F3EAFF;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer">✕</div>
+        </div>
+        <sc-if value="{{ loggedIn }}" hint-placeholder-val="{{ true }}">
+          <div style="margin-top:12px">
+            <div style="padding:10px 12px;border-radius:11px;background:rgba(232,192,106,.1);border:1px solid rgba(232,192,106,.28);color:#F5E6C0;font-size:11.5px;line-height:1.6">These shipping details will be bound to this account and used for all prize deliveries.<br /><span style="color:#FFCFCF">To change them later, verify the code sent to your registered mobile number and edit them yourself.</span></div>
+            <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+              <div style="padding:11px 12px;border-radius:10px;border:1px solid rgba(232,192,106,.25);background:rgba(232,192,106,.07);display:flex;justify-content:space-between;align-items:center">
+                <div style="color:#8E78BE;font-size:11.5px">Account</div>
+                <div style="color:#F5E6C0;font-weight:700;font-size:13px">{{ username }}</div>
+              </div>
+              <input placeholder="Recipient name" style="padding:11px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(8,1,22,.6);font-size:13px;color:#F3EAFF;outline:none;font-family:inherit" />
+              <input placeholder="Contact number" style="padding:11px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(8,1,22,.6);font-size:13px;color:#F3EAFF;outline:none;font-family:inherit" />
+              <textarea placeholder="Full delivery address" rows="3" style="padding:11px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(8,1,22,.6);font-size:13px;color:#F3EAFF;outline:none;resize:none;font-family:inherit"></textarea>
+            </div>
+            <div onClick="{{ submitShip }}" style="margin-top:12px;text-align:center;padding:12px 0;border-radius:11px;background:linear-gradient(180deg,#F0D291,#C89A3C);color:#2A1500;font-weight:800;font-size:14.5px;cursor:pointer" style-hover="filter:brightness(1.06)">Submit shipping details</div>
+            <div style="margin-top:8px;text-align:center;color:#8E78BE;font-size:10.5px">Submitting confirms and binds these details</div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ shipLocked }}">
+          <div style="margin-top:12px">
+            <div style="padding:10px 12px;border-radius:11px;background:rgba(46,204,113,.12);border:1px solid rgba(46,204,113,.4);color:#8FE3B8;font-size:12px;line-height:1.6">Shipping details are bound to this account. Editing requires mobile verification.</div>
+            <div style="margin-top:10px;display:flex;flex-direction:column;gap:7px">
+              <div style="display:flex;justify-content:space-between;padding:10px 12px;border-radius:10px;background:rgba(8,1,22,.6);border:1px solid rgba(255,255,255,.08)"><span style="color:#8E78BE;font-size:11.5px">Account</span><span style="color:#F3EAFF;font-size:12.5px;font-weight:700">{{ username }}</span></div>
+              <div style="display:flex;justify-content:space-between;gap:12px;padding:10px 12px;border-radius:10px;background:rgba(8,1,22,.6);border:1px solid rgba(255,255,255,.08)"><span style="color:#8E78BE;font-size:11.5px;flex:none">Recipient</span><span style="color:#F3EAFF;font-size:12.5px;text-align:right">Juan D. Santos</span></div>
+              <div style="display:flex;justify-content:space-between;gap:12px;padding:10px 12px;border-radius:10px;background:rgba(8,1,22,.6);border:1px solid rgba(255,255,255,.08)"><span style="color:#8E78BE;font-size:11.5px;flex:none">Mobile number</span><span style="color:#F3EAFF;font-size:12.5px;text-align:right">+63 917 ****  882</span></div>
+              <div style="display:flex;justify-content:space-between;gap:12px;padding:10px 12px;border-radius:10px;background:rgba(8,1,22,.6);border:1px solid rgba(255,255,255,.08)"><span style="color:#8E78BE;font-size:11.5px;flex:none">Delivery address</span><span style="color:#F3EAFF;font-size:12.5px;text-align:right;line-height:1.5">Unit 12B, Vista Tower, Makati City, Metro Manila</span></div>
+            </div>
+            <div style="margin-top:12px;padding:10px 12px;border-radius:11px;background:rgba(232,192,106,.1);border:1px solid rgba(232,192,106,.28);color:#F5E6C0;font-size:11.5px;line-height:1.6">To change your shipping details, verify the code sent to your registered mobile number — then you can edit them yourself.</div>
+            <div onClick="{{ startOtp }}" style="margin-top:12px;text-align:center;padding:12px 0;border-radius:11px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:#F3EAFF;font-weight:800;font-size:14px;cursor:pointer" style-hover="background:rgba(255,255,255,.14)">Verify & edit address</div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ otpStep }}">
+          <div style="margin-top:12px">
+            <div style="padding:10px 12px;border-radius:11px;background:rgba(232,192,106,.1);border:1px solid rgba(232,192,106,.28);color:#F5E6C0;font-size:11.5px;line-height:1.6">For account security, editing shipping details requires verifying the mobile number on your account. A code has been sent to <span style="font-weight:800">{{ maskedPhone }}</span>.</div>
+            <div style="margin-top:12px;display:flex;gap:8px">
+              <input placeholder="Enter 6-digit code" inputMode="numeric" maxLength="6" style="flex:1;min-width:0;padding:11px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(8,1,22,.6);font-size:14px;letter-spacing:.24em;color:#F3EAFF;outline:none;font-family:inherit" />
+              <div onClick="{{ sendOtp }}" style="flex:none;padding:11px 14px;border-radius:10px;border:1px solid rgba(232,192,106,.45);background:rgba(232,192,106,.12);color:#E8C06A;font-weight:700;font-size:12.5px;cursor:pointer;white-space:nowrap" style-hover="background:rgba(232,192,106,.2)">{{ otpBtnLabel }}</div>
+            </div>
+            <div onClick="{{ verifyOtp }}" style="margin-top:12px;text-align:center;padding:12px 0;border-radius:11px;background:linear-gradient(180deg,#F0D291,#C89A3C);color:#2A1500;font-weight:800;font-size:14.5px;cursor:pointer" style-hover="filter:brightness(1.06)">Verify code</div>
+            <div onClick="{{ cancelOtp }}" style="margin-top:8px;text-align:center;color:#8E78BE;font-size:11.5px;cursor:pointer" style-hover="color:#C9B6F2">Back</div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ otpDone }}">
+          <div style="margin-top:12px">
+            <div style="padding:10px 12px;border-radius:11px;background:rgba(46,204,113,.12);border:1px solid rgba(46,204,113,.4);color:#8FE3B8;font-size:12px;line-height:1.6">Mobile number verified — you can now edit your shipping details.</div>
+            <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+              <div style="padding:11px 12px;border-radius:10px;border:1px solid rgba(232,192,106,.25);background:rgba(232,192,106,.07);display:flex;justify-content:space-between;align-items:center">
+                <span style="color:#8E78BE;font-size:11.5px">Account</span><span style="color:#F3EAFF;font-size:12.5px;font-weight:700">{{ username }}</span>
+              </div>
+              <input defaultValue="Juan D. Santos" placeholder="Recipient name" style="padding:11px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(8,1,22,.6);font-size:13px;color:#F3EAFF;outline:none;font-family:inherit" />
+              <input defaultValue="+63 917 555 0882" placeholder="Contact number" style="padding:11px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(8,1,22,.6);font-size:13px;color:#F3EAFF;outline:none;font-family:inherit" />
+              <textarea defaultValue="Unit 12B, Vista Tower, Makati City, Metro Manila" placeholder="Full delivery address" rows="3" style="padding:11px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(8,1,22,.6);font-size:13px;color:#F3EAFF;outline:none;resize:none;font-family:inherit"></textarea>
+            </div>
+            <div onClick="{{ saveEdit }}" style="margin-top:12px;text-align:center;padding:12px 0;border-radius:11px;background:linear-gradient(180deg,#F0D291,#C89A3C);color:#2A1500;font-weight:800;font-size:14.5px;cursor:pointer" style-hover="filter:brightness(1.06)">Save changes</div>
+            <div onClick="{{ cancelOtp }}" style="margin-top:8px;text-align:center;color:#8E78BE;font-size:11.5px;cursor:pointer" style-hover="color:#C9B6F2">Cancel</div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ loggedOut }}">
+          <div style="margin-top:12px">
+            <div style="padding:12px;border-radius:11px;background:rgba(168,26,35,.14);border:1px solid rgba(232,192,106,.25);color:#FFD9D9;font-size:12px;line-height:1.65">You are not logged in. Shipping details must be bound to an account — please log in first.</div>
+            <div onClick="{{ goLogin }}" style="margin-top:12px;text-align:center;padding:12px 0;border-radius:11px;background:linear-gradient(180deg,#F0D291,#C89A3C);color:#2A1500;font-weight:800;font-size:14.5px;cursor:pointer" style-hover="filter:brightness(1.06)">Go to login</div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ===== RULES ===== -->
+  <sc-if value="{{ rulesOpen }}">
+    <div style="position:fixed;inset:0;z-index:60;background:rgba(6,0,18,.78);display:flex;justify-content:center;align-items:flex-end">
+      <div ref="{{ rulesBoxRef }}" style="width:100%;max-width:430px;max-height:86vh;overflow:auto;background:#16052F;border-top:1px solid rgba(232,192,106,.35);border-radius:18px 18px 0 0;padding:16px 14px 26px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="color:#E8C06A;font-weight:700;font-size:14px;letter-spacing:.2em">Event Rules</div>
+          <div onClick="{{ toggleRules }}" style="width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.08);color:#F3EAFF;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer">✕</div>
+        </div>
+        <div style="margin-top:12px;display:flex;flex-direction:column;gap:9px;color:#DED2F5;font-size:12.5px;line-height:1.75">
+          <div style="padding:11px 12px;border-radius:11px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07)"><b style="color:#fff">1. Event period</b><br />One calendar month per season. This season: 12/01 00:00:00 – 12/31 23:59:59 (GMT+8).</div>
+          <div ref="{{ expRuleRef }}" style="padding:11px 12px;border-radius:11px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07)"><b style="color:#fff">2. Bets & EXP</b><br />EXP = valid bets ÷ the conversion rate of each game category. Accrued in real time, subject to backend configuration.<div style="margin-top:9px;display:flex;flex-direction:column;gap:6px">
+            <div style="display:flex;justify-content:space-between;gap:10px;padding:8px 10px;border-radius:9px;background:rgba(8,1,22,.5);border:1px solid rgba(255,255,255,.07)"><span style="color:#F3EAFF;font-weight:700">Slots</span><span style="color:#E8C06A;font-weight:800">₱1 = 1 EXP</span></div>
+            <div style="display:flex;justify-content:space-between;gap:10px;padding:8px 10px;border-radius:9px;background:rgba(8,1,22,.5);border:1px solid rgba(255,255,255,.07)"><span style="color:#F3EAFF;font-weight:700">Live Casino</span><span style="color:#E8C06A;font-weight:800">₱20 = 1 EXP</span></div>
+            <div style="display:flex;justify-content:space-between;gap:10px;padding:8px 10px;border-radius:9px;background:rgba(8,1,22,.5);border:1px solid rgba(255,255,255,.07)"><span style="color:#F3EAFF;font-weight:700">eBingo</span><span style="color:#E8C06A;font-weight:800">₱5 = 1 EXP</span></div>
+            <div style="display:flex;justify-content:space-between;gap:10px;padding:8px 10px;border-radius:9px;background:rgba(8,1,22,.5);border:1px solid rgba(255,255,255,.07)"><span style="color:#F3EAFF;font-weight:700">Fishing</span><span style="color:#E8C06A;font-weight:800">₱4 = 1 EXP</span></div>
+            <div style="display:flex;justify-content:space-between;gap:10px;padding:8px 10px;border-radius:9px;background:rgba(8,1,22,.5);border:1px solid rgba(255,255,255,.07)"><span style="color:#F3EAFF;font-weight:700">Poker</span><span style="color:#E8C06A;font-weight:800">₱10 = 1 EXP</span></div>
+            <div style="color:#8E78BE;font-size:11px;line-height:1.6">Hedged bets, cancelled bets and bets on non-participating games do not earn EXP.</div>
+          </div></div>
+          <div style="padding:11px 12px;border-radius:11px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07)"><b style="color:#fff">3. Cash rewards</b><br />Claim manually on this page once a stage is cleared. Claim-all is supported and cash is credited straight to your account.</div>
+          <div style="padding:11px 12px;border-radius:11px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07)"><b style="color:#fff">4. Physical prizes</b><br />Available once you clear the stage within quota; submit shipping details and have stock confirmed. The claim button is disabled at zero stock — first come, first served.</div>
+          <div style="padding:11px 12px;border-radius:11px;background:rgba(168,26,35,.16);border:1px solid rgba(168,26,35,.45);color:#FFD6D6"><b style="color:#fff">5. Risk control</b><br />Hedging, arbitrage or abnormal betting may lead to disqualification and reward recovery.</div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:430,&quot;height&quot;:932},&quot;loggedIn&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Account&quot;},&quot;username&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;bi****8x9&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Account&quot;}}">
+class Component extends DCLogic {
+  state = { subscribed: false, rulesOpen: false, shipOpen: false, shipSubmitted: false, otpStage: 'none', otpLeft: 0, prizeIdx: 0, left: 0 };
+  sendCode() {
+    if (this.state.otpLeft > 0) return;
+    this.setState({ otpLeft: 60 });
+    clearInterval(this.otpTimer);
+    this.otpTimer = setInterval(() => {
+      this.setState(st => {
+        const n = st.otpLeft - 1;
+        if (n <= 0) clearInterval(this.otpTimer);
+        return { otpLeft: Math.max(0, n) };
+      });
+    }, 1000);
+  }
+  componentDidMount() {
+    // Event start: next 12/01 00:00:00 (GMT+8)
+    const now = new Date();
+    const utc8Now = new Date(now.getTime() + (now.getTimezoneOffset() * 60000) + 8 * 3600000);
+    const year = utc8Now.getMonth() === 11 && utc8Now.getDate() >= 1 ? utc8Now.getFullYear() + 1 : utc8Now.getFullYear();
+    this.target = Date.UTC(year, 11, 1, 0, 0, 0) - 8 * 3600000;
+    this.tick();
+    this.timer = setInterval(() => this.tick(), 1000);
+    this.startAuto();
+  }
+  componentWillUnmount() { clearInterval(this.timer); clearInterval(this.otpTimer); clearInterval(this.autoTimer); }
+  tick() { this.setState({ left: Math.max(0, this.target - Date.now()) }); }
+  pad(n) { return String(n).padStart(2, '0'); }
+  startAuto() {
+    clearInterval(this.autoTimer);
+    this.autoTimer = setInterval(() => {
+      this.setState(st => ({ prizeIdx: (st.prizeIdx + 1) % 8 }));
+    }, 5000);
+  }
+  restartAuto() { this.startAuto(); }
+  renderVals() {
+    const s = Math.floor(this.state.left / 1000);
+    const preview = [
+      { lv: 1, bet: '₱100', reward: 'Cash reward ₱3' },
+      { lv: 2, bet: '₱300', reward: 'Cash reward ₱4' },
+      { lv: 3, bet: '₱500', reward: 'Cash reward ₱5' }
+    ];
+    const physicals = [
+      { lv: 30, name: 'Huawei Smart Watch', qty: 20, bet: '₱1,000,000', cash: '300', stage: 'Warm Up', img: '../../assets/prize-lv30.png', fit: 'contain' },
+      { lv: 40, name: 'Apple AirPods', qty: 20, bet: '₱4,500,000', cash: '800', stage: 'Picking Up', img: '../../assets/prize-lv40.png', fit: 'contain' },
+      { lv: 50, name: 'Tablet', qty: 10, bet: '₱12,000,000', cash: '2,000', stage: 'Step Up', img: '../../assets/prize-lv50.png', fit: 'contain' },
+      { lv: 60, name: 'DJI Drone', qty: 10, bet: '₱32,000,000', cash: '6,000', stage: 'Pro Tier', img: '../../assets/prize-lv60.png', fit: 'contain' },
+      { lv: 70, name: 'iPhone 18 Pro Max', qty: 5, bet: '₱70,000,000', cash: '25,000', stage: 'Elite Path', img: '../../assets/prize-lv70.png', fit: 'contain' },
+      { lv: 80, name: 'MacBook Pro', qty: 3, bet: '₱145,000,000', cash: '70,000', stage: 'Peak Tier', img: '../../assets/prize-lv80.png', fit: 'contain' },
+      { lv: 90, name: 'Luxury Motorcycle', qty: 2, bet: '₱240,000,000', cash: '90,000', stage: 'Glory', img: '../../assets/prize-lv90.png', fit: 'contain' },
+      { lv: 100, name: 'BMW X3', qty: 1, bet: '₱300,000,000', cash: '100,000', stage: 'Grand Prize', img: '../../assets/prize-lv100.png', fit: 'contain' }
+    ].map(g => Object.assign({ pct: '100%', fit: 'cover' }, g)).map(g => Object.assign({}, g, { bgImg: 'url(' + g.img + ')' }));
+    const rev = physicals.slice().reverse();
+    const mk = (label, prefix, weight, names, href) => ({
+      label, href,
+      items: names.map((n, i) => ({ name: n, short: n, bgImg: "url('../../assets/game-" + prefix + (i + 1) + ".png')", exp: weight }))
+    });
+    const catalogGames = {
+      slots: mk('Slots', 'gs', 'JILI · 1:1 EXP', ['Super Ace', 'Super Ace Deluxe', 'Fortune Gems 3', 'Golden Empire', 'Wild Ace', 'Mega Ace'], 'https://789bingo.com/games/online-slot'),
+      live: mk('Live Casino', 'gl', 'LIVE · 20:1 EXP', ['Baccarat', 'Dragon Tiger', 'Roulette', 'Sic Bo', 'Color Game', 'Super 6'], 'https://789bingo.com/games/live-casino'),
+      ebingo: mk('eBingo', 'eb', 'BINGO · 5:1 EXP', ['Bingo Bonanza', 'Lucky Bingo', 'Super Bingo', 'Bingo Fever', 'Mega Bingo', 'Bingo Rush'], 'https://789bingo.com/games/bingo'),
+      fishing: mk('Fishing', 'fi', 'FISH · 4:1 EXP', ['Jackpot Fishing', 'Dragon Fortune', 'Happy Fishing', 'Boom Legend', 'Mega Fishing', 'Ocean King'], 'https://789bingo.com/games/fishing'),
+      poker: mk('Poker', 'pk', 'POKER · 10:1 EXP', ['Texas Holdem', 'Omaha Poker', 'Video Poker', 'Bull Bull', 'Dragon Poker', 'Pusoy'], 'https://789bingo.com/games/poker'),
+      arcade: mk('Mini Games', 'ar', 'ARCADE · 3:1 EXP', ['Mines', 'Limbo', 'Dice', 'Plinko', 'Crash', 'Hi-Lo'], 'https://789bingo.com/games/arcade')
+    };
+    const tabOrder = ['slots', 'live', 'ebingo', 'fishing', 'poker', 'arcade'];
+    const tab = catalogGames[this.state.gameTab] ? this.state.gameTab : 'slots';
+    const bokehSpec = [
+      ['6%', '18%', '26px', 'rgba(232,192,106,.55)'], ['22%', '8%', '14px', 'rgba(168,26,35,.55)'],
+      ['38%', '22%', '10px', 'rgba(255,255,255,.35)'], ['58%', '10%', '18px', 'rgba(20,98,74,.6)'],
+      ['76%', '20%', '12px', 'rgba(232,192,106,.5)'], ['90%', '12%', '22px', 'rgba(168,26,35,.45)'],
+      ['12%', '62%', '16px', 'rgba(232,192,106,.35)'], ['46%', '78%', '12px', 'rgba(255,255,255,.25)'],
+      ['70%', '68%', '18px', 'rgba(232,192,106,.4)'], ['86%', '56%', '14px', 'rgba(20,98,74,.45)']
+    ];
+    const bokeh = bokehSpec.map((b, i) => ({ x: b[0], y: b[1], size: b[2], color: b[3], delay: (i * 0.4).toFixed(1) + 's' }));
+    return {
+      bokeh,
+      cdD: Math.floor(s / 86400),
+      cdH: this.pad(Math.floor(s / 3600) % 24),
+      cdM: this.pad(Math.floor(s / 60) % 60),
+      cdS: this.pad(s % 60),
+      shipOpen: this.state.shipOpen,
+      loggedIn: this.props.loggedIn !== false && !this.state.shipSubmitted,
+      shipLocked: this.props.loggedIn !== false && this.state.shipSubmitted && this.state.otpStage === 'none',
+      otpStep: this.state.otpStage === 'verify',
+      otpDone: this.state.otpStage === 'done',
+      maskedPhone: '+63 917 **** 882',
+      otpBtnLabel: this.state.otpLeft > 0 ? (this.state.otpLeft + 's to resend') : 'Send code',
+      startOtp: () => { this.setState({ otpStage: 'verify' }); this.sendCode(); },
+      sendOtp: () => this.sendCode(),
+      verifyOtp: () => this.setState({ otpStage: 'done' }),
+      cancelOtp: () => this.setState({ otpStage: 'none' }),
+      saveEdit: () => this.setState({ otpStage: 'none' }),
+      shipLinkLabel: this.state.shipSubmitted ? 'View shipping details' : 'Add shipping details',
+      shipTitle: this.state.shipSubmitted ? 'My shipping details' : 'Add shipping details',
+      loggedOut: this.props.loggedIn === false,
+      submitShip: () => this.setState({ shipSubmitted: true }),
+      username: this.props.username || 'bi****8x9',
+      goLogin: () => this.setState({ shipOpen: false }),
+      openShip: () => this.setState({ shipOpen: true }),
+      closeShip: () => this.setState({ shipOpen: false, otpStage: 'none' }),
+      rulesOpen: this.state.rulesOpen,
+      toggleRules: () => this.setState(st => ({ rulesOpen: !st.rulesOpen })),
+      expRuleRef: (el) => { this.expRuleEl = el; },
+      rulesBoxRef: (el) => { this.rulesBoxEl = el; },
+      openExpRules: () => {
+        this.setState({ rulesOpen: true });
+        setTimeout(() => {
+          const el = this.expRuleEl, box = this.rulesBoxEl;
+          if (!el || !box) return;
+          box.scrollTo({ top: Math.max(0, el.offsetTop - box.offsetTop - 8), behavior: 'smooth' });
+        }, 140);
+      },
+      preview,
+      games: catalogGames[tab].items,
+      gameTabs: tabOrder.map(k => ({
+        label: catalogGames[k].label,
+        bg: k === tab ? 'rgba(232,192,106,.16)' : 'rgba(255,255,255,.05)',
+        border: k === tab ? 'rgba(232,192,106,.45)' : 'rgba(255,255,255,.1)',
+        color: k === tab ? '#E8C06A' : '#A991D6',
+        onClick: () => this.setState({ gameTab: k })
+      })),
+      viewAllLabel: 'View all' + catalogGames[tab].label + 'games',
+      viewAllGames: () => { window.open(catalogGames[tab].href, '_blank'); },
+      physicalIndexLabel: (this.state.prizeIdx + 1) + ' / ' + physicals.length,
+      prizeDots: physicals.map((_, i) => ({
+        color: i === this.state.prizeIdx ? '#E8C06A' : 'rgba(255,255,255,.2)',
+        onClick: () => { this.setState({ prizeIdx: i }); this.restartAuto(); }
+      })),
+      deck: rev.map((g, i) => {
+        const n = rev.length;
+        const off = (i - this.state.prizeIdx + n) % n;
+        const shown = off <= 3;
+        return Object.assign({}, g, {
+          transform: 'translateX(' + (off * 34) + '%) scale(' + (1 - off * 0.06) + ')',
+          opacity: shown ? (off === 0 ? 1 : (off === 1 ? 0.8 : (off === 2 ? 0.5 : 0.26))) : 0,
+          z: n - off
+        });
+      }),
+      prevPrize: () => { this.setState(st => ({ prizeIdx: (st.prizeIdx - 1 + physicals.length) % physicals.length })); this.restartAuto(); },
+      nextPrize: () => { this.setState(st => ({ prizeIdx: (st.prizeIdx + 1) % physicals.length })); this.restartAuto(); },
+      onDeckDown: (e) => { this.dragX = e.clientX; },
+      onDeckUp: (e) => {
+        if (this.dragX == null) return;
+        const dx = e.clientX - this.dragX;
+        this.dragX = null;
+        const dir = Math.abs(dx) < 18 ? 1 : (dx < 0 ? 1 : -1);
+        this.setState(st => ({ prizeIdx: (st.prizeIdx + dir + physicals.length) % physicals.length }));
+        this.restartAuto();
+      }
+    };
+  }
+}
+</script>
+
+<template id="__bundler_thumbnail">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#16052F"/><text x="100" y="118" font-family="Arial, sans-serif" font-size="64" font-weight="bold" fill="#F0D291" text-anchor="middle">CR</text></svg>
+</template>
+</body>
+</html>

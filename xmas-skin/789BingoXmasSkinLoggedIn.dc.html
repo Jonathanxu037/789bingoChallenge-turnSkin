@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/app-icon-192.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/app-icon-180.png" />
+<link rel="manifest" href="../assets/app.webmanifest" />
+<meta name="apple-mobile-web-app-title" content="789 Bingo" />
+<meta name="theme-color" content="#8E1013" />
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+  html, body { margin:0; padding:0; background:#EDE6DD; }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  a { color:#B3122E; text-decoration:none; }
+  a:hover { color:#0F6B3A; }
+  img { -webkit-user-drag:none; user-select:none; }
+  @keyframes xbMarquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+</style>
+</helmet>
+
+<div style="position:relative;max-width:430px;margin:0 auto;min-height:100vh;background:#FFF6EC;font-family:'Nunito',system-ui,sans-serif;color:#2B1A12;padding-bottom:4px">
+
+  <!-- HEADER -->
+  <div style="position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:8px;padding:8px 10px;background:#B3122E;box-shadow:0 2px 8px rgba(120,10,20,.25)">
+    <div onClick="{{ onMenu }}" style="width:26px;height:26px;display:flex;flex-direction:column;justify-content:center;gap:4px;cursor:pointer">
+      <span style="height:3px;background:#FFF3D6;border-radius:2px"></span><span style="height:3px;width:70%;background:#FFF3D6;border-radius:2px"></span><span style="height:3px;background:#FFF3D6;border-radius:2px"></span>
+    </div>
+    <img onClick="{{ onLogo }}" src="../assets/x7890/logo-xmas.png" alt="789 Bingo" style="height:52px;margin:-8px 0 -6px;cursor:pointer;filter:drop-shadow(0 2px 3px rgba(0,0,0,.3))" />
+    <div style="flex:1"></div>
+    <sc-if value="{{ loggedOut }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;gap:6px">
+        <div onClick="{{ openLogin }}" style="padding:7px 12px;border-radius:9px;background:#FFF6E3;color:#8E1013;font-weight:900;font-size:13px;cursor:pointer">Login</div>
+        <div onClick="{{ openRegister }}" style="padding:7px 12px;border-radius:9px;background:#0F6B3A;border:1.5px solid #F4C658;color:#fff;font-weight:900;font-size:13px;cursor:pointer">Register &amp; Spin</div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ loggedIn }}">
+      <div style="display:flex;align-items:center;gap:6px">
+        <div style="display:flex;align-items:center;gap:5px;height:32px;padding:0 3px 0 3px;border-radius:999px;background:linear-gradient(180deg,#FFF9EC,#FBE9C8);border:1.5px solid #E8BF5A;box-shadow:inset 0 1px 0 #fff">
+          <div style="width:24px;height:24px;flex:none;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFF1BF,#F2C24E 55%,#B9791B);border:1px solid #9A5F10;display:flex;align-items:center;justify-content:center;color:#7A3C05;font-size:12px;font-weight:900">₱</div>
+          <span style="color:#3A120C;font-size:13.5px;font-weight:900;padding:0 2px">{{ balance }}</span>
+          <div onClick="{{ onWallet }}" aria-label="Deposit" style="width:24px;height:24px;flex:none;border-radius:7px;background:linear-gradient(180deg,#2E9A58,#0F6B3A);border:1px solid #F4C658;color:#fff;font-size:17px;font-weight:900;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer">+</div>
+        </div>
+        <img onClick="{{ onRewards }}" src="../assets/x7890/rewards-btn.png" alt="Rewards" style="display:block;height:34px;width:auto;flex:none;cursor:pointer;filter:drop-shadow(0 2px 3px rgba(60,0,0,.35))" style-active="transform:scale(.96)" />
+      </div>
+    </sc-if>
+    <div onClick="{{ onSearch }}" aria-label="Search" style="flex:none;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;filter:drop-shadow(0 2px 3px rgba(60,0,0,.45))" style-hover="transform:scale(1.08)">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="srGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF1BF" /><stop offset=".5" stop-color="#F2C24E" /><stop offset="1" stop-color="#B9791B" /></linearGradient>
+          <radialGradient id="srGlass" cx=".38" cy=".34" r=".7"><stop offset="0" stop-color="#FFFFFF" stop-opacity=".55" /><stop offset=".55" stop-color="#FFE9C2" stop-opacity=".12" /><stop offset="1" stop-color="#FFFFFF" stop-opacity="0" /></radialGradient>
+        </defs>
+        <path d="M19.2 19.2 27 27" stroke="#8E1013" stroke-width="5" stroke-linecap="round" />
+        <path d="M19.2 19.2 27 27" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-dasharray="2.4 2.4" />
+        <circle cx="13" cy="13" r="8.6" fill="url(#srGlass)" stroke="url(#srGold)" stroke-width="3" />
+        <path d="M8.6 10.6a5 5 0 0 1 3.6-3.1" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" opacity=".85" />
+        <path d="M5.2 8.2C6.2 4.8 9.4 3 13 3s6.8 1.8 7.8 5.2c-1.2-.8-2.2-.4-3 .3-.9-.9-2-.9-2.9 0-.9-.9-2-.9-2.9 0-.9-.9-2-.9-2.9 0-.9-.7-2.1-1.1-3.9-.3Z" fill="#FFFFFF" />
+        <path d="M22.2 4.6c.9-.2 1.9.2 2.3 1.1.3.8 0 1.7-.7 2.1" stroke="#1F7A3E" stroke-width="1.4" stroke-linecap="round" />
+        <path d="M23.4 3.2c1.4-.7 3 .2 3.2 1.6-1.4.5-2.8.1-3.2-1.6Z" fill="#2E9A4E" />
+        <circle cx="24.2" cy="8.4" r="1.5" fill="#D91F2A" />
+        <circle cx="25.9" cy="7.2" r="1.3" fill="#E5323B" />
+      </svg>
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <div ref="{{ catRef }}" onPointerDown="{{ onCatDown }}" onPointerMove="{{ onCatMove }}" onPointerUp="{{ onCatUp }}" onPointerLeave="{{ onCatUp }}" style="display:flex;gap:6px;padding:10px 8px 6px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;cursor:grab;user-select:none;touch-action:pan-x">
+    <sc-for list="{{ cats }}" as="c" hint-placeholder-count="8">
+      <div onClick="{{ c.onClick }}" style="flex:none;width:56px;text-align:center;cursor:pointer">
+        <div style="width:52px;height:44px;margin:0 auto;border-radius:12px;overflow:hidden;border:2px solid {{ c.border }};background-image:url({{ c.img }});background-size:cover;background-position:center;pointer-events:none"></div>
+        <div style="margin-top:3px;font-size:12px;font-weight:900;color:{{ c.color }}">{{ c.name }}</div>
+      </div>
+    </sc-for>
+  </div>
+
+  <!-- BANNER -->
+  <div onClick="{{ onBanner }}" style="position:relative;margin:4px 10px 0;aspect-ratio:860/286;border-radius:12px;overflow:hidden;cursor:pointer;box-shadow:0 4px 12px rgba(120,10,20,.15)">
+    <sc-for list="{{ slides }}" as="sl" hint-placeholder-count="0">
+      <div role="img" aria-label="{{ sl.alt }}" style="position:absolute;inset:0;background-image:{{ sl.bg }};background-size:cover;background-position:center;opacity:{{ sl.opacity }};transition:opacity .6s ease"></div>
+    </sc-for>
+  </div>
+
+  <!-- NOTICE -->
+  <div data-notice-bar="1" style="margin:10px 10px 0;display:flex;align-items:center;gap:8px;height:34px;padding:0 10px;border-radius:999px;background:#fff;border:1px solid #F1DDC2;overflow:hidden">
+    <img src="../assets/x7890/notice-bell.png" alt="" style="flex:none;width:28px;height:28px;object-fit:contain;margin-left:-4px;filter:drop-shadow(0 1px 2px rgba(120,40,0,.3))" />
+    <div style="flex:1;min-width:0;overflow:hidden">{{ marquee }}</div>
+  </div>
+
+  <!-- RECENT GAMES -->
+  <sc-if value="{{ loggedIn }}">
+    <div style="display:flex;align-items:center;gap:6px;padding:14px 12px 8px">
+      <img src="../assets/x7890/recent-icon.png" alt="" style="display:block;height:30px;width:auto;filter:drop-shadow(0 1px 2px rgba(120,10,20,.25))" />
+      <span style="font-size:18px;font-weight:900;color:#8E1013">Recent Games</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:0 10px">
+      <sc-for list="{{ recent }}" as="g" hint-placeholder-count="3">
+        <div onClick="{{ g.onClick }}" style="border-radius:10px;overflow:hidden;background:#0F4A2C;border:1.5px solid #D9A83A;box-shadow:0 0 0 1px rgba(255,236,180,.55) inset, 0 3px 8px rgba(40,20,0,.22);cursor:pointer" style-active="transform:scale(.97)">
+          <div style="aspect-ratio:1/1;background-image:url({{ g.img }});background-size:cover;background-position:center"></div>
+          <div style="padding:5px 7px 6px;background:linear-gradient(180deg,#1E6B3E 0%,#11502F 55%,#0B3D23 100%);border-top:1.5px solid #E8BF5A;box-shadow:inset 0 1px 0 rgba(255,240,190,.35)">
+            <div style="color:#FFF3D0;font-size:12px;font-weight:800;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 2px rgba(0,0,0,.45)">{{ g.name }}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <!-- SECTION -->
+  <div style="display:flex;align-items:center;gap:6px;padding:14px 12px 8px">
+    <img src="../assets/x7890/hot-icon.png" alt="" style="display:block;height:30px;width:auto;filter:drop-shadow(0 1px 2px rgba(120,10,20,.25))" />
+    <span style="font-size:18px;font-weight:900;color:#8E1013">{{ catTitle }}</span>
+  </div>
+  <div style="position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:0 10px">
+    <sc-for list="{{ games }}" as="g" hint-placeholder-count="9">
+      <div onClick="{{ g.onClick }}" style="border-radius:10px;overflow:hidden;background:#0F4A2C;border:1.5px solid #D9A83A;box-shadow:0 0 0 1px rgba(255,236,180,.55) inset, 0 3px 8px rgba(40,20,0,.22);cursor:pointer" style-active="transform:scale(.97)">
+        <div style="aspect-ratio:1/1;background-image:url({{ g.img }});background-size:cover;background-position:center"></div>
+        <div style="position:relative;padding:5px 7px 6px;background:linear-gradient(180deg,#1E6B3E 0%,#11502F 55%,#0B3D23 100%);border-top:1.5px solid #E8BF5A;box-shadow:inset 0 1px 0 rgba(255,240,190,.35)">
+          <div style="color:#FFF3D0;font-size:12px;font-weight:800;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 2px rgba(0,0,0,.45)">{{ g.name }}</div>
+        </div>
+      </div>
+    </sc-for>
+    <!-- FLOATING PROMO -->
+    <sc-if value="{{ widgetOpen }}" hint-placeholder-val="{{ true }}">
+      <div style="position:fixed;right:max(2px, calc(50% - 213px));top:{{ widgetTop }};z-index:16;width:min(21vw, 90px);filter:drop-shadow(0 4px 8px rgba(80,0,0,.35))">
+        <div style="position:relative">
+          <img src="../assets/x7890/side-open.png" alt="Join now" style="display:block;width:100%" />
+          <div onClick="{{ onInvite }}" style="position:absolute;left:20%;top:36%;width:63%;height:16%;cursor:pointer"></div>
+          <div onClick="{{ onDeposit }}" style="position:absolute;left:20%;top:52.5%;width:63%;height:16%;cursor:pointer"></div>
+          <div onClick="{{ onSpin }}" style="position:absolute;left:20%;top:69%;width:63%;height:15.5%;cursor:pointer"></div>
+          <div onClick="{{ toggleWidget }}" style="position:absolute;left:27%;top:86%;width:53%;height:11%;cursor:pointer"></div>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ widgetClosed }}">
+      <div onClick="{{ toggleWidget }}" style="position:fixed;right:max(2px, calc(50% - 213px));top:{{ widgetTop }};z-index:16;width:min(21vw, 90px);cursor:pointer;filter:drop-shadow(0 4px 8px rgba(80,0,0,.35))" style-hover="transform:scale(1.04)">
+        <img src="../assets/x7890/widget-hidden.png" alt="Join now · Show" style="display:block;width:100%" />
+      </div>
+    </sc-if>
+
+  </div>
+  <div style="height:78px"></div>
+
+  <!-- SUPPORT -->
+  <img onClick="{{ onSupport }}" src="../assets/x7890/support.png" alt="Support" style="position:fixed;z-index:15;bottom:84px;right:max(6px,calc(50% - 209px));width:60px;cursor:pointer;filter:drop-shadow(0 4px 8px rgba(120,10,20,.35))" />
+
+  <!-- BOTTOM NAV -->
+  <div style="position:fixed;bottom:0;left:50%;transform:translateX(-50%);z-index:20;width:100%;max-width:430px;display:flex;align-items:flex-end;padding:5px 4px 6px;background:radial-gradient(120% 140% at 50% 0%, #1F5A3A 0%, #0F3B25 55%, #082717 100%);border-top:2px solid #E8BF5A;box-shadow:0 -1px 0 rgba(255,236,180,.45) inset, 0 -6px 16px rgba(20,40,20,.28)">
+    <sc-for list="{{ navs }}" as="n" hint-placeholder-count="5">
+      <div onClick="{{ n.onClick }}" style="flex:1;display:flex;flex-direction:column;align-items:center;cursor:pointer">
+        <img src="{{ n.img }}?v=7" alt="" style="width:{{ n.size }};height:auto;margin-top:{{ n.lift }};filter:drop-shadow(0 2px 3px rgba(0,0,0,.45)) drop-shadow(0 0 6px rgba(255,214,120,.25))" />
+        <span style="font-size:11.5px;font-weight:900;color:{{ n.color }};text-shadow:0 1px 2px rgba(0,0,0,.5)">{{ n.name }}</span>
+        <span style="width:18px;height:3px;border-radius:2px;background:{{ n.bar }};margin-top:2px"></span>
+      </div>
+    </sc-for>
+  </div>
+
+  <!-- LOGIN SHEET -->
+  <sc-if value="{{ sheetOpen }}">
+    <div onClick="{{ closeSheet }}" style="position:fixed;inset:0;z-index:40;background:rgba(10,0,2,.55)"></div>
+    <div style="position:fixed;left:50%;bottom:0;transform:translateX(-50%);z-index:41;width:100%;max-width:430px;padding:18px 18px 24px;border-radius:20px 20px 0 0;background:#FFF6EC;border-top:3px solid #B3122E">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="color:#8E1013;font-size:20px;font-weight:900">{{ sheetTitle }}</div>
+        <div onClick="{{ closeSheet }}" style="width:30px;height:30px;border-radius:50%;background:#F3E4D2;color:#8E1013;display:flex;align-items:center;justify-content:center;cursor:pointer">✕</div>
+      </div>
+      <div style="margin-top:14px;display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:center;height:46px;border-radius:12px;background:#fff;border:1.5px solid #E8CFB0;overflow:hidden">
+          <span style="flex:none;padding:0 12px;height:100%;display:flex;align-items:center;background:#FBEBD5;color:#8E1013;font-weight:900">+63</span>
+          <input value="{{ phone }}" onChange="{{ onPhone }}" placeholder="Mobile number" inputMode="numeric" style="flex:1;min-width:0;height:100%;border:0;outline:none;padding:0 12px;font-family:inherit;font-size:15px;font-weight:700" />
+        </div>
+        <div style="display:flex;align-items:center;height:46px;border-radius:12px;background:#fff;border:1.5px solid #E8CFB0;overflow:hidden">
+          <input value="{{ pwd }}" onChange="{{ onPwd }}" type="password" placeholder="Password" style="flex:1;min-width:0;height:100%;border:0;outline:none;padding:0 12px;font-family:inherit;font-size:15px;font-weight:700" />
+        </div>
+        <sc-if value="{{ sheetErr }}"><div style="color:#B3122E;font-size:12.5px;font-weight:800">{{ sheetErr }}</div></sc-if>
+        <div onClick="{{ submitSheet }}" style="height:48px;border-radius:999px;background:#B3122E;color:#fff;font-size:17px;font-weight:900;display:flex;align-items:center;justify-content:center;cursor:pointer">{{ sheetCta }}</div>
+        <div onClick="{{ toggleSheetMode }}" style="text-align:center;color:#0F6B3A;font-size:13px;font-weight:800;cursor:pointer">{{ sheetSwitch }}</div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ toast }}">
+    <div style="position:fixed;left:50%;top:18%;transform:translateX(-50%);z-index:50;max-width:80%;padding:10px 16px;border-radius:12px;background:rgba(40,4,8,.9);color:#FFF3D6;font-size:13.5px;font-weight:800;text-align:center">{{ toast }}</div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:430,&quot;height&quot;:932}}">
+class Component extends DCLogic {
+  state = { cat: 'hot', slide: 0, nav: 0, widget: true, loggedIn: true, sheet: null, phone: '', pwd: '', err: '', toast: '' };
+  componentDidMount() {
+    setTimeout(() => {
+      const nb = document.querySelector('[data-notice-bar]');
+      if (nb) { const r = nb.getBoundingClientRect(); this.setState({ widgetTop: Math.round(r.bottom + window.scrollY + 8) }); }
+    }, 300);
+    this.timer = setInterval(() => this.setState(st => ({ slide: (st.slide + 1) % 2 })), 4500);
+    if (/[?&]login=1/.test(window.location.search)) {
+      this.setState({ loggedIn: true });
+      this.flash('Welcome back! Maligayang Pasko');
+    }
+  }
+  componentDidUpdate() {
+    if (!this.timer) this.timer = setInterval(() => this.setState(st => ({ slide: (st.slide + 1) % 2 })), 4500);
+  }
+  componentWillUnmount() { clearInterval(this.timer); clearTimeout(this.tt); }
+  flash(msg) { clearTimeout(this.tt); this.setState({ toast: msg }); this.tt = setTimeout(() => this.setState({ toast: '' }), 1800); }
+  needLogin(mode) { if (!this.state.loggedIn) { this.setState({ sheet: mode || 'login', err: '' }); return true; } return false; }
+  renderVals() {
+    const s = this.state;
+    const defs = [
+      ['hot', 'Hot', 'Hot Games', 'hot', ['Fortune Tree', 'Baccarat C:01-1', 'D Blackjack', 'D Dragon Tiger', 'D Pok Deng', 'D Sic Bo', 'Fortune Goddess', 'Fortune Gems', 'Fortune Bingo']],
+      ['slot', 'Slot', 'Slot Games', 'gs', ['Super Ace', 'Super Ace Deluxe', 'Fortune Gems 3', 'Golden Empire', 'Wild Ace', 'Mega Ace']],
+      ['casino', 'Casino', 'Live Casino', 'gl', ['Baccarat', 'Dragon Tiger', 'Roulette', 'Sic Bo', 'Color Game', 'Super 6']],
+      ['poker', 'Poker', 'Poker', 'pk', ['Texas Holdem', 'Omaha Poker', 'Video Poker', 'Bull Bull', 'Dragon Poker', 'Pusoy']],
+      ['bingo', 'Bingo', 'eBingo', 'eb', ['Bingo Bonanza', 'Lucky Bingo', 'Super Bingo', 'Bingo Fever', 'Mega Bingo', 'Bingo Rush']],
+      ['arcade', 'Arcade', 'Arcade', 'ar', ['Mines', 'Limbo', 'Dice', 'Plinko', 'Crash', 'Hi-Lo']],
+      ['fish', 'Fish', 'Fishing', 'fi', ['Jackpot Fishing', 'Dragon Fortune', 'Happy Fishing', 'Boom Legend', 'Mega Fishing', 'Ocean King']],
+      ['new', 'New', 'New Games', 'new', ['Super Ace Deluxe', 'Fortune Gems 3', 'Color Game', 'Plinko', 'Bingo Rush', 'Ocean King'], ['gs2', 'gs3', 'gl5', 'ar4', 'eb6', 'fi6']]
+    ];
+    const cur = defs.find(d => d[0] === s.cat) || defs[0];
+    const img = (i) => cur[3] === 'hot' ? '../assets/x7890/hot' + i + '.png' : (cur[5] ? '../assets/game-' + cur[5][i] + '.png' : '../assets/game-' + cur[3] + (i + 1) + '.png');
+    const iconIdx = { hot: 0, slot: 1, casino: 2, poker: 3, bingo: 4, arcade: 5, fish: 6, new: 7 };
+    const slides = [['../assets/x7890/bannerIn.png', 'Merry Christmas'], ['../assets/x7890/banner-deposit.png', 'First deposit bonus']];
+    const notice = 'Maligayang Pasko! Crown Rush 100-Stage Challenge is LIVE — clear stages to win BMW X3, iPhone 18 Pro Max & cash prizes!   ✦   Christmas Deposit Bonus up to ₱8,888 until 12/31   ✦   ';
+    const navNames = ['Home', 'Chat', 'Invite', 'Wallet', 'Account'];
+    const mode = s.sheet;
+    return {
+      loggedIn: s.loggedIn, loggedOut: !s.loggedIn, balance: '100.00',
+      onRewards: () => { window.location.href = './789BingoXmasPromotions.dc.html'; },
+      recent: [['Sugar Bang Bang', '../assets/x7890/recent0.png'], ['Maya Golden City', '../assets/x7890/recent1.png'], ['Fortune Tree', '../assets/x7890/hot0.png']]
+        .map(r => ({ name: r[0], img: r[1], onClick: () => this.flash('Launching ' + r[0] + '…') })),
+      cats: defs.map((d) => ({ name: d[1], img: '../assets/x7890/cat' + iconIdx[d[0]] + '.png', border: d[0] === s.cat ? '#F4C658' : 'transparent', color: d[0] === s.cat ? '#B3122E' : '#3A2A24', onClick: () => { if (this.catDragged) return; this.setState({ cat: d[0] }); } })),
+      catRef: (el) => { this.catEl = el; },
+      onCatDown: (e) => { if (!this.catEl || e.pointerType === 'touch') return; this.catDrag = { x: e.clientX, left: this.catEl.scrollLeft }; this.catDragged = false; },
+      onCatMove: (e) => { if (!this.catDrag) return; const dx = e.clientX - this.catDrag.x; if (Math.abs(dx) > 4) this.catDragged = true; this.catEl.scrollLeft = this.catDrag.left - dx; },
+      onCatUp: () => { this.catDrag = null; setTimeout(() => { this.catDragged = false; }, 0); },
+      slides: slides.map((sl, i) => ({ src: sl[0], bg: "url('" + sl[0] + "')", alt: sl[1], opacity: s.slide === i ? 1 : 0 })),
+      dots: slides.map((_, i) => ({ w: s.slide === i ? '16px' : '6px', bg: s.slide === i ? '#F4C658' : 'rgba(255,255,255,.8)', onClick: (e) => { e.stopPropagation(); this.setState({ slide: i }); } })),
+      onBanner: () => this.flash('Christmas Event'),
+      marquee: React.createElement('div', { style: { display: 'flex', whiteSpace: 'nowrap', animation: 'xbMarquee 22s linear infinite', fontSize: '12.5px', fontWeight: 800, color: '#3A120C' } },
+        React.createElement('span', { style: { paddingRight: '8px' } }, notice), React.createElement('span', { style: { paddingRight: '8px' } }, notice)),
+      catTitle: cur[2],
+      games: cur[4].map((n, i) => ({ name: n, img: img(i), onClick: () => { if (!this.needLogin()) this.flash('Launching ' + n + '…'); } })),
+      widgetOpen: s.widget, widgetClosed: !s.widget,
+      widgetTop: (s.widgetTop || 330) + 'px',
+      toggleWidget: () => this.setState({ widget: !s.widget }),
+      navs: navNames.map((n, i) => {
+        const mid = i === 2, on = s.nav === i;
+        return { name: n, img: '../assets/x7890/nav' + i + '.png', size: mid ? '78px' : '38px', lift: mid ? '-34px' : '0', color: on ? '#FFD66B' : '#FFF3D6', bar: on ? '#FFD66B' : 'transparent',
+          onClick: () => {
+            if (i === 0) { this.setState({ nav: 0, cat: 'hot' }); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+            if (i === 1) { window.location.href = './789BingoXmasChat.dc.html'; return; }
+            if (i === 2) { window.location.href = './789BingoXmasInvite.dc.html'; return; }
+            if (i === 3) { window.location.href = './789BingoXmasWallet.dc.html'; return; }
+            if (i === 4) { window.location.href = './789BingoXmasAccount.dc.html'; return; }
+            if (this.needLogin()) return;
+            this.setState({ nav: i }); this.flash('Opening ' + n + '…');
+          } };
+      }),
+      onMenu: () => this.flash('Menu'), onSearch: () => { window.location.href = './789BingoXmasSearch.dc.html'; }, onSupport: () => this.flash('Connecting to 24/7 Customer Service…'),
+      onLogo: () => { this.setState({ cat: 'hot', nav: 0 }); window.scrollTo({ top: 0, behavior: 'smooth' }); },
+      onInvite: () => { window.location.href = './789BingoXmasInvite.dc.html'; },
+      onWallet: () => { window.location.href = './789BingoXmasWallet.dc.html'; },
+      onDeposit: () => { if (!this.needLogin()) this.flash('Opening Deposit · Lucky Spin'); },
+      onSpin: () => { if (!this.needLogin('register')) this.flash('Free Spin ready!'); },
+      openLogin: () => { window.location.href = './789BingoMaxSkinLogin.dc.html'; }, openRegister: () => this.setState({ sheet: 'register', err: '' }),
+      sheetOpen: !!mode, sheetErr: s.err,
+      sheetTitle: mode === 'register' ? 'Register & Spin Now' : 'Login',
+      sheetCta: mode === 'register' ? 'Register & Get Free Spin' : 'Login',
+      sheetSwitch: mode === 'register' ? 'Already have an account? Login' : 'New here? Register & Spin Now',
+      toggleSheetMode: () => this.setState({ sheet: mode === 'register' ? 'login' : 'register', err: '' }),
+      closeSheet: () => this.setState({ sheet: null, err: '' }),
+      phone: s.phone, pwd: s.pwd,
+      onPhone: (e) => this.setState({ phone: e.target.value.replace(/[^0-9]/g, '').slice(0, 10) }),
+      onPwd: (e) => this.setState({ pwd: e.target.value }),
+      submitSheet: () => {
+        if (!/^9\d{9}$/.test(s.phone)) { this.setState({ err: 'Enter a valid PH mobile number (9XXXXXXXXX)' }); return; }
+        if (s.pwd.length < 6) { this.setState({ err: 'Password must be at least 6 characters' }); return; }
+        this.setState({ loggedIn: true, sheet: null, err: '', pwd: '' });
+        this.flash(mode === 'register' ? 'Welcome! Free Spin added' : 'Welcome back!');
+      },
+      toast: s.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

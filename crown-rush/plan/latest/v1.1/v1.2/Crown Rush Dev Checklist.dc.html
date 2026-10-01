@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>流水闯关活动 · 开发自查清单</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&amp;family=Noto+Serif+SC:wght@700;900&amp;display=swap" rel="stylesheet" />
+<style>
+  html, body { margin:0; padding:0; background:#F6F3EE; }
+  * { box-sizing:border-box; }
+  a { color:#8A5A12; text-decoration:none; }
+  a:hover { color:#16052F; }
+</style>
+</helmet>
+
+<div style="min-height:100vh;font-family:'Noto Sans SC',system-ui,sans-serif;color:#1F1A26;font-size:14px;line-height:1.6">
+
+  <div style="position:sticky;top:0;z-index:10;background:#16052F;color:#F5E6C0;box-shadow:0 4px 14px rgba(22,5,47,.25)">
+    <div style="max-width:1080px;margin:0 auto;padding:18px 24px 16px;display:flex;align-items:center;gap:22px;flex-wrap:wrap">
+      <div style="flex:1;min-width:260px">
+        <div style="font-size:12px;letter-spacing:.24em;color:#C89A3C;font-weight:700">789BINGO · 开发自查</div>
+        <div style="margin-top:4px;font-family:'Noto Serif SC',serif;font-size:22px;font-weight:900;color:#FFF6E2">流水闯关活动 · 开发自查清单 · v1.2</div>
+        <div style="margin-top:4px;color:#CDBBEF;font-size:12.5px">本迭代仅后台与后端（前台已在 v1.0 完成）。勾选状态保存在本机浏览器。每组可跳转到需求速览与 PRD 高亮内容。</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px">
+        <div style="text-align:right">
+          <div style="font-size:12px;color:#CDBBEF">整体完成度</div>
+          <div style="font-family:'Noto Serif SC',serif;font-size:30px;font-weight:900;color:#E8C06A;line-height:1.1">{{ totalPct }}</div>
+          <div style="font-size:12px;color:#CDBBEF">{{ totalDone }} / {{ totalAll }} 项</div>
+        </div>
+        <div style="width:140px;height:10px;border-radius:999px;background:rgba(255,255,255,.14);overflow:hidden">
+          <div style="height:100%;border-radius:999px;background:linear-gradient(90deg,#C89A3C,#F0D291);width:{{ totalPct }}"></div>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1080px;margin:0 auto;padding:0 24px 12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <sc-for list="{{ filters }}" as="fl" hint-placeholder-count="4">
+        <div onClick="{{ fl.onClick }}" style="padding:5px 13px;border-radius:999px;font-size:12.5px;font-weight:700;cursor:pointer;background:{{ fl.bg }};color:{{ fl.color }};border:1px solid {{ fl.border }}">{{ fl.name }}</div>
+      </sc-for>
+      <span style="width:1px;height:18px;background:rgba(232,220,248,.25);margin:0 4px"></span>
+      <sc-for list="{{ roles }}" as="rl" hint-placeholder-count="3">
+        <div onClick="{{ rl.onClick }}" style="padding:5px 12px;border-radius:999px;font-size:12px;cursor:pointer;background:{{ rl.bg }};color:{{ rl.color }};border:1px solid {{ rl.border }}">{{ rl.name }}</div>
+      </sc-for>
+      <div onClick="{{ reset }}" style="margin-left:auto;padding:5px 12px;border-radius:999px;font-size:12px;cursor:pointer;color:#FFB3B3;border:1px solid rgba(255,179,179,.4)">清空勾选</div>
+    </div>
+  </div>
+
+  <div style="max-width:1080px;margin:0 auto;padding:20px 24px 60px;display:flex;flex-direction:column;gap:14px">
+    <sc-for list="{{ groups }}" as="g" hint-placeholder-count="6">
+      <div style="border-radius:10px;background:#fff;border:1px solid #ECE6F2;overflow:hidden">
+        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:#FBF9FD;border-bottom:1px solid #ECE6F2;flex-wrap:wrap">
+          <span style="flex:none;min-width:30px;height:22px;padding:0 7px;border-radius:6px;background:#16052F;color:#E8C06A;font-size:11.5px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ g.no }}</span>
+          <span style="font-weight:700;font-size:15px;color:#16052F">{{ g.title }}</span>
+          <span style="padding:1px 8px;border-radius:4px;font-size:11.5px;font-weight:700;background:{{ g.stBg }};color:{{ g.stColor }}">{{ g.stText }}</span>
+          <div style="flex:1;min-width:120px;display:flex;align-items:center;gap:8px">
+            <div style="flex:1;height:6px;border-radius:999px;background:#EEE8F4;overflow:hidden"><div style="height:100%;border-radius:999px;background:{{ g.barColor }};width:{{ g.pct }}"></div></div>
+            <span style="font-size:12px;color:#6A6076;width:64px;text-align:right">{{ g.done }} / {{ g.all }}</span>
+          </div>
+          <span onClick="{{ g.toggleAll }}" style="font-size:12px;color:#5A3A9A;cursor:pointer">{{ g.allLabel }}</span>
+          <a href="{{ g.prdHref }}" style="font-size:12px;font-weight:700;text-decoration:underline;text-underline-offset:3px">查看 PRD ›</a>
+        </div>
+        <div style="padding:4px 6px">
+          <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="5">
+            <label style="display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border-radius:6px;cursor:pointer;background:{{ it.bg }}" style-hover="background:#F7F4FB">
+              <input type="checkbox" checked="{{ it.on }}" onChange="{{ it.toggle }}" style="margin-top:4px;width:15px;height:15px;accent-color:#16052F;flex:none" />
+              <span style="flex:1;min-width:0;font-size:13.5px;line-height:1.65;color:{{ it.color }};text-decoration:{{ it.deco }}">{{ it.text }}</span>
+              <span style="flex:none;padding:1px 7px;border-radius:4px;font-size:11px;background:{{ it.roleBg }};color:{{ it.roleColor }}">{{ it.role }}</span>
+              <sc-if value="{{ it.key }}">
+                <span style="flex:none;padding:1px 7px;border-radius:4px;font-size:11px;background:#FDECEC;color:#B3122E;font-weight:700">关键</span>
+              </sc-if>
+            </label>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+    <sc-if value="{{ empty }}">
+      <div style="padding:40px 0;text-align:center;color:#8A7C99">当前筛选下没有检查项</div>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { checked: {}, filter: 'all', role: 'all' };
+  componentDidMount() {
+    try { const v = JSON.parse(localStorage.getItem('crDevChecklist_v1.2') || '{}'); this.setState({ checked: v }); } catch (e) {}
+  }
+  save(c) { try { localStorage.setItem('crDevChecklist_v1.2', JSON.stringify(c)); } catch (e) {} }
+  data() {
+    const arr = this.dataBase();
+    const P = {"B2":[["后台","活动列表四类查询条件可组合，「全部阶段」按周期重叠命中",0],["后台","新建活动配置参与游戏分类与流水金额 : EXP 比例，至少一类",1],["后端","活动进入「进行中」后关卡 / 门槛 / 权重 / 奖品分配接口拒绝修改",1],["后台","关闭活动弹窗：预关闭时间、未领取三项统计、应用 / 短信推送勾选",1],["后端","到达预关闭时间自动下架前台页面与入口",1],["后台","关卡数不设上限（≥1）",0]],"B1":[["后台","库存记录显示操作人（用户领奖 · 用户名 / 后台操作 · 后台用户名）",0],["后台","奖品列表分列「真实用户领取」「机器人领取」",0],["后端","机器人领奖只扣前台剩余名额，不扣后台库存",1]],"B6":[["后台","领取记录显示发放 ID、活动 ID，支持四类查询条件",0],["后台","修改物流前弹窗确认是否已交发货",1],["后端","用户确认领取后前台地址冻结，仅后台可改",1],["后台","单条发货 / 导入快递单号：只更新填写了单号的「待发货」记录并出库",1],["后台","「待确认库存」可修改奖品，确认库存后锁定",1],["后台","已发货 / 已签收可登记拒收退回，奖品回到平台可用库存",0]],"B5":[["后台","按目标关卡批量生成机器人，三种成长方式",1],["后端","模仿玩家：拉杆范围取本活动玩家单日 EXP 增长最低 / 最高，默认平均值；输入值可高于最高值；初期按平台流水 × EXP 比例预估",1],["后端","逐步成长 / 模仿玩家按小时自动增加 EXP 并虚拟领奖",1],["后端","机器人昵称脱敏后撞名校验（含自动生成跳过冲突）",1],["后端","机器人参与闯关榜排名，前台不显示机器人标识",1],["后端","删除机器人不回退已领奖励、名额与榜单记录",0]],"D1":[["后台","按日明细「未领取」列",0],["后台","「查看详细数据」用户明细弹窗：分类投注、分类 EXP、未领取，可筛选导出",1],["后端","统计口径只含本活动参与的游戏分类",1],["后台","活动数据列表分综合 / 运营 / 财务三张表",0]]};
+    arr.forEach(it => { const add = P[it[0]]; if (add) add.forEach(r => { if (!it[2].some(x => x[1] === r[1])) it[2].push(r); }); });
+    if (!arr.some(it => it[0] === 'B8')) arr.push(['B8', "后台通用：操作日志、权限与导出", [["后端","后台操作写入平台操作日志（活动 / 机器人 / 库存 / 领取 / 数据导出）",1],["后台","本模块按平台权限体系配置 7 类权限点",1],["后端","含用户信息的导出仅限指定角色，并记录导出日志",1]]]);
+    return arr;
+  }
+  dataBase() {
+    const FE = '前端', BE = '后端', AD = '后台';
+    return [
+      ['F1', '活动状态与页面切换', [
+        [BE, '实现 未开始 / 预热中 / 进行中 / 领奖缓冲 / 关闭 五种状态，按时间自动推进并支持手动修改', 1],
+        [FE, '前台按状态显示预热页 / 进行中页 / 结束页，未开始与关闭不展示入口'],
+        [FE, '倒计时归零后请求服务端确认状态再切页，不以本地时间为准', 1],
+        [BE, '所有时间判断以服务端 GMT+8 为准'],
+        [FE, '埋点公共参数 page 随状态切换为 prelaunch / live / ended']]],
+      ['F2', 'EXP 累计与闯关', [
+        [BE, 'EXP = Σ（分类有效投注 ÷ 权重），只统计活动勾选的游戏分类', 1],
+        [BE, '仅「进行中」累计 EXP，领奖缓冲期不累计'],
+        [BE, '支持一次连闯多关，跳过的关卡可补领'],
+        [BE, '注单重算 / 撤单可回退对应 EXP，计算幂等', 1],
+        [BE, '新一期开启时 EXP 与关卡进度清零，不继承'],
+        [BE, 'cr_stage_up 由服务端上报']]],
+      ['F3', '现金奖励领取', [
+        [BE, '单关领取与一键领取现金，按 用户 + 关卡 唯一约束防重复领取', 1],
+        [BE, '一键领取只包含现金关卡与替补彩金，不含实体'],
+        [BE, '彩金关卡「达标后停止领取」生效'],
+        [FE, '领取后关卡保留在列表，5 秒后滚动到下一个未领取关卡'],
+        [BE, '入账同时生成 1 倍打码任务（前台不展示）', 1]]],
+      ['F4', '实体奖品领取与物流信息', [
+        [FE, '未登录跳转登录；未绑定物流信息弹窗填写，用户名只读'],
+        [FE, '已绑定时弹出物流信息二次确认，可在此修改地址'],
+        [BE, '「校验活动剩余名额 + 预占 1 件」为原子操作，防并发超发', 1],
+        [BE, '预占成功生成「待确认库存」记录'],
+        [FE, '前台剩余名额 = 活动分配 − 预占 − 已出库，实时读取服务端'],
+        [BE, '前台领取不依赖后台处理，后台流程不阻塞用户领取']]],
+      ['F5', '实体库存耗尽 · 替补彩金', [
+        [BE, '名额为 0 时按关卡「库存耗尽替代」处理：替补彩金 / 其他实体 / 无奖励', 1],
+        [FE, '替补彩金时卡片切换为普通样式，文案「实体奖品已领完 · 改发彩金 ₱X」'],
+        [BE, '替补彩金可参与一键领取，金额与预计人数按批量规则'],
+        [BE, '「已领完」以服务端实时名额为准，不用前端缓存']]],
+      ['F6', '物流信息修改', [
+        [FE, '修改地址前发送账号绑定手机号验证码，支持倒计时重发'],
+        [BE, '验证码校验通过后才允许保存'],
+        [BE, '已发货记录不受后续地址修改影响'],
+        [BE, '修改写入操作日志']]],
+      ['F7', '一键领取结果弹窗', [
+        [FE, '弹窗展示总金额与明细，明细固定 5 条高度可滚动'],
+        [FE, '按后台配置秒数自动关闭（默认 30 秒），可手动关闭'],
+        [FE, '不使用 toast，弹窗高度在视口 75%–90% 以内']]],
+      ['F8', '闯关榜', [
+        [BE, '排名按已领取记录计算：已领取金额（现金+彩金）降序 → 已领实体件数降序 → 最后领取时间升序；未领取不计入；机器人参与排名，剔除风控账号；读缓存快照', 1],
+        [BE, '每小时自动刷新，前台可手动刷新'],
+        [FE, '用户名脱敏；已领实体奖品按关卡从低到高显示缩略图'],
+        [AD, '后台可剔除异常账号']]],
+      ['F9', '活动结束页', [
+        [FE, '结束时间到达自动切换为结束页，只展示已闯关关卡'],
+        [BE, '领奖缓冲状态允许领取接口，拒绝 EXP 累计', 1],
+        [FE, '未登录显示「登录后领取奖励」引导'],
+        [BE, '无领奖截止时间，后台手动下架前一直可以领取']]],
+      ['B1', '奖品管理与库存模型', [
+        [BE, '每个奖品记录 在库量 / 活动分配 / 预占 / 已出库 四个数', 1],
+        [AD, '名称、在库量不可直接修改；单件成本修改只影响之后的领取与预算'],
+        [AD, '新增库存数量只允许非 0 整数，负数时备注必填'],
+        [BE, '调整后在库量 ≥ 预占 + 各活动剩余名额，否则拒绝', 1],
+        [BE, '所有库存变动在事务中完成并写库存记录（入库 / 报损 / 分配 / 释放 / 预占 / 预占释放 / 发货出库 / 退货入库）', 1],
+        [AD, '后台不做奖品图片管理；前台奖品图片随版本内置，按奖品名称对应'],
+        [BE, '活动创建时生成单件成本快照，成本调整不追溯']]],
+      ['B2', '活动创建与关卡配置', [
+        [AD, '时间节点使用日历卡片选择，精确到秒'],
+        [AD, '关卡列表详情可逐关设置 EXP 标准、奖励类型、奖励内容'],
+        [BE, '实体分配数量不超过奖品可分配余量', 1],
+        [AD, '批量：每 N 关设实体、彩金金额（统一 / 倍增 / 指数 / 按阶段）、预计领取人数（统一 / 规则 / 阶段）、达标处理统一'],
+        [AD, '库存耗尽替代：彩金 / 无奖励 / 其他实体（显示可分配余量）'],
+        [BE, '保存时写「分配至活动 / 释放分配」库存记录']]],
+      ['B3', '游戏权重配置', [
+        [AD, '展示平台全部游戏分类，勾选并设置 EXP 权重，至少勾选一项'],
+        [BE, '活动进入「进行中」后关卡、EXP 门槛、权重与奖品分配锁定，接口拒绝修改（仅未开始 / 预热中可改）'],
+        [BE, '数据列表游戏维度只展示勾选的分类']]],
+      ['B4', '活动总预算', [
+        [BE, '默认预算 = 彩金预计支出 + 替补彩金预计支出 + 实体成本 + 物流快递预留'],
+        [AD, '物流快递预留直接输入金额，显示建议值'],
+        [AD, '进行中之前可手动修改，显示「手动」标记，可恢复自动值'],
+        [BE, '进行中及之后预算只读']]],
+      ['B5', '机器人管理', [
+        [AD, '按活动读取关卡奖励，支持实体 / 彩金 / 全部与彩金区间筛选'],
+        [BE, '机器人按 EXP 闯关：当前关卡 = 满足 EXP ≥ 门槛的最大关卡；逐步成长按小时自动增加 EXP；EXP 只增不减；领奖不产生领取记录、实体不扣后台库存'],
+        [BE, '机器人领取不写奖品领取记录、不调用真实领取接口', 1],
+        [BE, '实体关卡扣减活动分配名额，名额回到平台可分配余量，在库量不变', 1],
+        [BE, '相关数据打机器人标识，成本与真实统计全部排除', 1],
+        [FE, '前台剩余名额同步扣减机器人领取']]],
+      ['B6', '奖品领取记录与履约', [
+        [AD, '确认库存只核实不扣数；在库量为 0 弹窗「该奖品目前无库存，请确认库存！」'],
+        [AD, '改奖仅限待确认库存；可选可分配余量 > 0 的实体或现金 / 彩金，需填写原因'],
+        [BE, '改奖时原奖品释放预占、新奖品预占', 1],
+        [BE, '发货：预占 −1、已出库 +1、在库量 −1', 1],
+        [BE, '拒收 / 退回：已出库 −1、在库量 +1、原活动分配 −1', 1],
+        [AD, '导出仅「实体 · 待发货」，文件名含时间、导出人、活动名'],
+        [BE, '导入仅更新填了单号的待发货记录，其他逐行返回原因'],
+        [AD, '批量确认库存 / 批量确认签收：二次确认可取消部分，结果逐条展示'],
+        [BE, '待确认库存超 24h、待发货超 72h 告警；每日对账'],
+        [AD, '顶部「待派发奖品」计数并可跳转筛选']]],
+      ['D1', '活动数据列表', [
+        [AD, '综合 / 运营 / 财务三个数据表，按活动与日期筛选'],
+        [BE, '金额类数据取服务端结算数据，不用前端埋点'],
+        [BE, '成本 = 现金 + 替补彩金 + 实体成本 + 物流；毛收益、净收益、ROI 按公式计算（抽水率待财务确认）'],
+        [BE, '获客成本 = 总成本 ÷ 新增参与；活跃率、人均投注按公式'],
+        [AD, '游戏维度可「查看详细」每日数据'],
+        [BE, '所有真实指标排除机器人数据', 1]]],
+      ['D2', '数据埋点', [
+        [FE, '所有事件携带公共参数 activity_id / season / page / user_id / is_login'],
+        [FE, '按 PRD §8.3 事件清单完成前端行为埋点'],
+        [BE, '闯关、领取结果、替补彩金等结果事件由服务端上报']]],
+      ['B7', '帮助提示', [
+        [AD, '后台按钮、数据项与弹窗字段旁的「?」共 43 条，文案按 PRD §7.9'],
+        [AD, '点击「?」不触发所在按钮的操作（阻止冒泡）'],
+        [AD, '说明文案做成可配置字典']]]
+    ];
+  }
+  renderVals() {
+    const s = this.state, c = s.checked;
+    const roleStyle = { '前端': ['#E6F4FF', '#1677FF'], '后端': ['#F9F0FF', '#722ED1'], '后台': ['#FFF7E6', '#D46B08'] };
+    const EX = [], OVR = {};
+    const all = this.data().filter(g => EX.indexOf(g[0]) < 0 && g[0][0] !== 'F').map(g => [g[0], g[1], g[2].filter(it => it[0] !== '前端')]).filter(g => g[2].length).map(g => OVR[g[0]] ? [g[0], OVR[g[0]].title, OVR[g[0]].items] : g);
+    let totalAll = 0, totalDone = 0;
+    all.forEach(([no, , items]) => items.forEach((_, i) => { totalAll++; if (c[no + '-' + i]) totalDone++; }));
+    const setC = next => { this.setState({ checked: next }); this.save(next); };
+    const groups = all.map(([no, title, items]) => {
+      const rows = items.map(([role, text, key], i) => ({ id: no + '-' + i, role, text, key: !!key }));
+      const done = rows.filter(r => c[r.id]).length;
+      const vis = rows.filter(r => (s.role === 'all' || r.role === s.role) && (s.filter === 'all' || (s.filter === 'todo' ? !c[r.id] : s.filter === 'done' ? !!c[r.id] : r.key)));
+      const allOn = rows.every(r => c[r.id]);
+      const pctN = Math.round(done / rows.length * 100);
+      return {
+        no, title, done, all: rows.length, pct: pctN + '%',
+        barColor: pctN === 100 ? '#389E0D' : '#C89A3C',
+        stText: pctN === 100 ? '已完成' : (done ? '进行中' : '未开始'),
+        stBg: pctN === 100 ? '#F6FFED' : (done ? '#FFF7E6' : '#F3EFF8'), stColor: pctN === 100 ? '#389E0D' : (done ? '#D46B08' : '#8A7C99'),
+        allLabel: allOn ? '取消本组' : '全选本组',
+        toggleAll: () => { const n = Object.assign({}, c); rows.forEach(r => { if (allOn) delete n[r.id]; else n[r.id] = true; }); setC(n); },
+        prdHref: './Crown Rush PRD.dc.html#hl=' + no,
+        items: vis.map(r => {
+          const on = !!c[r.id], rs = roleStyle[r.role];
+          return { text: r.text, role: r.role, key: r.key, on, roleBg: rs[0], roleColor: rs[1],
+            color: on ? '#9A90A6' : '#2E2638', deco: on ? 'line-through' : 'none', bg: on ? '#FAFAFC' : 'transparent',
+            toggle: () => { const n = Object.assign({}, c); if (on) delete n[r.id]; else n[r.id] = true; setC(n); } };
+        }),
+        _vis: vis.length
+      };
+    }).filter(g => g._vis > 0);
+    const chip = (on) => ({ bg: on ? '#E8C06A' : 'transparent', color: on ? '#16052F' : '#E8DCF8', border: on ? '#E8C06A' : 'rgba(232,220,248,.35)' });
+    return {
+      totalAll, totalDone, totalPct: (totalAll ? Math.round(totalDone / totalAll * 100) : 0) + '%',
+      filters: [['all', '全部'], ['todo', '未完成'], ['done', '已完成'], ['key', '仅关键项']].map(([k, n]) => Object.assign({ name: n, onClick: () => this.setState({ filter: k }) }, chip(s.filter === k))),
+      roles: [['all', '全部角色'], ['后端', '后端'], ['后台', '后台']].map(([k, n]) => Object.assign({ name: n, onClick: () => this.setState({ role: k }) }, chip(s.role === k))),
+      reset: () => { if (window.confirm('确定清空全部勾选吗？')) setC({}); },
+      groups, empty: groups.length === 0
+    };
+  }
+}
+</script>
+</body>
+</html>

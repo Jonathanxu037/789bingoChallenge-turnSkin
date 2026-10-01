@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../../../support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Wallet · 789Bingo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<style>
+  html, body { margin:0; padding:0; background:#F7EBD6; font-family:system-ui,-apple-system,"Segoe UI",sans-serif; }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  a { color:#B3141C; text-decoration:none; }
+  a:hover { color:#7E0F16; }
+  input::placeholder { color:#B59A7A; }
+  @keyframes wSpin { to { transform:rotate(360deg); } }
+  @keyframes wFloat { 0%,100% { transform:translateY(0) rotate(-6deg); } 50% { transform:translateY(-5px) rotate(4deg); } }
+  @keyframes wSnow { 0% { transform:translate3d(0,-12px,0); } 100% { transform:translate3d(var(--dx),130px,0); } }
+</style>
+</helmet>
+
+<div style="position:relative;max-width:430px;margin:0 auto;min-height:100vh;background:radial-gradient(120% 40% at 50% 0%, #FFF8EA, #F7EBD6 60%);overflow-x:clip">
+
+  <!-- HEADER -->
+  <div style="position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:center;height:48px;background:linear-gradient(90deg,#B3141C,#8E1013 60%,#6E0B10);border-bottom:2px solid #E8BF5A;box-shadow:0 -1px 0 rgba(255,236,180,.45) inset, 0 4px 10px rgba(80,0,0,.25)">
+    <div style="color:#FFF3D6;font-size:17px;font-weight:900;text-shadow:0 1px 2px rgba(60,0,0,.45)">Wallet</div>
+  </div>
+
+  <div style="padding:12px 10px 0;display:flex;flex-direction:column;gap:10px">
+
+    <!-- BALANCE -->
+    <div style="position:relative;overflow:hidden;height:88px;border-radius:14px;background:linear-gradient(110deg,#8E1013 0%,#B3141C 38%,#1F6B3F 78%,#0F4A2A 100%);border:2px solid #E8BF5A;box-shadow:0 0 0 1px rgba(255,238,190,.5) inset, 0 6px 16px rgba(120,20,10,.25);padding:14px 16px">
+      <div style="position:absolute;inset:0;pointer-events:none;overflow:hidden">{{ snow }}</div>
+      <div style="position:absolute;right:14px;top:50%;margin-top:-34px;width:68px;height:68px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFF4C8,#F6C84E 45%,#C98718 80%);border:2px solid #A8660C;box-shadow:0 4px 10px rgba(0,0,0,.35), inset 0 -3px 0 rgba(120,60,0,.35);display:flex;align-items:center;justify-content:center;color:#8A4A06;font-size:32px;font-weight:900;animation:wFloat 4s ease-in-out infinite">₱</div>
+      <div style="position:relative;color:#FFE9B0;font-size:13px;font-weight:700">Account Balance:</div>
+      <div style="position:relative;margin-top:4px;display:flex;align-items:center;gap:8px">
+        <span style="color:#FFF6E2;font-size:27px;font-weight:900;text-shadow:0 2px 6px rgba(0,0,0,.35)">₱ {{ balance }}</span>
+        <span onClick="{{ refresh }}" aria-label="Refresh" style="display:inline-flex;cursor:pointer;animation:{{ spinAnim }}">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M16 10a6 6 0 1 1-1.8-4.3" stroke="#F4C658" stroke-width="2.2" stroke-linecap="round" /><path d="M15.5 2.5v4h-4" stroke="#F4C658" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        </span>
+      </div>
+    </div>
+
+    <!-- TABS + METHODS -->
+    <div style="border-radius:14px;background:#FFFBF2;border:1.5px solid #EAD3A4;box-shadow:0 3px 10px rgba(120,60,10,.08);overflow:hidden">
+      <div style="display:flex">
+        <div onClick="{{ tabDeposit }}" style="flex:1;text-align:center;padding:13px 0 10px;cursor:pointer;background:{{ depBg }}">
+          <div style="color:{{ depColor }};font-size:17px;font-weight:900">Deposit</div>
+          <div style="margin:6px auto 0;width:34px;height:3px;border-radius:2px;background:{{ depBar }}"></div>
+        </div>
+        <div onClick="{{ tabWithdraw }}" style="flex:1;text-align:center;padding:13px 0 10px;cursor:pointer;background:{{ wdBg }}">
+          <div style="color:{{ wdColor }};font-size:17px;font-weight:900">Withdraw</div>
+          <div style="margin:6px auto 0;width:34px;height:3px;border-radius:2px;background:{{ wdBar }}"></div>
+        </div>
+      </div>
+
+      <div style="padding:12px 12px 14px">
+        <div style="color:#7A2A12;font-size:15px;font-weight:800">{{ methodTitle }}</div>
+        <div style="margin-top:10px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px">
+          <sc-for list="{{ methods }}" as="m" hint-placeholder-count="7">
+            <div onClick="{{ m.onClick }}" style="position:relative;display:flex;align-items:center;gap:6px;height:42px;padding:0 8px;border-radius:9px;background:{{ m.bg }};border:1.5px solid {{ m.border }};cursor:pointer">
+              <sc-if value="{{ m.hasImg }}">
+                <img src="{{ m.img }}" alt="" style="flex:none;display:block;width:24px;height:24px;border-radius:50%;object-fit:cover;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.06)" />
+              </sc-if>
+              <sc-if value="{{ m.noImg }}">
+                <span style="flex:none;width:24px;height:24px;border-radius:50%;background:{{ m.logoBg }};color:#fff;font-size:{{ m.logoSize }};font-weight:900;display:flex;align-items:center;justify-content:center">{{ m.logo }}</span>
+              </sc-if>
+              <span style="min-width:0;color:#3A120C;font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ m.name }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <!-- AMOUNT -->
+    <div style="border-radius:14px;background:#FFFBF2;border:1.5px solid #EAD3A4;box-shadow:0 3px 10px rgba(120,60,10,.08);padding:14px 12px">
+      <div style="color:#7A2A12;font-size:15px;font-weight:800">{{ amountTitle }}</div>
+      <div style="margin-top:10px;display:flex;align-items:center;gap:8px;height:40px;padding:0 14px;border-radius:999px;background:#fff;border:1.5px solid {{ inputBorder }}">
+        <span style="color:#3A120C;font-size:15px;font-weight:900">₱</span>
+        <input value="{{ amount }}" onChange="{{ onAmount }}" inputmode="numeric" placeholder="{{ limitText }}" style="flex:1;min-width:0;border:none;outline:none;background:transparent;color:#3A120C;font-size:14.5px;font-weight:700" />
+      </div>
+      <sc-if value="{{ isDeposit }}" hint-placeholder-val="{{ true }}">
+        <div style="margin-top:12px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px">
+          <sc-for list="{{ chips }}" as="c" hint-placeholder-count="10">
+            <div onClick="{{ c.onClick }}" style="position:relative;height:44px;border-radius:9px;background:{{ c.bg }};border:1.5px solid {{ c.border }};display:flex;align-items:center;justify-content:center;color:{{ c.color }};font-size:17px;font-weight:800;cursor:pointer">
+              <sc-if value="{{ c.hasTag }}">
+                <span style="position:absolute;top:-1px;left:-1px;padding:1px 6px;border-radius:8px 0 8px 0;background:{{ c.tagBg }};color:#fff;font-size:9.5px;font-weight:900">{{ c.tag }}</span>
+              </sc-if>
+              +{{ c.label }}
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isWithdraw }}">
+        <div style="margin-top:10px;display:flex;justify-content:space-between;color:#8A6A48;font-size:12px">
+          <span>Withdrawable: <b style="color:#B3141C">₱ {{ balance }}</b></span>
+          <span onClick="{{ fillAll }}" style="color:#0F6B3A;font-weight:800;cursor:pointer">All</span>
+        </div>
+      </sc-if>
+    </div>
+
+    <!-- SUBMIT -->
+    <div onClick="{{ submit }}" style="margin-top:6px;height:46px;border-radius:999px;background:linear-gradient(180deg,#E03A44,#B3141C 55%,#7E0F16);border:2px solid #F0CE86;box-shadow:0 5px 14px rgba(140,20,10,.35), inset 0 1px 0 rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;color:#FFF3D6;font-size:17px;font-weight:900;cursor:pointer" style-hover="filter:brightness(1.06)">Submit</div>
+
+    <!-- INSTRUCTIONS -->
+    <div style="padding:4px 2px 0">
+      <div style="color:#7A2A12;font-size:14px;font-weight:800">{{ noteTitle }}</div>
+      <div style="margin-top:6px;display:flex;flex-direction:column;gap:5px">
+        <sc-for list="{{ notes }}" as="n" hint-placeholder-count="3">
+          <div style="color:#8A6A48;font-size:12px;line-height:1.55">{{ n }}</div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div style="height:104px"></div>
+
+  <!-- BOTTOM NAV -->
+  <div style="position:fixed;bottom:0;left:50%;transform:translateX(-50%);z-index:20;width:100%;max-width:430px;display:flex;align-items:flex-end;padding:5px 4px 6px;background:radial-gradient(120% 140% at 50% 0%, #1F5A3A 0%, #0F3B25 55%, #082717 100%);border-top:2px solid #E8BF5A;box-shadow:0 -1px 0 rgba(255,236,180,.45) inset, 0 -6px 16px rgba(20,40,20,.28)">
+    <sc-for list="{{ navs }}" as="n" hint-placeholder-count="5">
+      <div onClick="{{ n.onClick }}" style="flex:1;display:flex;flex-direction:column;align-items:center;cursor:pointer">
+        <img src="{{ n.img }}?v=7" alt="" style="width:{{ n.size }};height:auto;margin-top:{{ n.lift }};filter:drop-shadow(0 2px 3px rgba(0,0,0,.45)) drop-shadow(0 0 6px rgba(255,214,120,.25))" />
+        <span style="font-size:11.5px;font-weight:900;color:{{ n.color }};text-shadow:0 1px 2px rgba(0,0,0,.5)">{{ n.name }}</span>
+        <span style="width:18px;height:3px;border-radius:2px;background:{{ n.bar }};margin-top:2px"></span>
+      </div>
+    </sc-for>
+  </div>
+
+  <sc-if value="{{ hasToast }}">
+    <div style="position:fixed;left:50%;bottom:150px;transform:translateX(-50%);z-index:40;padding:9px 16px;border-radius:999px;background:rgba(58,18,12,.9);border:1px solid #E8BF5A;color:#FFF3D6;font-size:12.5px;font-weight:800;white-space:nowrap">{{ toast }}</div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:430,&quot;height&quot;:932}}">
+class Component extends DCLogic {
+  state = { tab: 'deposit', method: 0, amount: '', chip: -1, balance: 100, spinning: false, toast: '' };
+  componentWillUnmount() { clearTimeout(this.tt); clearTimeout(this.st); }
+  flash(t) { clearTimeout(this.tt); this.setState({ toast: t }); this.tt = setTimeout(() => this.setState({ toast: '' }), 1800); }
+  renderVals() {
+    const s = this.state, dep = s.tab === 'deposit';
+    if (!this.flakes) {
+      this.flakes = React.createElement(React.Fragment, null, Array.from({ length: 16 }, (_, i) => {
+        const size = 2 + (i % 3) * 1.2;
+        return React.createElement('span', { key: i, style: {
+          position: 'absolute', top: '-10px', left: ((i * 29) % 100) + '%', width: size + 'px', height: size + 'px',
+          borderRadius: '50%', background: 'rgba(255,255,255,.9)', opacity: 0.4 + (i % 4) * 0.14,
+          '--dx': ((i % 5) - 2) * 8 + 'px', animation: 'wSnow ' + (4 + (i * 7 % 5)) + 's linear infinite',
+          animationDelay: '-' + ((i * 0.9) % 6).toFixed(1) + 's'
+        } });
+      }));
+    }
+    const G = { img: '../../../assets/x7890/pay-gcash.png' };
+    const depMethods = [
+      Object.assign({ name: 'GCash4' }, G), Object.assign({ name: 'GCASH2' }, G),
+      { name: 'Maya', img: '../../../assets/x7890/pay-maya.png' },
+      { name: 'QRPH', img: '../../../assets/x7890/pay-qrph.png' },
+      Object.assign({ name: 'PayCools' }, G), Object.assign({ name: 'Gcash' }, G),
+      { name: 'Bank Card', img: '../../../assets/x7890/pay-bank.png' }
+    ];
+    const wdMethods = [Object.assign({ name: 'GCash' }, G), { name: 'Maya', img: '../../../assets/x7890/pay-maya.png' }, { name: 'Bank Card', img: '../../../assets/x7890/pay-bank.png' }];
+    const list = dep ? depMethods : wdMethods;
+    const chipSrc = [[20], [50], [100], [500, 'Hot'], [1000], [2000], [5000], [10000, 'VIP'], [20000, 'VIP'], [499]];
+    const navNames = ['Home', 'Chat', 'Invite', 'Wallet', 'Account'];
+    return {
+      snow: this.flakes,
+      balance: s.balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+      spinAnim: s.spinning ? 'wSpin .8s linear infinite' : 'none',
+      refresh: () => { this.setState({ spinning: true }); clearTimeout(this.st); this.st = setTimeout(() => { this.setState({ spinning: false }); this.flash('Balance updated'); }, 900); },
+      goBack: () => { window.location.href = './789BingoXmasSkinLoggedIn.dc.html'; },
+      isDeposit: dep, isWithdraw: !dep,
+      tabDeposit: () => this.setState({ tab: 'deposit', method: 0, amount: '', chip: -1 }),
+      tabWithdraw: () => this.setState({ tab: 'withdraw', method: 0, amount: '', chip: -1 }),
+      depBg: dep ? 'linear-gradient(180deg,#FFE9B8,#FFFBF2)' : '#F3E3C4', wdBg: dep ? '#F3E3C4' : 'linear-gradient(180deg,#FFE9B8,#FFFBF2)',
+      depColor: dep ? '#B3141C' : '#5A3A22', wdColor: dep ? '#5A3A22' : '#B3141C',
+      depBar: dep ? '#B3141C' : 'transparent', wdBar: dep ? 'transparent' : '#B3141C',
+      methodTitle: dep ? 'Payment Method' : 'Withdraw To',
+      amountTitle: dep ? 'Deposit Amount' : 'Withdraw Amount',
+      limitText: dep ? 'Limit 10～50,000' : 'Min 100',
+      methods: list.map((m, i) => Object.assign({}, m, {
+        hasImg: !!m.img, noImg: !m.img,
+        bg: i === s.method ? 'linear-gradient(180deg,#FFF1D0,#FFE2A6)' : '#fff',
+        border: i === s.method ? '#D9A23A' : '#E6D3B2',
+        onClick: () => this.setState({ method: i })
+      })),
+      amount: s.amount,
+      inputBorder: s.amount ? '#D9A23A' : '#E6D3B2',
+      onAmount: (e) => this.setState({ amount: e.target.value.replace(/[^0-9]/g, '').slice(0, 6), chip: -1 }),
+      fillAll: () => this.setState({ amount: String(s.balance) }),
+      chips: chipSrc.map((c, i) => ({
+        label: c[0].toLocaleString('en-US'), tag: c[1] || '', hasTag: !!c[1],
+        tagBg: c[1] === 'Hot' ? 'linear-gradient(90deg,#E8323C,#B3141C)' : 'linear-gradient(90deg,#1F8E56,#0F6B3A)',
+        bg: i === s.chip ? 'linear-gradient(180deg,#FFF1D0,#FFE2A6)' : '#fff',
+        border: i === s.chip ? '#D9A23A' : '#E6D3B2',
+        color: i === s.chip ? '#B3141C' : '#3A120C',
+        onClick: () => this.setState({ chip: i, amount: String(c[0]) })
+      })),
+      submit: () => {
+        const v = parseInt(s.amount || '0', 10);
+        if (dep) {
+          if (v < 10 || v > 50000) { this.flash('Enter an amount between ₱10 and ₱50,000'); return; }
+          this.flash('Redirecting to ' + list[s.method].name + ' · ₱' + v.toLocaleString());
+        } else {
+          if (v < 100) { this.flash('Minimum withdrawal is ₱100'); return; }
+          if (v > s.balance) { this.flash('Insufficient balance'); return; }
+          this.flash('Withdrawal request submitted');
+        }
+      },
+      noteTitle: dep ? 'Deposit Instructions:' : 'Withdraw Instructions:',
+      notes: dep ? [
+        '1. The payment will usually be credited within 1–15 minutes after success, and you will receive an in-site notification.',
+        '2. If the payment is not credited after 30 minutes, please contact customer service with your receipt.',
+        '3. Please use the payment account under your own name.'
+      ] : [
+        '1. Withdrawals are usually processed within 30 minutes.',
+        '2. The receiving account name must match your registered name.',
+        '3. Contact customer service if the withdrawal is delayed.'
+      ],
+      navs: navNames.map((n, i) => {
+        const mid = i === 2, on = i === 3;
+        return { name: n, img: '../../../assets/x7890/nav' + i + '.png', size: mid ? '78px' : '38px', lift: mid ? '-34px' : '0', color: on ? '#FFD66B' : '#FFF3D6', bar: on ? '#FFD66B' : 'transparent',
+          onClick: () => {
+            if (i === 0) { window.location.href = './789BingoXmasSkinLoggedIn.dc.html'; return; }
+            if (i === 1) { window.location.href = './789BingoXmasChat.dc.html'; return; }
+            if (i === 2) { window.location.href = './789BingoXmasInvite.dc.html'; return; }
+            if (i === 3) return;
+            if (i === 4) { window.location.href = './789BingoXmasAccount.dc.html'; return; }
+            this.flash('Opening ' + n + '…');
+          } };
+      }),
+      toast: s.toast, hasToast: !!s.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -10,32 +10,39 @@
   a { color:#8E0F17; text-decoration:none; }
   a:hover { color:#B3141C; }
   .app { display:flex; height:100vh; }
-  .side { flex:none; width:290px; display:flex; flex-direction:column; background:#16052F; color:#E8DCF8; }
-  .brand { padding:18px 18px 14px; border-bottom:1px solid rgba(255,255,255,.08); }
+  .side { flex:none; width:300px; display:flex; flex-direction:column; background:#16052F; color:#E8DCF8; }
+  .brand { padding:16px 18px 12px; }
   .brand .k { font-size:11px; letter-spacing:.24em; color:#C89A3C; font-weight:700; }
   .brand .t { margin-top:4px; font-size:17px; font-weight:800; color:#FFF6E2; }
-  .search { margin:12px 14px 6px; }
-  .search input { width:100%; height:32px; border-radius:8px; border:1px solid rgba(232,220,248,.2); background:rgba(255,255,255,.06); color:#FFF6E2; padding:0 10px; font-size:13px; outline:none; }
-  .search input::placeholder { color:#9C8BB8; }
+  .tabs { display:flex; gap:6px; padding:0 14px 12px; border-bottom:1px solid rgba(255,255,255,.08); }
+  .tab { flex:1; text-align:center; padding:8px 0; border-radius:8px; font-size:13.5px; font-weight:800; cursor:pointer; color:#CDBBEF; background:rgba(255,255,255,.06); border:1px solid rgba(232,220,248,.14); }
+  .tab:hover { background:rgba(255,255,255,.1); }
+  .tab.on.cr { background:linear-gradient(135deg,#5A2BA0,#2A0A56); color:#FFF6E2; border-color:#E8C06A; }
+  .tab.on.xs { background:linear-gradient(135deg,#C21F28,#6A0A12); color:#FFF6E2; border-color:#E8C06A; }
+  .tools { display:flex; align-items:center; gap:6px; padding:10px 14px 4px; }
+  .tools input { flex:1; min-width:0; height:30px; border-radius:7px; border:1px solid rgba(232,220,248,.2); background:rgba(255,255,255,.06); color:#FFF6E2; padding:0 10px; font-size:12.5px; outline:none; }
+  .tools input::placeholder { color:#9C8BB8; }
+  .mini { flex:none; padding:5px 8px; border-radius:6px; font-size:11.5px; color:#CDBBEF; border:1px solid rgba(232,220,248,.18); cursor:pointer; }
+  .mini:hover { color:#FFF6E2; }
   .tree { flex:1; overflow-y:auto; padding:6px 8px 20px; }
-  .node { user-select:none; }
-  .row { display:flex; align-items:center; gap:7px; padding:7px 8px; border-radius:7px; cursor:pointer; font-size:13px; line-height:1.35; }
+  .row { display:flex; align-items:center; gap:7px; padding:6px 8px; border-radius:7px; cursor:pointer; font-size:13px; line-height:1.35; }
   .row:hover { background:rgba(255,255,255,.07); }
   .row.active { background:#E8C06A; color:#16052F; font-weight:700; }
   .row.active .tag { background:#16052F; color:#E8C06A; }
-  .caret { flex:none; width:12px; font-size:10px; color:#9C8BB8; transition:transform .15s; }
+  .caret { flex:none; width:12px; font-size:9px; color:#9C8BB8; transition:transform .15s; }
   .caret.open { transform:rotate(90deg); }
-  .l0 > .row { font-weight:800; font-size:14px; color:#FFF6E2; margin-top:6px; }
-  .l1 > .row { font-weight:700; color:#F5E6C0; }
-  .l1 .desc { font-size:11px; color:#9C8BB8; font-weight:400; margin-left:4px; }
-  .kids { padding-left:14px; border-left:1px dashed rgba(232,220,248,.14); margin-left:13px; }
+  .grp { font-weight:700; color:#F5E6C0; }
+  .grp .desc { font-size:11px; color:#9C8BB8; font-weight:400; margin-left:4px; }
+  .grp .cnt { margin-left:auto; flex:none; white-space:nowrap; font-size:10.5px; color:#8E7BAE; font-weight:400; }
+  .bar { flex:none; width:3px; height:14px; border-radius:2px; }
+  .kids { margin-left:13px; padding-left:8px; border-left:1px dashed rgba(232,220,248,.14); }
   .tag { flex:none; padding:1px 6px; border-radius:4px; font-size:10.5px; font-weight:800; }
   .tag.doc { background:rgba(46,154,88,.25); color:#8FE3B8; }
   .tag.page { background:rgba(216,36,47,.25); color:#FFB3B3; }
   .tag.admin { background:rgba(140,110,220,.28); color:#D3C4FF; }
   .name { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .main { flex:1; min-width:0; display:flex; flex-direction:column; }
-  .bar { flex:none; height:46px; display:flex; align-items:center; gap:10px; padding:0 16px; background:#fff; border-bottom:1px solid #E6DED2; font-size:13px; }
+  .topbar { flex:none; height:46px; display:flex; align-items:center; gap:10px; padding:0 16px; background:#fff; border-bottom:1px solid #E6DED2; font-size:13px; }
   .crumb { flex:1; min-width:0; color:#7A6A58; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .crumb b { color:#2A1A10; }
   .btn { flex:none; padding:5px 12px; border-radius:6px; border:1px solid #E6DED2; color:#5A3A1A; font-size:12.5px; cursor:pointer; background:#fff; }
@@ -53,13 +60,15 @@
 <div class="app">
   <aside class="side" id="side">
     <div class="brand"><div class="k">789BINGO</div><div class="t">需求与原型中心</div></div>
-    <div class="search"><input id="q" placeholder="搜索页面或文档…" /></div>
+    <div class="tabs"><div class="tab cr" data-tab="cr">流水闯关</div><div class="tab xs" data-tab="xs">圣诞换肤</div></div>
+    <div class="tools"><input id="q" placeholder="搜索当前需求下的页面或文档…" /><span class="mini" id="ex">全部展开</span><span class="mini" id="co">恢复默认</span></div>
     <div class="tree" id="tree"></div>
   </aside>
   <main class="main">
-    <div class="bar">
+    <div class="topbar">
       <span class="btn toggle" id="tg">☰ 目录</span>
       <div class="crumb" id="crumb"></div>
+      <a class="btn" id="home" href="#/nav.dc.html">项目导航</a>
       <a class="btn" id="newtab" target="_blank" rel="noopener">新窗口打开 ↗</a>
     </div>
     <iframe id="view" title="内容"></iframe>
@@ -67,94 +76,113 @@
 </div>
 <script>
 const CR = [
-  ['开发需求 PRD', 'Crown Rush PRD.dc.html', 'doc'],
-  ['需求速览', 'Crown Rush PRD Overview.dc.html', 'doc'],
-  ['开发自查清单', 'Crown Rush Dev Checklist.dc.html', 'doc'],
-  ['后台操作手册', 'Crown Rush Admin Manual.dc.html', 'doc'],
   ['活动预热页', 'Crown Rush Pre-Launch.dc.html', 'page'],
   ['活动进行中页', 'Crown Rush Live.dc.html', 'page'],
   ['活动结束页', 'Crown Rush Ended.dc.html', 'page'],
-  ['后台管理 · 流水闯关活动', 'Crown Rush Admin.dc.html', 'admin']
+  ['后台管理 · 流水闯关活动', 'Crown Rush Admin.dc.html', 'admin'],
+  ['后台操作手册', 'Crown Rush Admin Manual.dc.html', 'doc'],
+  ['需求速览', 'Crown Rush PRD Overview.dc.html', 'doc'],
+  ['开发需求 PRD', 'Crown Rush PRD.dc.html', 'doc'],
+  ['开发自查清单', 'Crown Rush Dev Checklist.dc.html', 'doc']
 ];
-const files = (dir, list) => list.map(([name, f, t]) => ({ name, path: dir + '/' + f, type: t }));
 const noPages = l => l.filter(x => x[2] !== 'page');
-const TREE = [
-  { name: '项目导航', path: '项目导航.dc.html', type: 'doc' },
-  { name: '流水闯关活动', key: 'cr', children: [
-    { name: '完整需求', desc: '基线', key: 'cr-full', children: files('crown-rush', CR) },
-    { name: 'v1.0 迭代', desc: '前台全量 + 后台精简', key: 'cr-10', children: files('crown-rush/v1.0', CR) },
-    { name: 'v1.1 迭代', desc: '仅后台', key: 'cr-11', children: files('crown-rush/v1.1', noPages(CR)) },
-    { name: 'v1.2 迭代', desc: '仅后台 · 完整', key: 'cr-12', children: files('crown-rush/v1.2', noPages(CR)) }
-  ]},
-  { name: '圣诞换肤', key: 'xs', children: [
-    { name: '需求文档', key: 'xs-doc', children: files('xmas-skin', [['换肤需求 PRD', '789BingoSkinPRD.dc.html', 'doc'], ['后台 · 节日皮肤管理', 'Skin Admin.dc.html', 'admin'], ['后台操作手册', 'Skin Admin Manual.dc.html', 'doc']]) },
-    { name: '页面原型', key: 'xs-pages', children: files('xmas-skin', [
-      ['首页 · 未登录', '789BingoXmasSkin.dc.html', 'page'], ['首页 · 已登录', '789BingoXmasSkinLoggedIn.dc.html', 'page'],
-      ['登录页', '789BingoMaxSkinLogin.dc.html', 'page'], ['Promotions', '789BingoXmasPromotions.dc.html', 'page'],
-      ['钱包', '789BingoXmasWallet.dc.html', 'page'], ['个人中心', '789BingoXmasAccount.dc.html', 'page'],
-      ['等级中心', '789BingoXmasLevel.dc.html', 'page'], ['聊天室', '789BingoXmasChat.dc.html', 'page'],
-      ['邀请', '789BingoXmasInvite.dc.html', 'page'], ['游戏查询', '789BingoXmasSearch.dc.html', 'page']
-    ]) }
-  ]}
+const files = (dir, list) => list.map(([name, f, t]) => ({ name, path: dir + '/' + f, type: t }));
+const iters = (root, k) => [
+  { key: k + '-full', name: '完整需求', desc: '全部功能', children: files(root + '/full', CR) },
+  { key: k + '-10', name: 'v1.0 迭代', desc: '前台全量 + 后台精简', children: files(root + '/v1.0', CR) },
+  { key: k + '-11', name: 'v1.1 迭代', desc: '仅后台', children: files(root + '/v1.1', noPages(CR)) },
+  { key: k + '-12', name: 'v1.2 迭代', desc: '仅后台 · 完整', children: files(root + '/v1.2', noPages(CR)) }
 ];
+const SKIN = [
+  ['首页 · 未登录', '789BingoXmasSkin.dc.html', 'page'], ['首页 · 已登录', '789BingoXmasSkinLoggedIn.dc.html', 'page'],
+  ['登录页', '789BingoMaxSkinLogin.dc.html', 'page'], ['Promotions', '789BingoXmasPromotions.dc.html', 'page'],
+  ['钱包', '789BingoXmasWallet.dc.html', 'page'], ['个人中心', '789BingoXmasAccount.dc.html', 'page'],
+  ['等级中心', '789BingoXmasLevel.dc.html', 'page'], ['聊天室', '789BingoXmasChat.dc.html', 'page'],
+  ['邀请', '789BingoXmasInvite.dc.html', 'page'], ['游戏查询', '789BingoXmasSearch.dc.html', 'page'],
+  ['后台 · 节日皮肤管理', 'Skin Admin.dc.html', 'admin'], ['后台操作手册', 'Skin Admin Manual.dc.html', 'doc'],
+  ['换肤需求 PRD', '789BingoSkinPRD.dc.html', 'doc']
+];
+const skinGroups = (dir, k, noAdmin) => [
+  { key: k + '-pages', name: '页面原型', children: files(dir, SKIN.filter(x => x[2] === 'page')) },
+  { key: k + '-doc', name: '后台与文档', children: files(dir, SKIN.filter(x => x[2] !== 'page' && (!noAdmin || x[1].indexOf('Skin Admin') !== 0))) }
+];
+const TREES = {
+  cr: [
+    { key: 'cr-plan', name: '版本规划', desc: 'plan', color: '#0F6B3A', children: [
+      { key: 'cr-plan-latest', name: '最新需求记录', desc: 'latest', children: [
+        { key: 'cr-pl-v11', name: 'v1.1', desc: '当前规划', children: iters('crown-rush/plan/latest/v1.1', 'cr-pl') }
+      ] },
+      { key: 'cr-plan-history', name: '历史需求记录', desc: 'history', color: '#8A817B', children: [
+        { key: 'cr-ph-v10', name: 'v1.0', desc: '已归档', children: iters('crown-rush/plan/history/v1.0', 'cr-ph') }
+      ] }
+    ] }
+  ],
+  xs: [
+    { key: 'xs-latest', name: '最新需求记录', desc: 'latest', color: '#0F6B3A', children: [
+      { key: 'xs-11', name: 'v1.1', desc: '当前版本', children: skinGroups('xmas-skin/latest/v1.1', 'xs-11', true) }
+    ] },
+    { key: 'xs-his', name: '历史需求记录', desc: 'history', color: '#8A817B', children: [
+      { key: 'xs-10', name: 'v1.0', desc: '已定稿', children: skinGroups('xmas-skin/history/v1.0', 'xs-10', false) }
+    ] }
+  ]
+};
+const DEFAULT_OPEN = { 'cr-plan': true, 'cr-plan-latest': true, 'cr-pl-v11': true, 'cr-pl-10': true, 'xs-latest': true, 'xs-11': true, 'xs-11-pages': true, 'xs-11-doc': true };
+const TITLE = { cr: '流水闯关活动', xs: '圣诞换肤' };
 const TAG = { doc: '文档', page: '页面', admin: '后台' };
-const byPath = {}, parents = {};
-(function index(nodes, trail) { nodes.forEach(n => { const t = trail.concat([n]); if (n.path) { byPath[n.path] = n; parents[n.path] = t; } if (n.children) index(n.children, t); }); })(TREE, []);
-const open = JSON.parse(localStorage.getItem('navOpen') || '{"cr":true,"cr-full":true,"xs":true}');
-let current = '', query = '';
+const byPath = {}, trail = {};
+Object.keys(TREES).forEach(tab => (function idx(nodes, tr) { nodes.forEach(n => { const t2 = tr.concat([n]); if (n.path) { byPath[n.path] = { node: n, tab }; trail[n.path] = t2; } if (n.children) idx(n.children, t2); }); })(TREES[tab], []));
+let open = Object.assign({}, DEFAULT_OPEN), tab = 'cr', current = '', query = '';
 const $ = id => document.getElementById(id);
-function match(n) { if (!query) return true; if (n.path) return (n.name + ' ' + n.path).toLowerCase().includes(query); return (n.children || []).some(match); }
+const count = n => n.path ? 1 : (n.children || []).reduce((a, c) => a + count(c), 0);
+const match = n => !query || (n.path ? (n.name + ' ' + n.path).toLowerCase().includes(query) : (n.children || []).some(match));
 function render() {
-  const tree = $('tree'); tree.innerHTML = '';
-  const build = (nodes, lvl, host) => nodes.forEach(n => {
+  document.querySelectorAll('.tab').forEach(el => el.classList.toggle('on', el.dataset.tab === tab));
+  const host = $('tree'); host.innerHTML = '';
+  const build = (nodes, el, color) => nodes.forEach(n => {
     if (!match(n)) return;
-    const box = document.createElement('div'); box.className = 'node l' + lvl;
     const row = document.createElement('div'); row.className = 'row' + (n.path && n.path === current ? ' active' : '');
     if (n.children) {
-      const isOpen = query ? true : !!open[n.key];
-      row.innerHTML = '<span class="caret' + (isOpen ? ' open' : '') + '">▶</span><span class="name">' + n.name + (n.desc ? '<span class="desc">' + n.desc + '</span>' : '') + '</span>';
-      row.onclick = () => { open[n.key] = !open[n.key]; localStorage.setItem('navOpen', JSON.stringify(open)); render(); };
-      box.appendChild(row);
-      if (isOpen) { const kids = document.createElement('div'); kids.className = 'kids'; build(n.children, lvl + 1, kids); box.appendChild(kids); }
+      const isOpen = query ? true : !!open[n.key]; const c = n.color || color || '#D9CDB8';
+      row.classList.add('grp');
+      row.innerHTML = '<span class="caret' + (isOpen ? ' open' : '') + '">▶</span><span class="bar" style="background:' + c + '"></span><span class="name">' + n.name + (n.desc ? '<span class="desc">' + n.desc + '</span>' : '') + '</span><span class="cnt">' + count(n) + ' 项</span>';
+      row.onclick = () => { open[n.key] = !open[n.key]; render(); };
+      el.appendChild(row);
+      if (isOpen) { const kids = document.createElement('div'); kids.className = 'kids'; build(n.children, kids, c); el.appendChild(kids); }
     } else {
       row.innerHTML = '<span class="tag ' + n.type + '">' + TAG[n.type] + '</span><span class="name">' + n.name + '</span>';
-      row.title = n.path;
-      row.onclick = () => { go(n.path); $('side').classList.remove('show'); };
-      box.appendChild(row);
+      row.title = n.path; row.onclick = () => { go(n.path); $('side').classList.remove('show'); };
+      el.appendChild(row);
     }
-    host.appendChild(box);
   });
-  build(TREE, 0, tree);
+  build(TREES[tab], host);
 }
-function crumbOf(path) {
-  const t = parents[path];
-  return t ? t.map((n, i) => i === t.length - 1 ? '<b>' + n.name + '</b>' : n.name).join(' › ') : '<b>' + decodeURIComponent(path) + '</b>';
+function crumbOf(p) {
+  const t = trail[p]; if (!t) return '<b>' + (p === 'nav.dc.html' ? '项目导航' : decodeURIComponent(p)) + '</b>';
+  return TITLE[byPath[p].tab] + ' › ' + t.map((n, i) => i === t.length - 1 ? '<b>' + n.name + '</b>' : n.name).join(' › ');
 }
 function go(path, fromFrame) {
-  const clean = path.split('#')[0];
-  current = clean;
-  (parents[clean] || []).forEach(n => { if (n.key) open[n.key] = true; });
+  const clean = path.split('#')[0]; current = clean;
+  if (byPath[clean]) { tab = byPath[clean].tab; (trail[clean] || []).forEach(n => { if (n.key) open[n.key] = true; }); }
   if (!fromFrame) $('view').src = encodeURI(path);
-  $('crumb').innerHTML = crumbOf(clean);
-  $('newtab').href = encodeURI(path);
-  const h = '#/' + path;
-  if (location.hash !== h) history.replaceState(null, '', h);
-  document.title = (byPath[clean] ? byPath[clean].name + ' · ' : '') + '789Bingo 需求与原型中心';
+  $('crumb').innerHTML = crumbOf(clean); $('newtab').href = encodeURI(path);
+  const h = '#/' + path; if (location.hash !== h) history.replaceState(null, '', h);
+  document.title = (byPath[clean] ? byPath[clean].node.name + ' · ' : '') + '789Bingo 需求与原型中心';
   render();
 }
 $('view').addEventListener('load', () => {
   try {
-    const loc = $('view').contentWindow.location;
     const base = location.href.replace(/[#?].*$/, '').replace(/[^/]*$/, '');
-    let rel = decodeURIComponent(loc.href.replace(base, '').replace(/[?].*$/, ''));
+    const rel = decodeURIComponent($('view').contentWindow.location.href.replace(base, '').replace(/[?].*$/, ''));
     if (rel && rel.split('#')[0] !== current) go(rel, true);
   } catch (e) {}
 });
+document.querySelectorAll('.tab').forEach(el => el.onclick = () => { tab = el.dataset.tab; query = ''; $('q').value = ''; render(); });
 $('q').addEventListener('input', e => { query = e.target.value.trim().toLowerCase(); render(); });
+$('ex').onclick = () => { (function all(ns) { ns.forEach(n => { if (n.children) { open[n.key] = true; all(n.children); } }); })(TREES[tab]); render(); };
+$('co').onclick = () => { open = Object.assign({}, DEFAULT_OPEN); render(); };
 $('tg').onclick = () => $('side').classList.toggle('show');
 window.addEventListener('hashchange', () => { const p = decodeURIComponent(location.hash.replace(/^#\//, '')); if (p && p.split('#')[0] !== current) go(p); });
-const start = decodeURIComponent(location.hash.replace(/^#\//, '')) || '项目导航.dc.html';
-go(start);
+go(decodeURIComponent(location.hash.replace(/^#\//, '')) || 'nav.dc.html');
 </script>
 </body>
 </html>

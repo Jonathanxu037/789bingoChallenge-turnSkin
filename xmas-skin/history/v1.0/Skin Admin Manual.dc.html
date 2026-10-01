@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>圣诞换肤 · 后台操作手册</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&amp;family=Noto+Serif+SC:wght@700;900&amp;display=swap" rel="stylesheet" />
+<style>
+  html, body { margin:0; padding:0; background:#F6F3EE; }
+  * { box-sizing:border-box; }
+  a { color:#8A5A12; text-decoration:none; }
+  a:hover { color:#16052F; }
+</style>
+</helmet>
+
+<div style="min-height:100vh;font-family:'Noto Sans SC',system-ui,sans-serif;color:#1F1A26;font-size:14px;line-height:1.7">
+  <div style="background:#16052F;color:#F5E6C0">
+    <div style="max-width:1160px;margin:0 auto;padding:28px 24px 22px">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <span style="font-size:12px;letter-spacing:.24em;color:#C89A3C;font-weight:700">789BINGO · 后台操作手册</span>
+        <span style="padding:1px 9px;border-radius:999px;background:#E8C06A;color:#16052F;font-size:12px;font-weight:800">{{ ver }}</span>
+      </div>
+      <h1 style="margin:8px 0 6px;font-family:'Noto Serif SC',serif;font-size:27px;line-height:1.3;color:#FFF6E2">节日皮肤管理 · 后台操作手册</h1>
+      <div style="color:#CDBBEF;font-size:13.5px;max-width:780px;text-wrap:pretty">{{ intro }}</div>
+      <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+        <a href="./Skin Admin.dc.html" style="padding:6px 14px;border-radius:999px;font-size:12.5px;font-weight:700;color:#16052F;background:#E8C06A">打开后台原型 ›</a>
+        <a href="./789BingoSkinPRD.dc.html" style="padding:6px 14px;border-radius:999px;font-size:12.5px;font-weight:700;color:#F5E6C0;border:1px solid rgba(232,220,248,.4)">查看 PRD ›</a>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width:1160px;margin:0 auto;padding:20px 24px 60px;display:grid;grid-template-columns:220px minmax(0,1fr);gap:24px;align-items:start">
+    <div style="position:sticky;top:16px;padding:14px 12px;border-radius:10px;background:#fff;border:1px solid #ECE6F2">
+      <div style="font-size:12px;color:#8A7C99;font-weight:700;letter-spacing:.12em;padding:0 6px 6px">目录</div>
+      <sc-for list="{{ toc }}" as="t" hint-placeholder-count="7">
+        <div onClick="{{ t.go }}" style="padding:7px 8px;border-radius:6px;font-size:13px;cursor:pointer;color:#2E2638" style-hover="background:#F3EFF8;color:#16052F">{{ t.name }}</div>
+      </sc-for>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+      <div id="m-flow" style="padding:18px 20px;border-radius:10px;background:#fff;border:1px solid #ECE6F2">
+        <div style="font-family:'Noto Serif SC',serif;font-size:18px;font-weight:900;color:#16052F">整体操作流程</div>
+        <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+          <sc-for list="{{ flow }}" as="f" hint-placeholder-count="5">
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <span style="flex:none;width:22px;height:22px;border-radius:50%;background:#16052F;color:#E8C06A;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ f.n }}</span>
+              <span style="font-size:13.5px;color:#2E2638">{{ f.text }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <sc-for list="{{ modules }}" as="m" hint-placeholder-count="4">
+        <div id="{{ m.anchor }}" style="padding:18px 20px;border-radius:10px;background:#fff;border:1px solid #ECE6F2">
+          <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
+            <span style="flex:none;min-width:28px;height:22px;padding:0 7px;border-radius:6px;background:#16052F;color:#E8C06A;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center">{{ m.no }}</span>
+            <span style="font-family:'Noto Serif SC',serif;font-size:18px;font-weight:900;color:#16052F">{{ m.name }}</span>
+          </div>
+          <div style="margin-top:6px;color:#4A4056;font-size:13.5px">{{ m.purpose }}</div>
+
+          <div style="margin-top:14px;font-weight:700;color:#16052F;font-size:14px;display:flex;align-items:center;gap:8px"><span style="width:4px;height:14px;border-radius:2px;background:#16052F"></span>操作步骤</div>
+          <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ m.steps }}" as="st" hint-placeholder-count="3">
+              <div style="display:flex;gap:10px;padding:10px 12px;border-radius:8px;background:#FBF9FD;border:1px solid #F0EAF6">
+                <span style="flex:none;width:20px;height:20px;border-radius:50%;border:1.5px solid #C89A3C;color:#8A5A12;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ st.n }}</span>
+                <div style="min-width:0">
+                  <div style="font-weight:700;color:#16052F;font-size:13.5px">{{ st.title }}</div>
+                  <div style="margin-top:2px;color:#4A4056;font-size:13px">{{ st.text }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ m.hasFields }}">
+            <div style="margin-top:14px;font-weight:700;color:#16052F;font-size:14px;display:flex;align-items:center;gap:8px"><span style="width:4px;height:14px;border-radius:2px;background:#5A3A9A"></span>数据项说明</div>
+            <div style="margin-top:8px;border:1px solid #ECE6F2;border-radius:8px;overflow:hidden">
+              <sc-for list="{{ m.fields }}" as="fd" hint-placeholder-count="3">
+                <div style="display:grid;grid-template-columns:150px minmax(0,1fr);border-top:1px solid #F2EEF7">
+                  <div style="padding:8px 12px;background:#F7F4FB;font-weight:700;font-size:13px;color:#16052F">{{ fd.k }}</div>
+                  <div style="padding:8px 12px;font-size:13px;color:#2E2638">{{ fd.v }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ m.hasCautions }}">
+            <div style="margin-top:14px;padding:10px 14px;border-radius:8px;background:#FFF7E6;border:1px dashed #E6A23C">
+              <div style="font-weight:700;color:#AD4E00;font-size:13.5px">注意事项</div>
+              <ul style="margin:6px 0 0;padding-left:18px;color:#6A4A10;font-size:13px">
+                <sc-for list="{{ m.cautions }}" as="c" hint-placeholder-count="2"><li style="margin-bottom:2px">{{ c.text }}</li></sc-for>
+              </ul>
+            </div>
+          </sc-if>
+        </div>
+      </sc-for>
+
+      <sc-if value="{{ hasUpgrade }}">
+        <div id="m-upgrade" style="padding:18px 20px;border-radius:10px;background:#fff;border:1px solid #ECE6F2">
+          <div style="font-family:'Noto Serif SC',serif;font-size:18px;font-weight:900;color:#16052F">{{ upgradeTitle }}</div>
+          <ul style="margin:10px 0 0;padding-left:18px;font-size:13.5px;color:#2E2638">
+            <sc-for list="{{ upgrade }}" as="u" hint-placeholder-count="3"><li style="margin-bottom:4px">{{ u.text }}</li></sc-for>
+          </ul>
+        </div>
+      </sc-if>
+
+      <div id="m-faq" style="padding:18px 20px;border-radius:10px;background:#fff;border:1px solid #ECE6F2">
+        <div style="font-family:'Noto Serif SC',serif;font-size:18px;font-weight:900;color:#16052F">常见问题</div>
+        <div style="margin-top:10px;display:flex;flex-direction:column;gap:6px">
+          <sc-for list="{{ faq }}" as="q" hint-placeholder-count="4">
+            <div style="border:1px solid #ECE6F2;border-radius:8px;overflow:hidden">
+              <div onClick="{{ q.toggle }}" style="display:flex;align-items:center;gap:8px;padding:10px 12px;cursor:pointer;background:{{ q.bg }}">
+                <span style="color:#C89A3C;font-weight:900">Q</span>
+                <span style="flex:1;font-weight:700;font-size:13.5px;color:#16052F">{{ q.q }}</span>
+                <span style="color:#8A7C99;font-size:12px">{{ q.arrow }}</span>
+              </div>
+              <sc-if value="{{ q.open }}">
+                <div style="padding:10px 12px 12px 32px;font-size:13px;color:#4A4056;border-top:1px solid #F2EEF7">{{ q.a }}</div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { faqOpen: {} };
+  manual() {
+    return /*M*/{
+ "ver": "圣诞换肤",
+ "intro": "本手册面向运营人员，说明「活动配置 › 节日皮肤管理」后台的日常操作：为 H5 / PWA / App 配置节日皮肤与桌面图标的生效时间、灰度与停用。页面中带「?」的数据项和按钮可点击查看说明。",
+ "flow": [
+  "前端将皮肤素材打包上传 CDN，生成资源包版本并通知运营。",
+  "运营「新增皮肤」，先配置 5% 灰度、生效时间覆盖验证期。",
+  "QA 与运营在灰度期内用灰度账号检查各端显示。",
+  "确认无误后新增或编辑为 100% 全量皮肤，设置正式生效时间。",
+  "到期自动恢复默认；如遇问题随时「停用」回退。"
+ ],
+ "modules": [
+  {
+   "name": "皮肤列表",
+   "purpose": "查看所有节日皮肤的配置与生效状态，按名称、状态、适用端筛选。",
+   "steps": [
+    [
+     "筛选",
+     "输入皮肤名称，选择状态与适用端，点「确定」；「重置」清空条件。"
+    ],
+    [
+     "查看状态",
+     "状态按生效时间自动计算，无需手动切换。"
+    ],
+    [
+     "查看日志",
+     "点「操作日志」查看全部操作记录。"
+    ]
+   ],
+   "fields": [
+    [
+     "资源包版本",
+     "前端上传的整套皮肤素材版本，后台不能上传单张图片。"
+    ],
+    [
+     "适用端",
+     "H5 / PWA / Android / iOS，未勾选的端使用默认皮肤。"
+    ],
+    [
+     "生效时间",
+     "开始自动生效，结束自动恢复默认（GMT+8）。"
+    ],
+    [
+     "灰度比例",
+     "按用户 ID 抽取比例用户看到皮肤，100% 为全量。"
+    ],
+    [
+     "桌面图标",
+     "是否同时替换手机桌面上的 App / PWA 图标。"
+    ],
+    [
+     "状态",
+     "未开始 / 生效中 / 已结束 / 已停用。"
+    ]
+   ],
+   "cautions": []
+  },
+  {
+   "name": "新增 / 编辑皮肤",
+   "purpose": "配置一套皮肤的资源、范围与生效规则。",
+   "steps": [
+    [
+     "新增",
+     "点「+ 新增皮肤」，填写皮肤名称（仅后台可见）。"
+    ],
+    [
+     "选择资源包",
+     "在下拉中选择前端已上传的版本；选「default」即默认皮肤。"
+    ],
+    [
+     "选择适用端",
+     "勾选需要换肤的客户端，至少一个。"
+    ],
+    [
+     "设置时间",
+     "选择开始与结束时间，结束须晚于开始。"
+    ],
+    [
+     "灰度与图标",
+     "填写灰度比例（0–100%），选择桌面图标是否切换。"
+    ],
+    [
+     "保存",
+     "点「保存」，系统校验时间重叠与必填项。"
+    ]
+   ],
+   "fields": [
+    [
+     "皮肤名称",
+     "建议含年份与主题，如「2026 圣诞主题」。"
+    ],
+    [
+     "灰度比例",
+     "建议先 5% 验证，再全量。"
+    ],
+    [
+     "桌面图标切换",
+     "Android / PWA 下次打开生效；iOS 需随版本发布或使用备用图标。"
+    ]
+   ],
+   "cautions": [
+    "同一适用端的多套皮肤生效时间不得重叠。",
+    "生效中的皮肤修改后，用户刷新或重新打开才会看到。",
+    "换肤页面范围与飘雪等动效由 UI 与前端确定，后台不配置。"
+   ]
+  },
+  {
+   "name": "停用 / 启用",
+   "purpose": "出现问题时快速回退到默认皮肤，或重新启用。",
+   "steps": [
+    [
+     "停用",
+     "在列表点「停用」并确认，皮肤立即不再生效，用户刷新后恢复默认。"
+    ],
+    [
+     "启用",
+     "点「启用」，按生效时间重新计算状态。"
+    ]
+   ],
+   "fields": [],
+   "cautions": [
+    "桌面图标停用后，iOS 可能要等用户下次打开 App 才恢复。",
+    "停用、启用都会写入操作日志。"
+   ]
+  }
+ ],
+ "upgradeTitle": "",
+ "upgrade": [],
+ "faq": [
+  [
+   "下拉中找不到新的资源包版本？",
+   "前端尚未上传或上传失败，请联系前端确认 CDN 上传结果。"
+  ],
+  [
+   "保存时提示时间重叠？",
+   "同一适用端已有皮肤覆盖该时间段，调整时间或先停用另一套皮肤。"
+  ],
+  [
+   "用户反馈还是旧皮肤？",
+   "检查该用户是否在灰度比例外、所用端是否勾选；请用户刷新页面或重新打开 App。"
+  ],
+  [
+   "iOS 桌面图标没变？",
+   "iOS 图标需随 App 版本或备用图标机制更换，与其他端生效时机不同。"
+  ]
+ ]
+}/*END*/;
+  }
+  renderVals() {
+    const M = this.manual(), s = this.state;
+    const go = id => () => { const el = document.getElementById(id); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 12, behavior: 'smooth' }); };
+    const modules = M.modules.map((m, i) => ({
+      no: String(i + 1).padStart(2, '0'), name: m.name, purpose: m.purpose, anchor: 'm-' + i,
+      steps: m.steps.map((st, j) => ({ n: j + 1, title: st[0], text: st[1] })),
+      fields: (m.fields || []).map(([k, v]) => ({ k, v })), hasFields: !!(m.fields && m.fields.length),
+      cautions: (m.cautions || []).map(t => ({ text: t })), hasCautions: !!(m.cautions && m.cautions.length)
+    }));
+    const toc = [{ name: '整体操作流程', go: go('m-flow') }].concat(modules.map((m, i) => ({ name: m.no + ' ' + m.name, go: go('m-' + i) })));
+    if (M.upgrade.length) toc.push({ name: M.upgradeTitle, go: go('m-upgrade') });
+    toc.push({ name: '常见问题', go: go('m-faq') });
+    return {
+      ver: M.ver, intro: M.intro, toc, modules,
+      flow: M.flow.map((t, i) => ({ n: i + 1, text: t })),
+      hasUpgrade: M.upgrade.length > 0, upgradeTitle: M.upgradeTitle, upgrade: M.upgrade.map(t => ({ text: t })),
+      faq: M.faq.map(([q, a], i) => {
+        const open = !!s.faqOpen[i];
+        return { q, a, open, arrow: open ? '收起' : '展开', bg: open ? '#FBF9FD' : '#fff', toggle: () => this.setState(x => ({ faqOpen: Object.assign({}, x.faqOpen, { [i]: !x.faqOpen[i] }) })) };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

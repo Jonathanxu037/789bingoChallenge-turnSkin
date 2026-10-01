@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Search · 789Bingo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<style>
+  html, body { margin:0; padding:0; background:#F7EBD6; font-family:system-ui,-apple-system,"Segoe UI",sans-serif; }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  a { color:#B3141C; text-decoration:none; }
+  a:hover { color:#8E0F17; }
+  input::placeholder { color:#B9A27A; }
+  @keyframes sSnow { 0% { transform:translateY(-10px); } 100% { transform:translateY(80px); } }
+  @keyframes sToast { from { opacity:0; transform:translate(-50%,8px); } to { opacity:1; transform:translate(-50%,0); } }
+</style>
+</helmet>
+
+<div style="max-width:430px;margin:0 auto;min-height:100vh;background:#F7EBD6;position:relative;padding-bottom:30px">
+
+  <div style="position:sticky;top:0;z-index:20;background:radial-gradient(120% 140% at 50% 0%, #C21F28 0%, #8E0F17 70%, #6A0A12 100%);overflow:hidden">
+    <div style="position:absolute;left:0;right:0;top:0;height:5px;background:repeating-linear-gradient(90deg,#fff 0 12px,#D8242F 12px 24px,#0F6B3A 24px 36px);opacity:.9"></div>
+    <div style="position:absolute;inset:0;pointer-events:none">
+      <sc-for list="{{ snow }}" as="f" hint-placeholder-count="0">
+        <span style="position:absolute;top:-8px;left:{{ f.left }};width:{{ f.size }};height:{{ f.size }};border-radius:50%;background:#fff;opacity:{{ f.op }};animation:sSnow {{ f.dur }} linear infinite;animation-delay:{{ f.delay }}"></span>
+      </sc-for>
+    </div>
+    <div style="position:relative;display:flex;align-items:center;justify-content:center;height:50px;margin-top:4px">
+      <div onClick="{{ goBack }}" style="position:absolute;left:10px;top:9px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;cursor:pointer;color:#FFE9B0">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M12.5 4 6.5 10l6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      </div>
+      <div style="color:#FFF3D6;font-weight:800;font-size:17px">Search</div>
+    </div>
+    <div style="position:relative;padding:4px 14px 14px">
+      <div style="display:flex;align-items:center;gap:9px;height:44px;padding:0 14px;border-radius:999px;background:#FFFDF6;border:2px solid #F4C658;box-shadow:inset 0 2px 4px rgba(120,20,10,.08)">
+        <svg width="20" height="20" viewBox="0 0 22 22" fill="none" aria-hidden="true"><circle cx="9.5" cy="9.5" r="6.5" stroke="#B3141C" stroke-width="2.2" /><path d="m14.5 14.5 4.5 4.5" stroke="#B3141C" stroke-width="2.4" stroke-linecap="round" /></svg>
+        <input value="{{ query }}" onChange="{{ onQuery }}" placeholder="Game Name" style="flex:1;min-width:0;border:none;outline:none;background:transparent;font-size:15px;color:#3A2410" />
+        <sc-if value="{{ hasQuery }}">
+          <div onClick="{{ clearQuery }}" style="flex:none;width:20px;height:20px;border-radius:50%;background:#E6D6B8;color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;cursor:pointer">✕</div>
+        </sc-if>
+      </div>
+    </div>
+    <div style="position:relative;height:9px;background:radial-gradient(9px 7px at 6% 0,#fff 98%,transparent),radial-gradient(13px 8px at 22% 0,#fff 98%,transparent),radial-gradient(10px 7px at 40% 0,#fff 98%,transparent),radial-gradient(14px 8px at 60% 0,#fff 98%,transparent),radial-gradient(10px 7px at 78% 0,#fff 98%,transparent),radial-gradient(12px 8px at 94% 0,#fff 98%,transparent)"></div>
+  </div>
+
+  <sc-if value="{{ hasQuery }}">
+    <div style="padding:14px 14px 0">
+      <div style="font-size:14px;font-weight:800;color:#5A1A0E">Results <span style="color:#0F6B3A">{{ resultCount }}</span></div>
+      <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px">
+        <sc-for list="{{ results }}" as="g" hint-placeholder-count="0">
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:14px;background:#FFFDF6;border:1.5px solid #F0D79A">
+            <img src="{{ g.img }}" alt="" style="flex:none;width:44px;height:44px;border-radius:9px;object-fit:cover" />
+            <div style="flex:1;min-width:0;font-size:14px;font-weight:700;color:#3A2410;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ g.name }}</div>
+            <div onClick="{{ g.onPlay }}" style="flex:none;padding:7px 14px;border-radius:999px;background:linear-gradient(180deg,#2E9A58,#0F6B3A);border:1.5px solid #F4C658;color:#FFF3D6;font-size:12.5px;font-weight:800;cursor:pointer">Play now</div>
+          </div>
+        </sc-for>
+        <sc-if value="{{ noResults }}">
+          <div style="padding:30px 0;text-align:center;color:#9A6A2A;font-size:13px">No games found for “{{ query }}”</div>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ noQuery }}" hint-placeholder-val="{{ true }}">
+    <div style="padding:14px 0 0">
+      <div style="padding:0 14px;display:flex;align-items:center;gap:6px;font-size:15px;font-weight:800;color:#5A1A0E">
+        <span>🎁</span><span>Game Recommendations</span>
+      </div>
+      <div style="margin-top:10px;display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding:2px 14px 4px">
+        <sc-for list="{{ recs }}" as="g" hint-placeholder-count="5">
+          <div onClick="{{ g.onPlay }}" style="flex:none;width:74px;cursor:pointer">
+            <div style="width:74px;height:74px;border-radius:13px;overflow:hidden;border:2px solid #F4C658;box-shadow:0 3px 8px rgba(120,20,10,.18)">
+              <img src="{{ g.img }}" alt="{{ g.name }}" style="display:block;width:100%;height:100%;object-fit:cover" />
+            </div>
+            <div style="margin-top:5px;font-size:11px;font-weight:700;color:#3A2410;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ g.name }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="margin-top:16px;padding:0 14px;display:flex;align-items:center;gap:6px;font-size:15px;font-weight:800;color:#5A1A0E">
+        <span>🎄</span><span>Popular Game <span style="color:#0F6B3A">Top 5</span></span>
+      </div>
+      <div style="margin-top:10px;padding:0 14px;display:flex;flex-direction:column;gap:9px">
+        <sc-for list="{{ top }}" as="g" hint-placeholder-count="5">
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:14px;background:{{ g.bg }};border:1.5px solid {{ g.border }};box-shadow:0 2px 6px rgba(120,20,10,.06)">
+            <div style="flex:none;width:30px;display:flex;align-items:center;justify-content:center">
+              <sc-if value="{{ g.medal }}">
+                <div style="width:26px;height:26px;border-radius:50%;background:{{ g.medalBg }};border:1.5px solid #fff;box-shadow:0 2px 4px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:900">{{ g.rank }}</div>
+              </sc-if>
+              <sc-if value="{{ g.plain }}">
+                <span style="font-size:16px;font-weight:800;color:#9A6A2A">{{ g.rank }}</span>
+              </sc-if>
+            </div>
+            <img src="{{ g.img }}" alt="" style="flex:none;width:44px;height:44px;border-radius:9px;object-fit:cover" />
+            <div style="flex:1;min-width:0;font-size:14px;font-weight:700;color:#3A2410;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ g.name }}</div>
+            <div onClick="{{ g.onPlay }}" style="flex:none;padding:7px 14px;border-radius:999px;background:linear-gradient(180deg,#2E9A58,#0F6B3A);border:1.5px solid #F4C658;color:#FFF3D6;font-size:12.5px;font-weight:800;cursor:pointer" style-hover="filter:brightness(1.08)">Play now</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ hasToast }}">
+    <div style="position:fixed;left:50%;bottom:40px;transform:translateX(-50%);z-index:50;padding:9px 16px;border-radius:999px;background:rgba(58,8,12,.92);border:1px solid #F4C658;color:#FFF3D6;font-size:12.5px;font-weight:700;white-space:nowrap;animation:sToast .25s ease">{{ toast }}</div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { query: '', toast: '' };
+  flakes = Array.from({ length: 14 }, (_, i) => ({
+    left: ((i * 43) % 97) + '%', size: (2 + (i % 3)) + 'px', op: (0.4 + (i % 4) * 0.15).toFixed(2),
+    dur: (4 + (i % 4)) + 's', delay: (-(i * 0.6)).toFixed(1) + 's'
+  }));
+  componentWillUnmount() { clearTimeout(this.tt); }
+  flash(t) { this.setState({ toast: t }); clearTimeout(this.tt); this.tt = setTimeout(() => this.setState({ toast: '' }), 1800); }
+  renderVals() {
+    const s = this.state;
+    const play = n => () => this.flash('Launching ' + n + '…');
+    const recs = [
+      ['Sugar Bang Bang', '../../../assets/x7890/srch-r0.png'], ['Maya Golden City', '../../../assets/x7890/srch-r1.png'],
+      ['Fortune Tree', '../../../assets/x7890/srch-r2.png'], ['Baccarat', '../../../assets/x7890/srch-r3.png'],
+      ['Fortune Gems', '../../../assets/x7890/hot7.png']
+    ].map(([name, img]) => ({ name, img, onPlay: play(name) }));
+    const styles = [
+      { bg: 'linear-gradient(90deg,#FFF3C4,#FFFBEA)', border: '#F4C658', medalBg: 'linear-gradient(180deg,#F8D25C,#C8921C)' },
+      { bg: 'linear-gradient(90deg,#ECEEF2,#FAFAFB)', border: '#C9CED8', medalBg: 'linear-gradient(180deg,#D7DCE4,#8C95A6)' },
+      { bg: 'linear-gradient(90deg,#FFE3D2,#FFF6F0)', border: '#EBA88A', medalBg: 'linear-gradient(180deg,#F0A77A,#B8612F)' }
+    ];
+    const topNames = ['Sugar bang bang2', 'Maya golden city 4', 'Fortune tree', 'Baccarat c:01-1', 'Speed bacc c08'];
+    const top = topNames.map((name, i) => {
+      const st = styles[i] || { bg: '#FFFDF6', border: '#F0D79A' };
+      return { name, rank: i + 1, img: '../../../assets/x7890/srch-t' + i + '.png', medal: i < 3, plain: i >= 3, medalBg: st.medalBg || '', bg: st.bg, border: st.border, onPlay: play(name) };
+    });
+    const q = s.query.trim().toLowerCase();
+    const pool = recs.concat(top.map(t => ({ name: t.name, img: t.img, onPlay: t.onPlay })));
+    const seen = {};
+    const results = q ? pool.filter(g => { const k = g.name.toLowerCase(); if (seen[k] || k.indexOf(q) < 0) return false; seen[k] = 1; return true; }) : [];
+    return {
+      snow: this.flakes,
+      goBack: () => { if (window.history.length > 1) window.history.back(); else window.location.href = './789BingoXmasSkinLoggedIn.dc.html'; },
+      query: s.query, onQuery: e => this.setState({ query: e.target.value }), clearQuery: () => this.setState({ query: '' }),
+      hasQuery: !!q, noQuery: !q, results, resultCount: results.length, noResults: !!q && results.length === 0,
+      recs, top,
+      hasToast: !!s.toast, toast: s.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

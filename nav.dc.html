@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>项目导航</title>
+<style>
+  html, body { margin:0; padding:0; background:#F6F3EE; font-family:system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+  * { box-sizing:border-box; }
+  a { color:#8E0F17; text-decoration:none; }
+  a:hover { color:#B3141C; }
+</style>
+</helmet>
+
+<div style="max-width:1180px;margin:0 auto;padding:36px 20px 60px">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap">
+    <div>
+      <div style="font-size:22px;font-weight:800;color:#2A1A10">项目导航</div>
+      <div style="margin-top:6px;font-size:13px;color:#7A6A58">按「项目 › 版本 › 文件」逐级展开，点击文件打开</div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <div onClick="{{ expandAll }}" style="padding:6px 12px;border-radius:8px;border:1px solid #E6DED2;background:#fff;color:#5A3A1A;font-size:12.5px;cursor:pointer" style-hover="background:#FAF6EF">全部展开</div>
+      <div onClick="{{ collapseAll }}" style="padding:6px 12px;border-radius:8px;border:1px solid #E6DED2;background:#fff;color:#5A3A1A;font-size:12.5px;cursor:pointer" style-hover="background:#FAF6EF">全部收起</div>
+    </div>
+  </div>
+
+  <div style="margin-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:18px;align-items:start">
+    <sc-for list="{{ projects }}" as="pj" hint-placeholder-count="2">
+      <div style="border-radius:14px;background:#fff;border:1px solid #E6DED2;overflow:hidden">
+        <div style="padding:14px 16px;background:{{ pj.headBg }};color:#FFF6E2">
+          <div style="font-size:17px;font-weight:800">{{ pj.title }}</div>
+          <div style="margin-top:3px;font-size:12px;opacity:.85">{{ pj.folder }}</div>
+        </div>
+        <div style="padding:8px 10px 12px;display:flex;flex-direction:column;gap:1px">
+          <sc-for list="{{ pj.rows }}" as="r" hint-placeholder-count="8">
+            <div>
+              <sc-if value="{{ r.isGroup }}" hint-placeholder-val="{{ true }}">
+                <div onClick="{{ r.toggle }}" style="display:flex;align-items:center;gap:7px;padding:7px 8px 7px {{ r.pad }};border-radius:7px;cursor:pointer" style-hover="background:#FAF6EF">
+                  <span style="flex:none;width:12px;font-size:10px;color:#B9A88E;transform:{{ r.caretRot }};transition:transform .15s">▶</span>
+                  <span style="flex:none;width:5px;height:14px;border-radius:3px;background:{{ r.color }}"></span>
+                  <span style="font-size:{{ r.fs }};font-weight:{{ r.fw }};color:#2A1A10;white-space:nowrap">{{ r.name }}</span>
+                  <span style="min-width:0;font-size:11.5px;color:#9A8A72;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.desc }}</span>
+                  <span style="margin-left:auto;flex:none;font-size:11px;color:#B9A88E">{{ r.count }}</span>
+                </div>
+              </sc-if>
+              <sc-if value="{{ r.isFile }}">
+                <a href="{{ r.href }}" style="display:flex;align-items:center;gap:9px;padding:6px 8px 6px {{ r.pad }};border-radius:7px" style-hover="background:#F6F1E8">
+                  <span style="flex:none;padding:1px 6px;border-radius:5px;font-size:10.5px;font-weight:800;background:{{ r.tagBg }};color:{{ r.tagColor }}">{{ r.tag }}</span>
+                  <span style="min-width:0;font-size:13px;font-weight:600;color:#2A1A10;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.name }}</span>
+                  <span style="margin-left:auto;flex:none;color:#C9B89E;font-size:13px">›</span>
+                </a>
+              </sc-if>
+              <sc-if value="{{ r.isEmpty }}">
+                <div style="padding:5px 8px 5px {{ r.pad }};font-size:12px;color:#B9A88E">暂无内容</div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ pj.hasNote }}">
+          <div style="margin:0 12px 12px;padding:8px 10px;border:1px dashed #D48806;border-radius:6px;background:#FFF7E6;color:#874D00;font-size:12px;line-height:1.6">所有原型页面的视觉效果均为示例，最终呈现效果以 UI 设计师产出结果为准。</div>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  DEFAULT_OPEN = { 'cr-plan': true, 'cr-plan-latest': true, 'cr-pl-v11': true, 'cr-pl-10': true, 'xs-latest': true, 'xs-11': true, 'xs-11-pages': true, 'xs-11-doc': true };
+  state = { open: Object.assign({}, this.DEFAULT_OPEN) };
+
+  tree() {
+    const CR = [
+      ['活动预热页', 'Crown Rush Pre-Launch.dc.html', '页面'],
+      ['活动进行中页', 'Crown Rush Live.dc.html', '页面'],
+      ['活动结束页', 'Crown Rush Ended.dc.html', '页面'],
+      ['后台管理 · 流水闯关活动', 'Crown Rush Admin.dc.html', '后台'],
+      ['后台操作手册', 'Crown Rush Admin Manual.dc.html', '文档'],
+      ['需求速览', 'Crown Rush PRD Overview.dc.html', '文档'],
+      ['开发需求 PRD', 'Crown Rush PRD.dc.html', '文档'],
+      ['开发自查清单', 'Crown Rush Dev Checklist.dc.html', '文档']
+    ];
+    const noPages = l => l.filter(x => x[2] !== '页面');
+    const files = (dir, list) => list.map(([name, f, t]) => ({ name, href: './' + dir + '/' + f, type: t }));
+    const iters = (root, k) => [
+      { key: k + '-full', name: '完整需求', desc: '全部功能', children: files(root + '/full', CR) },
+      { key: k + '-10', name: 'v1.0 迭代', desc: '前台全量 + 后台精简', children: files(root + '/v1.0', CR) },
+      { key: k + '-11', name: 'v1.1 迭代', desc: '仅后台', children: files(root + '/v1.1', noPages(CR)) },
+      { key: k + '-12', name: 'v1.2 迭代', desc: '仅后台 · 完整', children: files(root + '/v1.2', noPages(CR)) }
+    ];
+    const SKIN = [
+      ['首页 · 未登录', '789BingoXmasSkin.dc.html', '页面'],
+      ['首页 · 已登录', '789BingoXmasSkinLoggedIn.dc.html', '页面'],
+      ['登录页', '789BingoMaxSkinLogin.dc.html', '页面'],
+      ['Promotions', '789BingoXmasPromotions.dc.html', '页面'],
+      ['钱包', '789BingoXmasWallet.dc.html', '页面'],
+      ['个人中心', '789BingoXmasAccount.dc.html', '页面'],
+      ['等级中心', '789BingoXmasLevel.dc.html', '页面'],
+      ['聊天室', '789BingoXmasChat.dc.html', '页面'],
+      ['邀请', '789BingoXmasInvite.dc.html', '页面'],
+      ['游戏查询', '789BingoXmasSearch.dc.html', '页面'],
+      ['后台 · 节日皮肤管理', 'Skin Admin.dc.html', '后台'],
+      ['后台操作手册', 'Skin Admin Manual.dc.html', '文档'],
+      ['换肤需求 PRD', '789BingoSkinPRD.dc.html', '文档']
+    ];
+    const skinGroups = (dir, k, noAdmin) => [
+      { key: k + '-pages', name: '页面原型', children: files(dir, SKIN.filter(x => x[2] === '页面')) },
+      { key: k + '-doc', name: '后台与文档', children: files(dir, SKIN.filter(x => x[2] !== '页面' && (!noAdmin || x[1].indexOf('Skin Admin') !== 0))) }
+    ];
+    return [
+      { key: 'cr', title: '流水闯关活动', folder: 'crown-rush/', headBg: 'linear-gradient(135deg,#3A1170,#16052F)', children: [
+        { key: 'cr-plan', name: '版本规划', desc: 'plan', color: '#0F6B3A', children: [
+          { key: 'cr-plan-latest', name: '最新需求记录', desc: 'latest', children: [
+            { key: 'cr-pl-v11', name: 'v1.1', desc: '当前规划', children: iters('crown-rush/plan/latest/v1.1', 'cr-pl') }
+          ] },
+          { key: 'cr-plan-history', name: '历史需求记录', desc: 'history', children: [
+            { key: 'cr-ph-v10', name: 'v1.0', desc: '已归档', children: iters('crown-rush/plan/history/v1.0', 'cr-ph') }
+          ] }
+        ] }
+      ] },
+      { key: 'xs', title: '圣诞换肤', folder: 'xmas-skin/', hasNote: true, headBg: 'linear-gradient(135deg,#C21F28,#6A0A12)', children: [
+        { key: 'xs-latest', name: '最新需求记录', desc: 'latest', color: '#0F6B3A', children: [
+          { key: 'xs-11', name: 'v1.1', desc: '当前版本', children: skinGroups('xmas-skin/latest/v1.1', 'xs-11', true) }
+        ] },
+        { key: 'xs-his', name: '历史需求记录', desc: 'history', color: '#8A817B', children: [
+          { key: 'xs-10', name: 'v1.0', desc: '已定稿', children: skinGroups('xmas-skin/history/v1.0', 'xs-10', false) }
+        ] }
+      ] }
+    ];
+  }
+
+  renderVals() {
+    const open = this.state.open;
+    const TAG = {
+      '文档': { tagBg: '#E7F1EA', tagColor: '#0F6B3A' },
+      '后台': { tagBg: '#EEE8F7', tagColor: '#5A3A9A' },
+      '页面': { tagBg: '#FBE9E9', tagColor: '#9A0F18' }
+    };
+    const countFiles = n => n.children ? n.children.reduce((a, c) => a + countFiles(c), 0) : 1;
+    const allKeys = [];
+    const collect = n => { if (n.children) { if (n.key) allKeys.push(n.key); n.children.forEach(collect); } };
+    const flat = (nodes, depth, out, inheritColor) => {
+      nodes.forEach(n => {
+        const pad = (8 + depth * 18) + 'px';
+        if (n.children) {
+          const isOpen = !!open[n.key];
+          const color = n.color || inheritColor || '#D9CDB8';
+          out.push({
+            isGroup: true, isFile: false, isEmpty: false, name: n.name, desc: n.desc || '', pad, color,
+            count: countFiles(n) + ' 项', caretRot: isOpen ? 'rotate(90deg)' : 'none',
+            fs: depth === 0 ? '14px' : '13.5px', fw: depth === 0 ? 800 : 700,
+            toggle: () => this.setState(s => ({ open: Object.assign({}, s.open, { [n.key]: !s.open[n.key] }) }))
+          });
+          if (isOpen) {
+            if (!n.children.length) out.push({ isGroup: false, isFile: false, isEmpty: true, pad: (8 + (depth + 1) * 18) + 'px' });
+            else flat(n.children, depth + 1, out, color);
+          }
+        } else {
+          out.push(Object.assign({ isGroup: false, isFile: true, isEmpty: false, name: n.name, href: n.href, tag: n.type, pad }, TAG[n.type]));
+        }
+      });
+      return out;
+    };
+    const T = this.tree();
+    T.forEach(collect);
+    return {
+      projects: T.map(p => ({ title: p.title, folder: p.folder, headBg: p.headBg, hasNote: !!p.hasNote, rows: flat(p.children, 0, []) })),
+      expandAll: () => { const o = {}; allKeys.forEach(k => { o[k] = true; }); this.setState({ open: o }); },
+      collapseAll: () => this.setState({ open: { cr: true, xs: true } })
+    };
+  }
+}
+</script>
+</body>
+</html>

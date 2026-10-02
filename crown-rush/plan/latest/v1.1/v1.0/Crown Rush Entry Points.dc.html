@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>流水闯关 · 活动入口 UI 设计需求（v1.0 迭代）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&amp;display=swap" rel="stylesheet" />
+<style>
+  html, body { margin:0; padding:0; background:#F4F1EC; }
+  * { box-sizing:border-box; }
+  a { color:#8A5A12; text-decoration:none; }
+  a:hover { color:#16052F; }
+  @keyframes epPulse { 0%,100% { box-shadow:0 0 0 0 rgba(245,34,45,.55); } 60% { box-shadow:0 0 0 7px rgba(245,34,45,0); } }
+</style>
+</helmet>
+
+<div style="min-height:100vh;font-family:'Noto Sans SC',system-ui,sans-serif;color:#1F1A26;font-size:13.5px;line-height:1.7">
+
+  <div style="background:#16052F;color:#F5E6C0">
+    <div style="max-width:1240px;margin:0 auto;padding:24px 24px 20px">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <span style="font-size:11.5px;letter-spacing:.24em;color:#C89A3C;font-weight:700">流水闯关 · v1.0 迭代 · 前台</span>
+        <span style="padding:1px 9px;border-radius:999px;background:#E8C06A;color:#16052F;font-size:11.5px;font-weight:800">UI 设计需求</span>
+      </div>
+      <div style="margin-top:6px;font-size:24px;font-weight:900;color:#FFF6E2">活动落地页入口（共 4 个）</div>
+      <div style="margin-top:6px;color:#CDBBEF;font-size:13px;max-width:860px;text-wrap:pretty">基于平台现有首页与 Promotions 页标出 4 个入口的位置与交互，供 UI 围绕本期活动主题设计入口素材（不区分活动阶段，各入口只需一版）。图中虚线框与标注仅示意位置，<b style="color:#FFE9B0">所有视觉效果均为示例，最终呈现以 UI 设计师产出为准</b>（配色、样式、尺寸、素材规格由 UI 确定）。</div>
+    </div>
+  </div>
+
+  <div style="max-width:1240px;margin:0 auto;padding:18px 24px 50px;display:flex;flex-direction:column;gap:16px">
+
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 14px;border-radius:10px;background:#fff;border:1px solid #E6DED2">
+      <span style="font-weight:700;color:#16052F">预览</span>
+      <div onClick="{{ togglePopup }}" style="padding:5px 12px;border-radius:6px;border:1px solid #C89A3C;color:#8A5A12;font-weight:700;cursor:pointer;background:#FFF9EC">{{ popupLabel }}</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start">
+
+      <div style="padding:14px;border-radius:10px;background:#fff;border:1px solid #E6DED2">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-weight:900;color:#16052F;font-size:15px">平台首页</span><span style="color:#8A7C99;font-size:12px">入口 ① ② ③</span></div>
+        <div style="margin:10px auto 0;position:relative;width:100%;max-width:385px;border-radius:18px;overflow:hidden;border:6px solid #1F1A26;box-shadow:0 10px 26px rgba(0,0,0,.18)">
+          <img src="../../../../../assets/entry-home.png" alt="平台首页" style="display:block;width:100%;height:auto" />
+
+          <sc-if value="{{ visible }}" hint-placeholder-val="{{ true }}">
+            <div style="position:absolute;left:2%;top:14.6%;width:96%;height:14.4%;border:2px dashed #F5222D;border-radius:10px;background:rgba(22,5,47,.55);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px;color:#FFE9B0;text-align:center;padding:6px">
+              <div style="font-weight:900;font-size:13px">Crown Rush 首页 Banner</div>
+              <div style="font-size:11px;color:#F5E6C0">{{ bannerHint }}</div>
+              <div style="position:absolute;left:-2px;top:-2px;width:20px;height:20px;border-radius:50%;background:#F5222D;color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center">①</div>
+            </div>
+
+            <div style="position:absolute;right:2.5%;top:64%;width:17%;aspect-ratio:1/1;border:2px dashed #F5222D;border-radius:14px;background:rgba(22,5,47,.75);display:flex;align-items:center;justify-content:center;flex-direction:column;color:#FFE9B0;text-align:center;font-size:10px;font-weight:800;line-height:1.25">
+              <div>Crown<br />Rush</div>
+              <div style="font-size:9px;color:#F5E6C0;font-weight:500">悬浮 icon</div>
+              <div style="position:absolute;left:-10px;top:-10px;width:20px;height:20px;border-radius:50%;background:#F5222D;color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center">②</div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ popupShown }}">
+            <div style="position:absolute;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:14%">
+              <div style="position:relative;width:100%;aspect-ratio:3/4;border:2px dashed #F5222D;border-radius:16px;background:rgba(22,5,47,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#FFE9B0;text-align:center;padding:12px">
+                <div style="font-weight:900;font-size:14px">每日首次登录弹窗</div>
+                <div style="font-size:11px;color:#F5E6C0">本期活动主题主视觉</div>
+                <div style="margin-top:6px;padding:6px 16px;border-radius:999px;border:1px dashed #E8C06A;font-size:11.5px;font-weight:800">立即参与（进入落地页）</div>
+                <div style="position:absolute;top:8px;right:10px;font-size:14px;color:#F5E6C0">✕</div>
+                <div style="position:absolute;left:-10px;top:-10px;width:22px;height:22px;border-radius:50%;background:#F5222D;color:#fff;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center">③</div>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+
+      <div style="padding:14px;border-radius:10px;background:#fff;border:1px solid #E6DED2">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-weight:900;color:#16052F;font-size:15px">Promotions 页</span><span style="color:#8A7C99;font-size:12px">入口 ④</span></div>
+        <div style="margin:10px auto 0;position:relative;width:100%;max-width:380px;border-radius:18px;overflow:hidden;border:6px solid #1F1A26;box-shadow:0 10px 26px rgba(0,0,0,.18)">
+          <img src="../../../../../assets/entry-promo.png" alt="Promotions 页" style="display:block;width:100%;height:auto" />
+          <sc-if value="{{ visible }}" hint-placeholder-val="{{ true }}">
+            <div style="position:absolute;left:5%;top:10.4%;width:90%;height:20.6%;border:2px dashed #F5222D;border-radius:12px;background:rgba(22,5,47,.82);display:flex;flex-direction:column;justify-content:flex-end;padding:8px 10px;color:#FFE9B0">
+              <div style="flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center">
+                <div style="font-weight:900;font-size:13px">Crown Rush 活动 Banner</div>
+                <div style="font-size:11px;color:#F5E6C0">{{ bannerHint }}</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px"><span style="font-weight:800">Crown Rush 冲级闯关</span><span style="padding:2px 10px;border-radius:999px;border:1px dashed #E8C06A">Details</span></div>
+              <div style="position:absolute;left:-2px;top:-2px;width:20px;height:20px;border-radius:50%;background:#F5222D;color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center">④</div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:16px 18px;border-radius:10px;background:#fff;border:1px solid #E6DED2">
+      <div style="font-weight:900;color:#16052F;font-size:16px">入口设计说明</div>
+      <div style="margin-top:10px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+        <sc-for list="{{ entries }}" as="e" hint-placeholder-count="4">
+          <div style="padding:12px 14px;border-radius:9px;background:#FBF9FD;border:1px solid #ECE6F2">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="flex:none;width:22px;height:22px;border-radius:50%;background:#F5222D;color:#fff;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center">{{ e.no }}</span>
+              <span style="font-weight:900;color:#16052F;font-size:14.5px">{{ e.name }}</span>
+              <span style="margin-left:auto;color:#8A7C99;font-size:12px">{{ e.where }}</span>
+            </div>
+            <div style="margin-top:8px;display:flex;flex-direction:column;gap:5px;font-size:12.5px">
+              <sc-for list="{{ e.rows }}" as="r" hint-placeholder-count="5">
+                <div style="display:grid;grid-template-columns:76px minmax(0,1fr);gap:8px"><span style="color:#8A7C99">{{ r.k }}</span><span style="color:#2E2638">{{ r.v }}</span></div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="padding:16px 18px;border-radius:10px;background:#fff;border:1px solid #E6DED2">
+      <div style="font-weight:900;color:#16052F;font-size:16px">通用规则</div>
+      <div style="margin-top:8px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 20px;font-size:12.5px">
+        <sc-for list="{{ rules }}" as="r" hint-placeholder-count="6">
+          <div style="display:flex;gap:8px"><span style="flex:none;color:#C89A3C;font-weight:900">·</span><span><b style="color:#16052F">{{ r.k }}</b>：{{ r.v }}</span></div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="padding:16px 18px;border-radius:10px;background:#fff;border:1px solid #E6DED2">
+      <div style="font-weight:900;color:#16052F;font-size:16px">UI 需交付的素材</div>
+      <table style="margin-top:10px;width:100%;border-collapse:collapse;font-size:12.5px">
+        <tr style="background:#F3EFF8;color:#16052F;font-weight:700"><td style="padding:7px 9px;border:1px solid #E1D8EB;width:40px">入口</td><td style="padding:7px 9px;border:1px solid #E1D8EB">素材</td><td style="padding:7px 9px;border:1px solid #E1D8EB">备注</td></tr>
+        <sc-for list="{{ assets }}" as="a" hint-placeholder-count="5">
+          <tr><td style="padding:7px 9px;border:1px solid #E1D8EB;text-align:center;font-weight:900;color:#F5222D">{{ a.no }}</td><td style="padding:7px 9px;border:1px solid #E1D8EB">{{ a.item }}</td><td style="padding:7px 9px;border:1px solid #E1D8EB;color:#5A4E66">{{ a.note }}</td></tr>
+        </sc-for>
+      </table>
+      <div style="margin-top:8px;color:#8A7C99;font-size:12px">素材尺寸、格式、动效形式由 UI 设计师与前端确认；需与平台圣诞换肤风格统一。</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { popup: false };
+  renderVals() {
+    const s = this.state;
+    return {
+            popupShown: s.popup, popupLabel: s.popup ? '收起登录弹窗' : '预览登录弹窗 ③',
+      togglePopup: () => this.setState({ popup: !s.popup }),
+      visible: true, bannerHint: '本期活动主题主视觉',
+      entries: [
+        { no: '①', name: '首页 Banner', where: '首页 · Banner 轮播区', rows: [
+          { k: '位置', v: '首页顶部 Banner 轮播中的一张，与平台其他活动 Banner 并列轮播。' },
+          { k: '内容', v: '围绕本期活动主题设计的主视觉，一版通用。' },
+          { k: '点击', v: '直接跳转活动落地页。' }
+        ] },
+        { no: '②', name: '首页悬浮 icon', where: '首页 · 右侧悬浮', rows: [
+          { k: '位置', v: '首页常驻悬浮图标，需避开现有右侧邀请栏与客服按钮，不遮挡游戏卡片主要内容。' },
+          { k: '内容', v: '体现本期活动主题的 icon（可带轻微动效），一版通用。' },
+          { k: '点击', v: '跳转活动落地页。' }
+        ] },
+        { no: '③', name: '每日首次登录弹窗', where: '首页 · 登录后弹出', rows: [
+          { k: '时机', v: '用户每日首次登录后弹出；自然日计算与和平台其他弹窗的先后顺序，按平台现有逻辑。' },
+          { k: '内容', v: '本期活动主题主视觉 + 行动按钮 + 关闭按钮，一版通用。' },
+          { k: '点击', v: '点击弹窗或按钮进入活动落地页；点关闭仅关闭弹窗，当日不再弹出。' }
+        ] },
+        { no: '④', name: 'Promo 页 Banner', where: 'Promotions 页 · 活动列表', rows: [
+          { k: '位置', v: 'Promotions 页活动卡片列表中的一张，「All」与「冲级活动」分类下均展示。' },
+          { k: '内容', v: '本期活动主题 Banner 图 + 活动名称 + 平台通用「Details」按钮（沿用现有卡片样式），一版通用。' },
+          { k: '点击', v: '点击 Banner 或 Details 直接跳转活动落地页。' }
+        ] }
+      ],
+      rules: [
+        { k: '入口范围', v: 'v1.0 的 4 个入口仅针对本期圣诞 Crown Rush 活动；后续新活动的入口届时单独设置，后台不提供入口配置。' },
+        { k: '跳转目标', v: '所有入口进入同一个活动落地页。' },
+        { k: '设计范围', v: '入口素材只围绕本期活动主题设计，不区分活动阶段，每个入口一版通用。' },
+        { k: '未登录用户', v: '可看到 ① ② ④ 并进入落地页；③ 只在登录后触发。' },
+        { k: '视觉风格', v: '与平台圣诞换肤统一；图中虚线框仅示意位置，视觉以 UI 设计稿为准。' }
+      ],
+      assets: [
+        { no: '①', item: '首页 Banner 图', states: '1 版（三阶段共用）', note: '与首页现有 Banner 同规格' },
+        { no: '②', item: '悬浮 icon', states: '1 版', note: '动效形式由 UI 决定' },
+        { no: '③', item: '登录弹窗整图 / 分层素材', states: '1 版（三阶段共用）', note: '含行动按钮与关闭按钮' },
+        { no: '④', item: 'Promo 卡片 Banner 图', states: '1 版（三阶段共用）', note: '沿用 Promotions 现有卡片规格，名称与 Details 按钮用平台通用组件' },
+        { no: '—', item: '活动落地页主视觉', states: '三个页面', note: '与入口素材保持同一视觉主题（已在活动页需求中）' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

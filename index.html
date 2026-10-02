@@ -87,9 +87,10 @@ const CR = [
 ];
 const noPages = l => l.filter(x => x[2] !== 'page');
 const files = (dir, list) => list.map(([name, f, t]) => ({ name, path: dir + '/' + f, type: t }));
+const withEntry = (root, l) => root.indexOf('/latest/') >= 0 ? l.slice(0, 3).concat([['活动入口 · UI 设计需求', 'Crown Rush Entry Points.dc.html', 'page']], l.slice(3)) : l;
 const iters = (root, k) => [
-  { key: k + '-full', name: '完整需求', desc: '全部功能', children: files(root + '/full', CR) },
-  { key: k + '-10', name: 'v1.0 迭代', desc: '前台全量 + 后台精简', children: files(root + '/v1.0', CR) },
+  { key: k + '-full', name: '完整需求', desc: '全部功能', children: files(root + '/full', withEntry(root, CR)) },
+  { key: k + '-10', name: 'v1.0 迭代', desc: '前台全量 + 后台精简', children: files(root + '/v1.0', withEntry(root, CR)) },
   { key: k + '-11', name: 'v1.1 迭代', desc: '仅后台', children: files(root + '/v1.1', noPages(CR)) },
   { key: k + '-12', name: 'v1.2 迭代', desc: '仅后台 · 完整', children: files(root + '/v1.2', noPages(CR)) }
 ];

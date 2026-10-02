@@ -468,7 +468,7 @@ class Component extends DCLogic {
     this.vers = vers; this.latestVer = latest;
     let st = document.getElementById('ver-marks-style');
     if (!st) { st = document.createElement('style'); st.id = 'ver-marks-style'; document.head.appendChild(st); }
-    if (latest) st.textContent = '[data-hl]:not([data-hl="' + latest + '"]){background:#FFFBE0!important}[data-hl="' + latest + '"]{background:#FFF566!important}sup[data-ver]:not([data-ver="' + latest + '"]){background:#F3EAC2!important;color:#9A8752!important}sup[data-ver="' + latest + '"]{background:#FADB14!important;color:#5C3D00!important}';
+    if (latest) st.textContent = 'span[data-hl]:not([data-hl="' + latest + '"]){background:#FFFBE0!important}span[data-hl="' + latest + '"]{background:#FFF566!important}mark[data-prdhl]{background:#FF6EC7!important;color:#1B1720!important}sup[data-ver]:not([data-ver="' + latest + '"]){background:#F3EAC2!important;color:#9A8752!important}sup[data-ver="' + latest + '"]{background:#FADB14!important;color:#5C3D00!important}';
     if (!this._verObs) { this._verObs = new MutationObserver(() => { clearTimeout(this._verT); this._verT = setTimeout(() => this.initVersionMarks(), 200); }); this._verObs.observe(document.body, { childList: true, subtree: true }); }
 
   }
@@ -534,8 +534,8 @@ class Component extends DCLogic {
       hits.forEach(([pos, w]) => {
         if (pos > last) frag.appendChild(document.createTextNode(txt.slice(last, pos)));
         const mk = document.createElement('mark');
-        mk.setAttribute('data-hl', '1');
-        mk.style.cssText = 'background:#FF6EC7;color:#1B1720;padding:0 2px;border-radius:2px;box-shadow:0 0 0 1px #FF4FB8';
+        mk.setAttribute('data-prdhl', '1');
+        mk.style.cssText = 'background:#FF6EC7!important;color:#1B1720;padding:0 2px;border-radius:2px;box-shadow:0 0 0 1px #FF4FB8'; mk.style.setProperty('background', '#FF6EC7', 'important');
         mk.textContent = w; frag.appendChild(mk); count++;
         last = pos + w.length;
       });
@@ -547,7 +547,7 @@ class Component extends DCLogic {
     bar.style.cssText = 'position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:9999;display:flex;align-items:center;gap:10px;padding:8px 14px;border-radius:999px;background:#16052F;color:#FFF6E2;font:13px system-ui,sans-serif;box-shadow:0 6px 18px rgba(22,5,47,.3);white-space:nowrap';
     const dot = document.createElement('span'); dot.style.cssText = 'width:10px;height:10px;border-radius:50%;background:#FF6EC7'; bar.appendChild(dot);
     const lab = document.createElement('span'); lab.textContent = '功能点 ' + id + ' · ' + NAMES[id] + '：已标出 ' + count + ' 处'; bar.appendChild(lab);
-    const marks = () => Array.from(document.querySelectorAll('mark[data-hl]'));
+    const marks = () => Array.from(document.querySelectorAll('mark[data-prdhl]'));
     this.idx = 0;
     const goTo = i => { const ms = marks(); if (!ms.length) return; this.idx = (i + ms.length) % ms.length; const r = ms[this.idx].getBoundingClientRect(); window.scrollTo({ top: window.scrollY + r.top - 120, behavior: 'smooth' }); };
     const mkBtn = (label, fn) => { const b = document.createElement('span'); b.textContent = label; b.style.cssText = 'padding:2px 10px;border-radius:999px;background:rgba(255,255,255,.14);cursor:pointer'; b.onclick = fn; bar.appendChild(b); };
@@ -560,7 +560,7 @@ class Component extends DCLogic {
   }
   clear() {
     const b = document.getElementById('prd-hl-bar'); if (b) b.remove();
-    document.querySelectorAll('mark[data-hl]').forEach(mk => { mk.parentNode.replaceChild(document.createTextNode(mk.textContent), mk); });
+    document.querySelectorAll('mark[data-prdhl]').forEach(mk => { mk.parentNode.replaceChild(document.createTextNode(mk.textContent), mk); });
   }
   renderVals() { return {}; }
 }

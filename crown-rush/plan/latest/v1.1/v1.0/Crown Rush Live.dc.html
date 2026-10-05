@@ -433,7 +433,7 @@
         </div>
         <div style="margin-top:12px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 13px;border-radius:12px;background:rgba(232,192,106,.1);border:1px solid rgba(232,192,106,.35)">
           <div>
-            <div style="color:#8E78BE;font-size:11px">Total cash claimed</div>
+            <div style="color:#8E78BE;font-size:11px">Total reward claimed</div>
             <div style="color:#E8C06A;font-family:Anton,sans-serif;font-size:22px;line-height:1.1;margin-top:3px">{{ recordTotal }}</div>
           </div>
           <div style="text-align:right;color:#A991D6;font-size:11px;line-height:1.6">{{ recordCount }} entries<br />Season 12/01 - 12/31</div>
@@ -469,8 +469,8 @@
             <div style="display:flex;justify-content:space-between;gap:10px;padding:8px 10px;border-radius:9px;background:rgba(8,1,22,.5);border:1px solid rgba(255,255,255,.07)"><span style="color:#F3EAFF;font-weight:700">Fishing</span><span style="color:#E8C06A;font-weight:800">₱4 = 1 EXP</span></div>
             <div style="color:#8E78BE;font-size:11px;line-height:1.6">Hedged bets, cancelled bets and bets on non-participating games do not earn EXP.</div>
           </div></div>
-          <div style="padding:11px 12px;border-radius:11px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07)"><b style="color:#fff">3. Cash rewards</b><br />Claim manually on this page once a stage is cleared. "Claim all cash" credits every cleared cash stage straight to your account. Physical prize stages must be claimed individually.</div>
-          <div style="padding:11px 12px;border-radius:11px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07)"><b style="color:#fff">4. Physical prizes</b><br />Available once you clear the stage within quota; submit and confirm your shipping details. The button is disabled at zero stock — first come, first served.</div>
+          <div style="padding:11px 12px;border-radius:11px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07)"><b style="color:#fff">3. Rewards</b><br />Claim manually on this page once a stage is cleared. "Claim all cash" credits every cleared reward stage straight to your account. Milestone rewards must be claimed individually.</div>
+          <div style="padding:11px 12px;border-radius:11px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07)"><b style="color:#fff">4. Physical prizes</b> — Clear the stage while quota remains, then submit and confirm your shipping details to claim; your prize is reserved the moment you claim. First come, first served — once a prize runs out, that stage pays a substitute reward instead.</div>
           <div style="padding:11px 12px;border-radius:11px;background:rgba(168,26,35,.16);border:1px solid rgba(168,26,35,.45);color:#FFD6D6"><b style="color:#fff">5. Risk control</b><br />Hedging, arbitrage or abnormal betting may lead to disqualification and reward recovery.</div>
         </div>
       </div>
@@ -496,7 +496,7 @@
             <img src="../../../../../assets/claim-hero-v2.png" alt="Claim successful" style="display:block;width:auto;max-width:84%;max-height:112px;object-fit:contain;margin:0 auto;filter:drop-shadow(0 8px 18px rgba(0,0,0,.5));animation:crGiftPop .7s cubic-bezier(.2,1.2,.3,1)" />
 
             <div style="margin-top:8px;position:relative;z-index:2;padding:6px 12px 7px;border-radius:15px;background:linear-gradient(180deg,rgba(168,22,30,.95),rgba(88,9,15,.95));border:1.5px solid #F0CE86;box-shadow:0 0 18px rgba(255,205,110,.3), inset 0 1px 0 rgba(255,255,255,.2)">
-              <div style="color:#FFE9B0;font-size:10.5px;font-weight:800;letter-spacing:.12em">You claimed <b style="color:#FFD75E">{{ claimResultCount }}</b> cash rewards</div>
+              <div style="color:#FFE9B0;font-size:10.5px;font-weight:800;letter-spacing:.12em">You claimed <b style="color:#FFD75E">{{ claimResultCount }}</b> rewards</div>
               <div style="margin-top:3px;color:#FFE07A;font-family:Anton,sans-serif;font-size:28px;line-height:1.02;text-shadow:0 3px 0 #7A3C05, 0 0 18px rgba(255,205,110,.6)">{{ claimResultAmount }}</div>
               <div style="margin-top:3px;display:inline-flex;align-items:center;gap:5px;padding:3px 11px;border-radius:999px;background:rgba(31,142,86,.2);border:1px solid rgba(143,227,184,.45);color:#8FE3B8;font-size:11px;font-weight:800">✓ Credited to your balance</div>
             </div>
@@ -811,14 +811,14 @@ class Component extends DCLogic {
         .map(a => ({ lv: a[0], bet: '₱' + a[1].toLocaleString(), cash: a[2] }))
     );
     const physicals = [
-      { lv: 30, name: 'Huawei Smart Watch', qty: 20, left: 11, bet: '₱1,000,000', expReq: '1,000,000', cash: '300', img: '../../../../../assets/prize-lv30.png' },
-      { lv: 40, name: 'Apple AirPods', qty: 20, left: 0, bet: '₱4,500,000', expReq: '4,500,000', cash: '800', img: '../../../../../assets/prize-lv40.png' },
-      { lv: 50, name: 'Tablet', qty: 10, left: 4, bet: '₱12,000,000', expReq: '12,000,000', cash: '2,000', img: '../../../../../assets/prize-lv50.png' },
-      { lv: 60, name: 'DJI Drone', qty: 10, left: 6, bet: '₱32,000,000', expReq: '32,000,000', cash: '6,000', img: '../../../../../assets/prize-lv60.png' },
-      { lv: 70, name: 'iPhone 18 Pro Max', qty: 5, left: 3, bet: '₱70,000,000', expReq: '70,000,000', cash: '25,000', img: '../../../../../assets/prize-lv70.png' },
-      { lv: 80, name: 'MacBook Pro', qty: 3, left: 2, bet: '₱145,000,000', expReq: '145,000,000', cash: '70,000', img: '../../../../../assets/prize-lv80.png' },
-      { lv: 90, name: 'Luxury Motorcycle', qty: 2, left: 2, bet: '₱240,000,000', expReq: '240,000,000', cash: '90,000', img: '../../../../../assets/prize-lv90.png' },
-      { lv: 100, name: 'BMW X3', qty: 1, left: 1, bet: '₱300,000,000', expReq: '300,000,000', cash: '100,000', img: '../../../../../assets/prize-lv100.png' }
+      { lv: 30, name: 'Huawei Smart Watch', qty: 20, left: 11, bet: '₱1,000,000', expReq: '1,000,000', bonus: '300', img: '../../../../../assets/prize-lv30.png' },
+      { lv: 40, name: 'Apple AirPods', qty: 20, left: 0, bet: '₱4,500,000', expReq: '4,500,000', bonus: '800', img: '../../../../../assets/prize-lv40.png' },
+      { lv: 50, name: 'Tablet', qty: 10, left: 4, bet: '₱12,000,000', expReq: '12,000,000', bonus: '2,000', img: '../../../../../assets/prize-lv50.png' },
+      { lv: 60, name: 'DJI Drone', qty: 10, left: 6, bet: '₱32,000,000', expReq: '32,000,000', bonus: '6,000', img: '../../../../../assets/prize-lv60.png' },
+      { lv: 70, name: 'iPhone 18 Pro Max', qty: 5, left: 3, bet: '₱70,000,000', expReq: '70,000,000', bonus: '25,000', img: '../../../../../assets/prize-lv70.png' },
+      { lv: 80, name: 'MacBook Pro', qty: 3, left: 2, bet: '₱145,000,000', expReq: '145,000,000', bonus: '70,000', img: '../../../../../assets/prize-lv80.png' },
+      { lv: 90, name: 'Luxury Motorcycle', qty: 2, left: 2, bet: '₱240,000,000', expReq: '240,000,000', bonus: '90,000', img: '../../../../../assets/prize-lv90.png' },
+      { lv: 100, name: 'BMW X3', qty: 1, left: 1, bet: '₱300,000,000', expReq: '300,000,000', bonus: '100,000', img: '../../../../../assets/prize-lv100.png' }
     ].map(p => {
       const out = p.left === 0;
       return Object.assign({}, p, {
@@ -838,7 +838,7 @@ class Component extends DCLogic {
       const soldOut = !!ph && ph.left === 0;
       return {
         isPhysical: !!ph && !soldOut, isPlain: !ph || soldOut,
-        pName: ph ? ph.name : '', pCash: ph ? ph.cash : '', bgImg: ph ? ph.bgImg : '',
+        pName: ph ? ph.name : '', pCash: ph ? ph.bonus : '', bgImg: ph ? ph.bgImg : '',
         pPct: ph ? ph.pct : '0%', pLeft: ph ? ph.left : 0, pQty: ph ? ph.qty : 0,
         tagBg: ph ? ph.tagBg : '', tagBorder: ph ? ph.tagBorder : '', tagColor: ph ? ph.tagColor : '', tagText: ph ? ph.tagText : '',
         lv: r.lv, bet: this.compact(parseInt(String(r.bet).replace(/[^0-9]/g, ''), 10) || 0),
@@ -861,8 +861,8 @@ class Component extends DCLogic {
         barGlow: (reached && claimed) ? 'transparent' : (reached ? 'rgba(78,209,139,.4)' : 'rgba(240,210,145,.35)'),
         barFill: (reached && claimed) ? 'linear-gradient(90deg,rgba(14,78,48,.62),rgba(22,104,64,.62))' : (reached ? 'linear-gradient(90deg,#2FA96A,#7DE8AE)' : 'linear-gradient(90deg,#8A5E18,#C89A3C)'),
         reward: soldOut
-          ? ('Physical prize sold out · cash instead ' + this.money(r.cash || 0))
-          : (r.cash ? ('Cash reward ' + this.money(r.cash)) : (r.extra || 'Reward locked')),
+          ? ('Physical prize sold out · reward instead ' + this.money(r.cash || 0))
+          : (r.cash ? ('Reward ' + this.money(r.cash)) : (r.extra || 'Reward locked')),
         claimable: reached && !claimed, claimed: reached && claimed, locked: !reached,
         unclaimedFlag: (reached && !claimed) || !reached ? '1' : '0',
         onClaim: () => {
@@ -903,7 +903,7 @@ class Component extends DCLogic {
       { name: 'Roulette', exp: 'LIVE · 20:1 EXP', img: '../../../../../assets/game-gl3.png' }
     ].map(g => Object.assign({ bgImg: 'url(' + g.img + ')' }, g));
     const rankColors = ['#F0D291', '#D8D8E8', '#D69A5C'];
-    // 排名依据：已领取记录（非流水）。先按已领取奖励金额（现金 + 彩金，已到账）降序，
+    // 排名依据：已领取记录（非流水）。先按已领取奖励金额（彩金 + 替补彩金，已到账）降序，
     // 并列时按已领取实体奖品件数降序，再按最后一次领取时间先后（先到者靠前）。
     const rankSrc = [
       { user: 'bi****8x9', lv: 64, cash: 58200, phys: [30, 50, 60], last: '12/18 20:41' },
@@ -942,7 +942,7 @@ class Component extends DCLogic {
       [2, 4, '12/01 12:36'], [1, 3, '12/01 10:15']
     ];
     physicals.forEach(p => { if ((this.state.soldNow || {})[p.lv]) p.left = 0; });
-    const records = recordSrc.map(r => ({ reward: 'Cash ' + this.money(r[1]), lv: r[0], time: r[2] }));
+    const records = recordSrc.map(r => ({ reward: 'Reward ' + this.money(r[1]), lv: r[0], time: r[2] }));
     const recordSum = recordSrc.reduce((a, r) => a + r[1], 0);
 
     // game types enabled in admin config
@@ -1056,7 +1056,7 @@ class Component extends DCLogic {
       })(),
       ringDash: (Math.round(2 * Math.PI * 27 * pct / 100)) + ' ' + Math.round(2 * Math.PI * 27),
       level, nextLevel, growthText: growth.toLocaleString(), pctText: pct + '%',
-      remainExp: (nextNeed - growth).toLocaleString(), nextReward: 'Cash ₱350',
+      remainExp: (nextNeed - growth).toLocaleString(), nextReward: 'Reward ₱350',
       cdD: Math.floor(s / 86400),
       cdH: pad(Math.floor(s / 3600) % 24),
       cdM: pad(Math.floor(s / 60) % 60),
@@ -1228,7 +1228,7 @@ class Component extends DCLogic {
       confirmClaim: () => {
         const lv = this.state.pendingLv;
         const ph = physicals.find(x => x.lv === lv);
-        if (ph && (ph.left <= 0 || this.props.simulateSoldOut)) { this.setState({ shipStage: 'none', pendingLv: null, soldPop: { lv, amount: '₱' + ph.cash } }); return; }
+        if (ph && (ph.left <= 0 || this.props.simulateSoldOut)) { this.setState({ shipStage: 'none', pendingLv: null, soldPop: { lv, amount: '₱' + ph.bonus } }); return; }
         this.setState(st => ({ claimed: Object.assign({}, st.claimed, { [lv]: true }), shipStage: 'none', pendingLv: null }));
         this.toast('Claimed · a delivery ticket has been created');
         this.scheduleHide();

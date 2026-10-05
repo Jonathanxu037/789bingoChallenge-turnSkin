@@ -107,12 +107,12 @@
         </svg>
       </div>
       <div style="flex:1;min-width:0">
-        <div style="color:#F3EAFF;font-weight:700;font-size:12.5px">Every stage also pays cash</div>
-        <div style="color:#8E78BE;font-size:11px;margin-top:3px">Claimed on top of the physical prizes</div>
+        <div style="color:#F3EAFF;font-weight:700;font-size:12.5px">Non-prize stages pay a reward</div>
+        <div style="color:#8E78BE;font-size:11px;margin-top:3px">Credited straight to your balance</div>
       </div>
       <div style="flex:none;text-align:right">
-        <div style="color:#E8C06A;font-family:Anton,sans-serif;font-size:17px;line-height:1;letter-spacing:.02em">₱3 → ₱100,000</div>
-        <div style="color:#A991D6;font-size:10.5px;margin-top:4px">Up to ₱1,000,000+ in total</div>
+        <div style="color:#E8C06A;font-family:Anton,sans-serif;font-size:17px;line-height:1;letter-spacing:.02em">{{ bonusRange }}</div>
+        <div style="color:#A991D6;font-size:10.5px;margin-top:4px">Up to {{ bonusTotal }} in total</div>
       </div>
     </div>
   </div>
@@ -147,11 +147,11 @@
           <div style="margin-top:9px;display:flex;flex-direction:column;gap:8px">
             <div style="padding:11px 12px;border-radius:12px;background:rgba(232,192,106,.08);border:1px solid rgba(232,192,106,.3)">
               <div style="display:flex;justify-content:space-between;align-items:center">
-                <div style="color:#F5E6C0;font-weight:700;font-size:12.5px">Cash Rewards</div>
+                <div style="color:#F5E6C0;font-weight:700;font-size:12.5px">Rewards</div>
                 <div style="color:#E8C06A;font-size:11px;font-weight:700">Claim all in one tap</div>
               </div>
               <div style="margin-top:8px;display:flex;align-items:center;gap:6px;color:#CDBBEF;font-size:11px;flex-wrap:wrap">
-                <span>Stage cleared</span><span style="color:#E8C06A">→</span><span>Tap claim</span><span style="color:#E8C06A">→</span><span style="color:#F3EAFF;font-weight:700">Cash credited instantly</span>
+                <span>Stage cleared</span><span style="color:#E8C06A">→</span><span>Tap claim</span><span style="color:#E8C06A">→</span><span style="color:#F3EAFF;font-weight:700">Reward credited instantly</span>
               </div>
             </div>
             <div style="padding:11px 12px;border-radius:12px;background:rgba(168,26,35,.1);border:1px solid rgba(232,192,106,.22)">
@@ -207,7 +207,7 @@
         <div style="width:5px;height:5px;border-radius:50%;background:#A991D6;animation:crDots 1.6s ease-in-out infinite;animation-delay:.44s"></div>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;padding:0 2px">
-        <div style="color:#E8C06A;font-weight:800;font-size:12.5px">Physical prize stages <span style="color:#8E78BE;font-weight:500;font-size:11px">{{ physicalIndexLabel }}</span></div>
+        <div style="color:#E8C06A;font-weight:800;font-size:12.5px">Milestone Reward <span style="color:#8E78BE;font-weight:500;font-size:11px">{{ physicalIndexLabel }}</span></div>
         <div style="display:flex;gap:6px">
           <div onClick="{{ prevPrize }}" style="width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);color:#E8C06A;font-size:12px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:rgba(232,192,106,.18)">‹</div>
           <div onClick="{{ nextPrize }}" style="width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);color:#E8C06A;font-size:12px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:rgba(232,192,106,.18)">›</div>
@@ -372,8 +372,8 @@
             <div style="display:flex;justify-content:space-between;gap:10px;padding:8px 10px;border-radius:9px;background:rgba(8,1,22,.5);border:1px solid rgba(255,255,255,.07)"><span style="color:#F3EAFF;font-weight:700">Fishing</span><span style="color:#E8C06A;font-weight:800">₱4 = 1 EXP</span></div>
             <div style="color:#8E78BE;font-size:11px;line-height:1.6">Hedged bets, cancelled bets and bets on non-participating games do not earn EXP.</div>
           </div></div>
-          <div style="padding:11px 12px;border-radius:11px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07)"><b style="color:#fff">3. Cash rewards</b><br />Claim manually on this page once a stage is cleared. Claim-all is supported and cash is credited straight to your account.</div>
-          <div style="padding:11px 12px;border-radius:11px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07)"><b style="color:#fff">4. Physical prizes</b><br />Available once you clear the stage within quota; submit shipping details and have stock confirmed. The claim button is disabled at zero stock — first come, first served.</div>
+          <div style="padding:11px 12px;border-radius:11px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07)"><b style="color:#fff">3. Rewards</b><br />Claim manually on this page once a stage is cleared. Claim-all is supported and reward is credited straight to your account.</div>
+          <div style="padding:11px 12px;border-radius:11px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07)"><b style="color:#fff">4. Physical prizes</b> — Clear the stage while quota remains, then submit and confirm your shipping details to claim; your prize is reserved the moment you claim. First come, first served — once a prize runs out, that stage pays a substitute reward instead.</div>
           <div style="padding:11px 12px;border-radius:11px;background:rgba(168,26,35,.16);border:1px solid rgba(168,26,35,.45);color:#FFD6D6"><b style="color:#fff">5. Risk control</b><br />Hedging, arbitrage or abnormal betting may lead to disqualification and reward recovery.</div>
         </div>
       </div>
@@ -422,22 +422,67 @@ class Component extends DCLogic {
     }, 5000);
   }
   restartAuto() { this.startAuto(); }
+  // 彩金关卡配置（与后台「配置关卡」一致，原型示例数据）
+  stageCfg() { return [
+      { lv: 1, bet: '₱100', expReq: '100', cash: 3, done: true },
+      { lv: 2, bet: '₱300', expReq: '300', cash: 4, done: true },
+      { lv: 3, bet: '₱500', expReq: '500', cash: 5, done: true },
+      { lv: 4, bet: '₱1,000', expReq: '1,000', cash: 8, done: true },
+      { lv: 5, bet: '₱2,000', expReq: '2,000', cash: 10, done: true },
+      { lv: 6, bet: '₱3,000', expReq: '3,000', cash: 15, done: true },
+      { lv: 7, bet: '₱5,000', expReq: '5,000', cash: 18, done: true },
+      { lv: 8, bet: '₱7,000', expReq: '7,000', cash: 20, done: true },
+      { lv: 9, bet: '₱10,000', expReq: '10,000', cash: 25, done: true },
+      { lv: 10, bet: '₱15,000', expReq: '15,000', cash: 30, done: true },
+      { lv: 11, bet: '₱30,000', expReq: '30,000', cash: 40, done: true },
+      { lv: 12, bet: '₱50,000', expReq: '50,000', cash: 50, done: true },
+      { lv: 13, bet: '₱60,000', expReq: '60,000', cash: 55, done: true },
+      { lv: 14, bet: '₱90,000', expReq: '90,000', cash: 60, done: true },
+      { lv: 15, bet: '₱110,000', expReq: '110,000', cash: 70 },
+      { lv: 16, bet: '₱130,000', expReq: '130,000', cash: 80 },
+      { lv: 17, bet: '₱140,000', expReq: '140,000', cash: 85 },
+      { lv: 18, bet: '₱160,000', expReq: '160,000', cash: 90 },
+      { lv: 19, bet: '₱180,000', expReq: '180,000', cash: 100 },
+      { lv: 20, bet: '₱200,000', expReq: '200,000', cash: 0, extra: '20 Free Spins' },
+      { lv: 21, bet: '₱280,000', expReq: '280,000', cash: 120 },
+      { lv: 22, bet: '₱360,000', expReq: '360,000', cash: 140 },
+      { lv: 23, bet: '₱440,000', expReq: '440,000', cash: 160 },
+      { lv: 24, bet: '₱520,000', expReq: '520,000', cash: 180 },
+      { lv: 25, bet: '₱600,000', expReq: '600,000', cash: 200 }
+    ].concat(
+      [[26, 680000, 220], [27, 760000, 240], [28, 840000, 260], [29, 920000, 280], [30, 1000000, 300],
+       [31, 1400000, 350], [32, 1700000, 400], [33, 2000000, 450], [34, 2400000, 500], [35, 2800000, 550],
+       [36, 3100000, 600], [37, 3400000, 650], [38, 3800000, 700], [39, 4200000, 750], [40, 4500000, 800],
+       [41, 5200000, 920], [42, 6000000, 1040], [43, 6800000, 1160], [44, 7500000, 1280], [45, 8200000, 1400],
+       [46, 9000000, 1520], [47, 9800000, 1640], [48, 10000000, 1760], [49, 11000000, 1880], [50, 12000000, 2000],
+       [51, 14000000, 2400], [52, 16000000, 2800], [53, 18000000, 3200], [54, 20000000, 3600], [55, 22000000, 4000],
+       [56, 24000000, 4400], [57, 26000000, 4800], [58, 28000000, 5200], [59, 30000000, 5600], [60, 32000000, 6000],
+       [61, 36000000, 7900], [62, 40000000, 9800], [63, 43000000, 11700], [64, 47000000, 13600], [65, 51000000, 15500],
+       [66, 55000000, 17400], [67, 59000000, 19300], [68, 62000000, 21200], [69, 66000000, 23100], [70, 70000000, 25000],
+       [71, 78000000, 29500], [72, 85000000, 34000], [73, 92000000, 38500], [74, 100000000, 43000], [75, 110000000, 47500],
+       [76, 115000000, 52000], [77, 120000000, 56500], [78, 130000000, 61000], [79, 140000000, 65500], [80, 145000000, 70000],
+       [81, 155000000, 72000], [82, 165000000, 74000], [83, 175000000, 76000], [84, 185000000, 78000], [85, 190000000, 80000],
+       [86, 200000000, 82000], [87, 210000000, 84000], [88, 220000000, 86000], [89, 230000000, 88000], [90, 240000000, 90000],
+       [91, 245000000, 91000], [92, 250000000, 92000], [93, 260000000, 93000], [94, 265000000, 94000], [95, 270000000, 95000],
+       [96, 275000000, 96000], [97, 280000000, 97000], [98, 290000000, 98000], [99, 295000000, 99000], [100, 300000000, 100000]]
+        .map(a => ({ lv: a[0], bet: '₱' + a[1].toLocaleString(), cash: a[2] }))
+    ); }
   renderVals() {
     const s = Math.floor(this.state.left / 1000);
     const preview = [
-      { lv: 1, bet: '₱100', expReq: '100', reward: 'Cash reward ₱3' },
-      { lv: 2, bet: '₱300', expReq: '300', reward: 'Cash reward ₱4' },
-      { lv: 3, bet: '₱500', expReq: '500', reward: 'Cash reward ₱5' }
+      { lv: 1, bet: '₱100', expReq: '100', reward: 'Reward ₱3' },
+      { lv: 2, bet: '₱300', expReq: '300', reward: 'Reward ₱4' },
+      { lv: 3, bet: '₱500', expReq: '500', reward: 'Reward ₱5' }
     ];
     const physicals = [
-      { lv: 30, name: 'Huawei Smart Watch', qty: 20, bet: '₱1,000,000', expReq: '1,000,000', cash: '300', stage: 'Warm Up', img: '../../../../../assets/prize-lv30.png', fit: 'contain' },
-      { lv: 40, name: 'Apple AirPods', qty: 20, bet: '₱4,500,000', expReq: '4,500,000', cash: '800', stage: 'Picking Up', img: '../../../../../assets/prize-lv40.png', fit: 'contain' },
-      { lv: 50, name: 'Tablet', qty: 10, bet: '₱12,000,000', expReq: '12,000,000', cash: '2,000', stage: 'Step Up', img: '../../../../../assets/prize-lv50.png', fit: 'contain' },
-      { lv: 60, name: 'DJI Drone', qty: 10, bet: '₱32,000,000', expReq: '32,000,000', cash: '6,000', stage: 'Pro Tier', img: '../../../../../assets/prize-lv60.png', fit: 'contain' },
-      { lv: 70, name: 'iPhone 18 Pro Max', qty: 5, bet: '₱70,000,000', expReq: '70,000,000', cash: '25,000', stage: 'Elite Path', img: '../../../../../assets/prize-lv70.png', fit: 'contain' },
-      { lv: 80, name: 'MacBook Pro', qty: 3, bet: '₱145,000,000', expReq: '145,000,000', cash: '70,000', stage: 'Peak Tier', img: '../../../../../assets/prize-lv80.png', fit: 'contain' },
-      { lv: 90, name: 'Luxury Motorcycle', qty: 2, bet: '₱240,000,000', expReq: '240,000,000', cash: '90,000', stage: 'Glory', img: '../../../../../assets/prize-lv90.png', fit: 'contain' },
-      { lv: 100, name: 'BMW X3', qty: 1, bet: '₱300,000,000', expReq: '300,000,000', cash: '100,000', stage: 'Grand Prize', img: '../../../../../assets/prize-lv100.png', fit: 'contain' }
+      { lv: 30, name: 'Huawei Smart Watch', qty: 20, bet: '₱1,000,000', expReq: '1,000,000', bonus: '300', stage: 'Warm Up', img: '../../../../../assets/prize-lv30.png', fit: 'contain' },
+      { lv: 40, name: 'Apple AirPods', qty: 20, bet: '₱4,500,000', expReq: '4,500,000', bonus: '800', stage: 'Picking Up', img: '../../../../../assets/prize-lv40.png', fit: 'contain' },
+      { lv: 50, name: 'Tablet', qty: 10, bet: '₱12,000,000', expReq: '12,000,000', bonus: '2,000', stage: 'Step Up', img: '../../../../../assets/prize-lv50.png', fit: 'contain' },
+      { lv: 60, name: 'DJI Drone', qty: 10, bet: '₱32,000,000', expReq: '32,000,000', bonus: '6,000', stage: 'Pro Tier', img: '../../../../../assets/prize-lv60.png', fit: 'contain' },
+      { lv: 70, name: 'iPhone 18 Pro Max', qty: 5, bet: '₱70,000,000', expReq: '70,000,000', bonus: '25,000', stage: 'Elite Path', img: '../../../../../assets/prize-lv70.png', fit: 'contain' },
+      { lv: 80, name: 'MacBook Pro', qty: 3, bet: '₱145,000,000', expReq: '145,000,000', bonus: '70,000', stage: 'Peak Tier', img: '../../../../../assets/prize-lv80.png', fit: 'contain' },
+      { lv: 90, name: 'Luxury Motorcycle', qty: 2, bet: '₱240,000,000', expReq: '240,000,000', bonus: '90,000', stage: 'Glory', img: '../../../../../assets/prize-lv90.png', fit: 'contain' },
+      { lv: 100, name: 'BMW X3', qty: 1, bet: '₱300,000,000', expReq: '300,000,000', bonus: '100,000', stage: 'Grand Prize', img: '../../../../../assets/prize-lv100.png', fit: 'contain' }
     ].map(g => Object.assign({ pct: '100%', fit: 'cover' }, g)).map(g => Object.assign({}, g, { bgImg: 'url(' + g.img + ')' }));
     const rev = physicals.slice().reverse();
     const mk = (label, prefix, weight, names, href) => ({
@@ -462,7 +507,12 @@ class Component extends DCLogic {
       ['70%', '68%', '18px', 'rgba(232,192,106,.4)'], ['86%', '56%', '14px', 'rgba(20,98,74,.45)']
     ];
     const bokeh = bokehSpec.map((b, i) => ({ x: b[0], y: b[1], size: b[2], color: b[3], delay: (i * 0.4).toFixed(1) + 's' }));
+    const phLv = [30, 40, 50, 60, 70, 80, 90, 100];
+    const cfg = this.stageCfg().filter(r => phLv.indexOf(r.lv) < 0 && Number(r.bonus != null ? r.bonus : r.cash) > 0);
+    const bmin = Math.min.apply(null, cfg.map(r => Number(r.bonus != null ? r.bonus : r.cash))), bmax = Math.max.apply(null, cfg.map(r => Number(r.bonus != null ? r.bonus : r.cash))), bsum = cfg.reduce((x, r) => x + Number(r.bonus != null ? r.bonus : r.cash), 0);
+    const fmtP = n => '₱' + Number(n).toLocaleString('en-US');
     return {
+      bonusRange: fmtP(bmin) + ' → ' + fmtP(bmax), bonusTotal: fmtP(bsum),
       bokeh,
       cdD: Math.floor(s / 86400),
       cdH: this.pad(Math.floor(s / 3600) % 24),

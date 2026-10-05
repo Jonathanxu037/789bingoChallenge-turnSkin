@@ -136,7 +136,7 @@
                   <div onClick="{{ mbAdd }}" style="height:32px;padding:0 16px;display:flex;align-items:center;border-radius:3px;background:#52C41A;color:#fff;font-weight:700;cursor:pointer">+ 添加机器人</div>
                 </div>
                 <table style="margin-top:10px;width:100%;border-collapse:collapse;text-align:center;font-size:12.5px">
-                  <tr style="background:#FAFAFA;color:#666;font-weight:700"><td style="padding:8px;border:1px solid #EBEEF5">机器人 ID</td><td style="padding:8px;border:1px solid #EBEEF5">昵称</td><td style="padding:8px;border:1px solid #EBEEF5;width:170px">EXP</td><td style="padding:8px;border:1px solid #EBEEF5">当前关卡</td><td style="padding:8px;border:1px solid #EBEEF5">已领现金奖励</td><td style="padding:8px;border:1px solid #EBEEF5">已领实体奖品</td><td style="padding:8px;border:1px solid #EBEEF5">添加时间</td><td style="padding:8px;border:1px solid #EBEEF5">操作</td></tr>
+                  <tr style="background:#FAFAFA;color:#666;font-weight:700"><td style="padding:8px;border:1px solid #EBEEF5">机器人 ID</td><td style="padding:8px;border:1px solid #EBEEF5">昵称</td><td style="padding:8px;border:1px solid #EBEEF5;width:170px">EXP</td><td style="padding:8px;border:1px solid #EBEEF5">当前关卡</td><td style="padding:8px;border:1px solid #EBEEF5">已领彩金奖励</td><td style="padding:8px;border:1px solid #EBEEF5">已领实体奖品</td><td style="padding:8px;border:1px solid #EBEEF5">添加时间</td><td style="padding:8px;border:1px solid #EBEEF5">操作</td></tr>
                   <sc-for list="{{ mbRows }}" as="b" hint-placeholder-count="0">
                     <tr>
                       <td style="padding:8px;border:1px solid #EBEEF5;color:#909399">{{ b.id }}</td>
@@ -210,6 +210,16 @@
           </sc-if>
 
           <sc-if value="{{ isData }}">
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 14px;margin-bottom:12px;border:1px solid #EBEEF5;border-radius:3px;background:#FAFBFC">
+              <span style="color:#606266">所属活动</span>
+              <select value="{{ rqAct }}" onChange="{{ onRqAct }}" style="height:30px;border:1px solid #DCDFE6;border-radius:3px;padding:0 8px;background:#fff;font-size:12.5px;width:220px"><sc-for list="{{ rqActOpts }}" as="o" hint-placeholder-count="0"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select>
+              <span style="color:#606266">统计日期</span>
+              <input type="date" value="{{ rqFrom }}" onChange="{{ onRqFrom }}" style="height:30px;border:1px solid #DCDFE6;border-radius:3px;padding:0 8px;background:#fff;font-size:12.5px;width:150px" />
+              <span style="color:#909399">至</span>
+              <input type="date" value="{{ rqTo }}" onChange="{{ onRqTo }}" style="height:30px;border:1px solid #DCDFE6;border-radius:3px;padding:0 8px;background:#fff;font-size:12.5px;width:150px" />
+              <div onClick="{{ doRq }}" style="height:30px;padding:0 16px;display:flex;align-items:center;border-radius:3px;background:#409EFF;color:#fff;font-weight:700;cursor:pointer">查询</div>
+              <div onClick="{{ resetRq }}" style="height:30px;padding:0 16px;display:flex;align-items:center;border-radius:3px;border:1px solid #DCDFE6;color:#606266;cursor:pointer;background:#fff">重置</div>
+            </div>
             <div style="display:flex;align-items:center;gap:10px">
               <span style="font-weight:700">按日报表</span><span style="color:#909399;font-size:12px">真实数据不含机器人，机器人领取单独一列</span>
               <div style="flex:1"></div>
@@ -298,7 +308,7 @@
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
             <span style="color:#555">批量填充<span onClick="{{ help.edBatch }}" title="查看说明" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:4px;border-radius:50%;background:#C0C4CC;color:#fff;font-size:10px;font-weight:700;line-height:1;cursor:pointer;vertical-align:middle" style-hover="background:#409EFF">?</span></span>
             <select value="{{ stEdBField }}" onChange="{{ stEdOnBField }}" style="height:30px;border:1px solid #DCDFE6;border-radius:3px;padding:0 6px">
-              <option value="cash">现金金额（仅现金关卡）</option>
+              <option value="cash">彩金金额（仅彩金关卡）</option>
               <option value="fb">替补彩金（仅实体关卡）</option>
             </select>
             <input type="number" step="1" value="{{ stEdBVal }}" onChange="{{ stEdOnBVal }}" placeholder="数值" style="width:110px;height:30px;border:1px solid #DCDFE6;border-radius:3px;padding:0 8px" />
@@ -315,7 +325,7 @@
               <td style="padding:4px 5px;border:1px solid #EBEEF5;width:52px;padding:8px 5px">关卡</td>
               <td style="padding:4px 5px;border:1px solid #EBEEF5;padding:8px 5px">EXP 门槛<span onClick="{{ help.edExp }}" title="查看说明" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:4px;border-radius:50%;background:#C0C4CC;color:#fff;font-size:10px;font-weight:700;line-height:1;cursor:pointer;vertical-align:middle" style-hover="background:#409EFF">?</span></td>
               <td style="padding:4px 5px;border:1px solid #EBEEF5;width:90px;padding:8px 5px">奖励类型</td>
-              <td style="padding:4px 5px;border:1px solid #EBEEF5;padding:8px 5px">现金金额（₱）</td>
+              <td style="padding:4px 5px;border:1px solid #EBEEF5;padding:8px 5px">彩金金额（₱）</td>
               <td style="padding:4px 5px;border:1px solid #EBEEF5;width:150px;padding:8px 5px">实体奖品<span onClick="{{ help.edPrize }}" title="查看说明" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:4px;border-radius:50%;background:#C0C4CC;color:#fff;font-size:10px;font-weight:700;line-height:1;cursor:pointer;vertical-align:middle" style-hover="background:#409EFF">?</span></td>
               <td style="padding:4px 5px;border:1px solid #EBEEF5;width:80px;padding:8px 5px">实体数量</td>
               <td style="padding:4px 5px;border:1px solid #EBEEF5;padding:8px 5px">替补彩金（₱）<span onClick="{{ help.edFb }}" title="查看说明" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:4px;border-radius:50%;background:#C0C4CC;color:#fff;font-size:10px;font-weight:700;line-height:1;cursor:pointer;vertical-align:middle" style-hover="background:#409EFF">?</span></td>
@@ -324,7 +334,7 @@
               <tr style="background:{{ r.bg }}">
                 <td style="padding:4px 5px;border:1px solid #EBEEF5;color:#303133;font-weight:700">{{ r.lv }}</td>
                 <td style="padding:4px 5px;border:1px solid #EBEEF5"><input type="number" min="0" step="1" value="{{ r.exp }}" onChange="{{ r.onExp }}" style="height:28px;border:1px solid #DCDFE6;border-radius:3px;padding:0 6px;font-size:12px;width:100%;min-width:0;background:#fff;border-color:{{ r.expBorder }}" /></td>
-                <td style="padding:4px 5px;border:1px solid #EBEEF5"><select value="{{ r.type }}" onChange="{{ r.onType }}" style="height:28px;border:1px solid #DCDFE6;border-radius:3px;padding:0 6px;font-size:12px;width:100%;min-width:0;background:#fff"><option value="cash">现金</option><option value="phys">实体</option></select></td>
+                <td style="padding:4px 5px;border:1px solid #EBEEF5"><select value="{{ r.type }}" onChange="{{ r.onType }}" style="height:28px;border:1px solid #DCDFE6;border-radius:3px;padding:0 6px;font-size:12px;width:100%;min-width:0;background:#fff"><option value="cash">彩金</option><option value="phys">实体</option></select></td>
                 <td style="padding:4px 5px;border:1px solid #EBEEF5"><input type="number" min="0" step="1" value="{{ r.cash }}" onChange="{{ r.onCash }}" disabled="{{ r.isPhys }}" placeholder="{{ r.cashPh }}" style="height:28px;border:1px solid #DCDFE6;border-radius:3px;padding:0 6px;font-size:12px;width:100%;min-width:0;background:#fff;background:{{ r.cashBg }}" /></td>
                 <td style="padding:4px 5px;border:1px solid #EBEEF5"><select value="{{ r.prize }}" onChange="{{ r.onPrize }}" disabled="{{ r.isCash }}" style="height:28px;border:1px solid #DCDFE6;border-radius:3px;padding:0 6px;font-size:12px;width:100%;min-width:0;background:#fff;background:{{ r.physBg }}"><option value="">请选择</option><sc-for list="{{ stEdPrizeOpts }}" as="o" hint-placeholder-count="0"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select></td>
                 <td style="padding:4px 5px;border:1px solid #EBEEF5"><input type="number" min="0" step="1" value="{{ r.qty }}" onChange="{{ r.onQty }}" disabled="{{ r.isCash }}" style="height:28px;border:1px solid #DCDFE6;border-radius:3px;padding:0 6px;font-size:12px;width:100%;min-width:0;background:#fff;background:{{ r.physBg }}" /></td>
@@ -421,7 +431,7 @@
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
   state = {
-    tab: 'act', q: { name: '', id: '', status: 'all', type: 'all', from: '', to: '' }, qApplied: null, helpKey: null, now: Date.now(), toast: '', modal: null, form: {}, err: '', claimStatus: 'all', trkEdit: null, rd: null, closeDlg: null, rb: { act: 301 }, mb: { name: '', exp: '' }, mbEdit: null, bots: { 301: [{ id: 'BOT1001', name: 'luckyjuan88', exp: 1250000, created: '2026-12-02 10:15' }, { id: 'BOT1002', name: 'bingoqueen', exp: 4800000, created: '2026-12-03 16:40' }] }, cq: { act: 'all', prize: 'all', user: '' }, cqApplied: null, importAct: null,
+    tab: 'act', rq: { act: '', from: '', to: '' }, rqApplied: null, q: { name: '', id: '', status: 'all', type: 'all', from: '', to: '' }, qApplied: null, helpKey: null, now: Date.now(), toast: '', modal: null, form: {}, err: '', claimStatus: 'all', trkEdit: null, rd: null, closeDlg: null, rb: { act: 301 }, mb: { name: '', exp: '' }, mbEdit: null, bots: { 301: [{ id: 'BOT1001', name: 'luckyjuan88', exp: 1250000, created: '2026-12-02 10:15' }, { id: 'BOT1002', name: 'bingoqueen', exp: 4800000, created: '2026-12-03 16:40' }] }, cq: { act: 'all', prize: 'all', user: '' }, cqApplied: null, importAct: null,
     acts: [
       { id: 301, name: 'Crown Rush 12 月流水闯关', warm: '2026-11-20T00:00:00', start: '2026-12-01T00:00:00', end: '2026-12-31T23:59:59', off: '2027-01-15T23:59:59', stages: 100, wt: null },
       { id: 305, name: 'Crown Rush 1 月流水闯关', warm: '2027-01-20T00:00:00', start: '2027-02-01T00:00:00', end: '2027-02-28T23:59:59', off: '2027-03-15T23:59:59', stages: 0, wt: null }
@@ -446,7 +456,7 @@ class Component extends DCLogic {
       { id: 'R20049', actId: 301, user: 'ramon731', lv: 30, prize: '华为运动手表', name: 'Ramon Garcia', phone: '09192340662', addr: '12 Rizal St, Davao City', tracking: 'J&T 7310 5521 804', status: '已发货' }
     ]
   };
-  HELP = {"actStages":["关卡","该活动已配置的关卡数量。未配置时显示「未配置」，建议在预热开始前配置并核对。"],"actStatus":["状态","按时间自动计算：\n· 未开始：预热开始前，前台不显示；\n· 预热中：显示预热页与倒计时；\n· 进行中：显示进行中页，累计 EXP；\n· 领奖缓冲：活动结束后显示结束页，只能领奖不再累计 EXP；\n· 已下架：到达活动下架时间，前台不显示。"],"actOps":["操作","修改：仅「未开始」（预热开始前）可用，点击打开活动弹窗修改名称、时间节点（含下架时间）与参与游戏 / 比例；进入预热阶段后置灰，不可再修改。\n配置关卡：仅「未开始」可编辑，进入预热阶段后锁定为只读。"],"stock":["库存","平台实际库存件数。真实用户物流信息完整、确认领取并生成领取记录后扣减 1 件；机器人领奖不扣减库存。该关前台剩余名额为 0 时（分配数量 − 真实领取 − 机器人领取），按「替补彩金」发放。"],"claimed":["真实用户领取","真实用户已领取（已生成领取记录）的件数，不含机器人。"],"prizeOps":["操作","库存增减：正数为入库，负数为减少（必须填写原因）。\n库存记录：查看该奖品全部库存变动，每条记录显示操作人——「用户领奖 · 用户名」表示用户领取实体奖品生成领取记录后扣减；「后台操作 · 后台用户名」表示后台人员新建奖品或增减库存。"],"exportP":["导出待发货","导出所有「待发货」记录为 CSV（Excel 可直接打开），文件名含导出时间与导出人。列：发放 ID、活动 ID、活动名称、用户名、奖品、收件人、手机号、收货地址、快递公司、快递单号（已填写的备注一并导出）。所有信息完整导出，不脱敏。"],"claimStatus":["状态","待发货 → 已发货。点「确认发货」后状态改为已发货，发货流程即完结，本版本不做签收。\n拒收或退回：请在「实体奖品」中手动「库存增减」补回，并在备注写明发放 ID。"],"claimOps":["操作","确认发货：待发货记录点「确认发货」并二次确认，状态改为已发货，发货流程完结；不要求填写快递单号。\n快递单号：本版本仅作数据备注、选填，可在列表中随时添加或修改，不影响状态流转。\n修改物流：仅「待发货」可改，由客服代用户修改。"],"exportR":["导出报表","导出当前按日报表（CSV 格式，可用 Excel 打开）。"],"rUsers":["参与人数","当日产生有效投注的去重真实用户数。"],"rNew":["新增参与","当日首次参与本活动的真实用户数。"],"rClears":["闯关人次","当日真实用户闯关成功的次数。"],"rCash":["现金发放","当日真实用户领取的现金奖励金额。"],"rFb":["替补彩金发放","实体领完后改发彩金的当日金额（真实用户）。"],"rPhys":["实体领取","当日真实用户领取的实体件数。"],"rShip":["实体发货","当日改为「已发货」的实体件数。"],"rRobot":["机器人领取","当日机器人领取次数（彩金 + 实体）。机器人数据单独统计，不计入其他各列。"],"fQty":["增减数量","只能填非 0 整数：正数入库，负数减少。减少后库存不能小于 0。"],"fNote":["备注","记录本次库存变动的原因，写入库存记录。增减数量为负数时必填。"],"fCo":["快递公司","选填备注：承运快递公司，如 LBC、J&T、Ninja Van。"],"fNo":["快递单号","选填备注，保存不改变发货状态；状态改为「已发货」请使用操作列「确认发货」。"],"fWarm":["预热开始","到达该时间后进入「预热中」，前台显示预热页与开始倒计时（GMT+8）。"],"fStart":["活动开始","到达该时间后进入「进行中」，前台自动切换为进行中页，开始累计 EXP。"],"fEnd":["活动结束","到达该时间后进入「领奖缓冲」，前台切换为结束页，停止累计 EXP，已闯关奖励仍可领取。"],"fStock":["初始库存","新增奖品时的入库数量，会生成一条入库记录。"],"edCount":["关卡数","输入关卡总数（≥1，不设上限）后点「生成 / 调整关卡」：增加时在末尾补空行，减少时删除末尾关卡。活动进入预热阶段后不可修改。"],"edBatch":["批量填充","选择字段、数值和关卡范围后点「填充」。现金金额只填充现金关卡，替补彩金只填充实体关卡。"],"edExp":["EXP 门槛","用户累计 EXP 达到该值即闯关成功。须为非负整数，且每关必须大于上一关。"],"edPrize":["实体奖品","从「实体奖品」列表中选择。本活动各关分配的同一奖品数量合计不能超过该奖品当前库存。"],"edFb":["替补彩金","该关实体奖品领完后，后续闯关用户改发的彩金金额（₱）。"],"qTime":["活动时间","先选择查询的时间类型，再选日期区间（可只填一端）：\n· 预热开始 / 活动开始 / 活动结束：该时间点落在区间内的活动会被查出；\n· 全部阶段（默认）：活动从预热开始到活动结束的整个周期，只要与查询区间有任意重叠就会被查出。"],"fWt":["参与游戏 / 比例","勾选参与本活动的游戏分类，并为每个分类设置「流水金额 : EXP」比例，例如 ₱20 = 1 EXP 表示该分类每 ₱20 有效投注计 1 EXP。\n未勾选的分类投注不计 EXP；至少勾选一个分类，金额须为不小于 1 的整数。默认按 Slot、Casino、Poker、Bingo、Arcade、Fishing 全部勾选。"],"rbManual":["手动机器人","为所选活动手动添加机器人：填写昵称和 EXP 后添加，系统按 EXP 对照关卡门槛计算其闯关进度，并自动领取已闯过关卡的奖励（现金 / 实体）。\n· EXP 只能增加，不能减少；增加后自动领取新闯过关卡的奖励；\n· 机器人领取不产生领取记录，实体关卡占用活动名额但不消耗实物；\n· 删除机器人后，已领取的奖励与占用的名额不回退；该机器人保留在闯关榜中，数据冻结在删除时刻，之后可被其他用户或机器人超越而下移；\n· 机器人数据带机器人标识，不计入真实统计；\n· 闯关榜中按普通玩家参与排名（用户名脱敏，不显示机器人标识）。\n· 活动结束（进入领奖缓冲）后不能再新增机器人或增加 EXP，已有机器人仍可删除。"],"botClaimed":["机器人领取","手动机器人按 EXP 闯过实体关卡后自动领取的件数。机器人领奖模仿真实用户：前台该奖品的剩余数量会减少，但后台库存数不变，不生成领取记录、不发货。"],"actOff":["活动下架时间","创建活动时必填，为前台活动页面的最终下架时间，须晚于活动结束时间，预热开始前可通过「修改」调整，进入预热阶段后不可修改。到达该时间后状态变为「已下架」，前台活动页面与所有入口下架，未领取的奖励不能再领取。"]};
+  HELP = {"actStages":["关卡","该活动已配置的关卡数量。未配置时显示「未配置」，建议在预热开始前配置并核对。"],"actStatus":["状态","按时间自动计算：\n· 未开始：预热开始前，前台不显示；\n· 预热中：显示预热页与倒计时；\n· 进行中：显示进行中页，累计 EXP；\n· 领奖缓冲：活动结束后显示结束页，只能领奖不再累计 EXP；\n· 已下架：到达活动下架时间，前台不显示。"],"actOps":["操作","修改：仅「未开始」（预热开始前）可用，点击打开活动弹窗修改名称、时间节点（含下架时间）与参与游戏 / 比例；进入预热阶段后置灰，不可再修改。\n配置关卡：仅「未开始」可编辑，进入预热阶段后锁定为只读。"],"stock":["库存","平台实际库存件数。真实用户物流信息完整、确认领取并生成领取记录后扣减 1 件；机器人领奖不扣减库存。该关前台剩余名额为 0 时（分配数量 − 真实领取 − 机器人领取），按「替补彩金」发放。"],"claimed":["真实用户领取","真实用户已领取（已生成领取记录）的件数，不含机器人。"],"prizeOps":["操作","库存增减：正数为入库，负数为减少（必须填写原因）。\n库存记录：查看该奖品全部库存变动，每条记录显示操作人——「用户领奖 · 用户名」表示用户领取实体奖品生成领取记录后扣减；「后台操作 · 后台用户名」表示后台人员新建奖品或增减库存。"],"exportP":["导出待发货","导出所有「待发货」记录为 CSV（Excel 可直接打开），文件名含导出时间与导出人。列：发放 ID、活动 ID、活动名称、用户名、奖品、收件人、手机号、收货地址、快递公司、快递单号（已填写的备注一并导出）。所有信息完整导出，不脱敏。"],"claimStatus":["状态","待发货 → 已发货。点「确认发货」后状态改为已发货，发货流程即完结，本版本不做签收。\n拒收或退回：请在「实体奖品」中手动「库存增减」补回，并在备注写明发放 ID。"],"claimOps":["操作","确认发货：待发货记录点「确认发货」并二次确认，状态改为已发货，发货流程完结；不要求填写快递单号。\n快递单号：本版本仅作数据备注、选填，可在列表中随时添加或修改，不影响状态流转。\n修改物流：仅「待发货」可改，由客服代用户修改。"],"exportR":["导出报表","导出当前按日报表（CSV 格式，可用 Excel 打开）。"],"rUsers":["参与人数","当日产生有效投注的去重真实用户数。"],"rNew":["新增参与","当日首次参与本活动的真实用户数。"],"rClears":["闯关人次","当日真实用户闯关成功的次数。"],"rCash":["彩金发放","当日真实用户领取的彩金奖励金额。"],"rFb":["替补彩金发放","实体领完后改发彩金的当日金额（真实用户）。"],"rPhys":["实体领取","当日真实用户领取的实体件数。"],"rShip":["实体发货","当日改为「已发货」的实体件数。"],"rRobot":["机器人领取","当日机器人领取次数（彩金 + 实体）。机器人数据单独统计，不计入其他各列。"],"fQty":["增减数量","只能填非 0 整数：正数入库，负数减少。减少后库存不能小于 0。"],"fNote":["备注","记录本次库存变动的原因，写入库存记录。增减数量为负数时必填。"],"fCo":["快递公司","选填备注：承运快递公司，如 LBC、J&T、Ninja Van。"],"fNo":["快递单号","选填备注，保存不改变发货状态；状态改为「已发货」请使用操作列「确认发货」。"],"fWarm":["预热开始","到达该时间后进入「预热中」，前台显示预热页与开始倒计时（GMT+8）。"],"fStart":["活动开始","到达该时间后进入「进行中」，前台自动切换为进行中页，开始累计 EXP。"],"fEnd":["活动结束","到达该时间后进入「领奖缓冲」，前台切换为结束页，停止累计 EXP，已闯关奖励仍可领取。"],"fStock":["初始库存","新增奖品时的入库数量，会生成一条入库记录。"],"edCount":["关卡数","输入关卡总数（≥1，不设上限）后点「生成 / 调整关卡」：增加时在末尾补空行，减少时删除末尾关卡。活动进入预热阶段后不可修改。"],"edBatch":["批量填充","选择字段、数值和关卡范围后点「填充」。彩金金额只填充彩金关卡，替补彩金只填充实体关卡。"],"edExp":["EXP 门槛","用户累计 EXP 达到该值即闯关成功。须为正整数（大于 0），且每关必须大于上一关。"],"edPrize":["实体奖品","从「实体奖品」列表中选择。本活动各关分配的同一奖品数量合计不能超过该奖品当前库存。"],"edFb":["替补彩金","该关实体奖品领完后，后续闯关用户改发的彩金金额（₱）。"],"qTime":["活动时间","先选择查询的时间类型，再选日期区间（可只填一端）：\n· 预热开始 / 活动开始 / 活动结束：该时间点落在区间内的活动会被查出；\n· 全部阶段（默认）：活动从预热开始到活动结束的整个周期，只要与查询区间有任意重叠就会被查出。"],"fWt":["参与游戏 / 比例","勾选参与本活动的游戏分类，并为每个分类设置「流水金额 : EXP」比例，例如 ₱20 = 1 EXP 表示该分类每 ₱20 有效投注计 1 EXP。\n未勾选的分类投注不计 EXP；至少勾选一个分类，金额须为不小于 1 的整数。默认按 Slot、Casino、Poker、Bingo、Arcade、Fishing 全部勾选。"],"rbManual":["手动机器人","为所选活动手动添加机器人：填写昵称和 EXP 后添加，系统按 EXP 对照关卡门槛计算其闯关进度，并自动领取已闯过关卡的奖励（彩金 / 实体）。\n· EXP 只能增加，不能减少；增加后自动领取新闯过关卡的奖励；\n· 机器人领取不产生领取记录，实体关卡占用活动名额但不消耗实物；\n· 删除机器人后，已领取的奖励与占用的名额不回退；该机器人保留在闯关榜中，数据冻结在删除时刻，之后可被其他用户或机器人超越而下移；\n· 机器人数据带机器人标识，不计入真实统计；\n· 闯关榜中按普通玩家参与排名（用户名脱敏，不显示机器人标识）。\n· 活动结束（进入领奖缓冲）后不能再新增机器人或增加 EXP，已有机器人仍可删除。\n· 只有活动「进行中」才能添加机器人或增加 EXP（预热期不可添加）；\n· 机器人闯过实体关卡时若前台名额为 0，改领替补彩金（只计入机器人领取，不实际入账）。"],"botClaimed":["机器人领取","手动机器人按 EXP 闯过实体关卡后自动领取的件数。机器人领奖模仿真实用户：前台该奖品的剩余数量会减少，但后台库存数不变，不生成领取记录、不发货。"],"actOff":["活动下架时间","创建活动时必填，只选日期，当日 23:59:59 下架，须晚于活动结束日期。到达后状态变为「已下架」，前台活动页面与所有入口下架，未领取的奖励不能再领取。"]};
   WT_CATS = [['slot', 'Slot 老虎机', 1], ['casino', 'Casino 真人娱乐场', 20], ['poker', 'Poker', 10], ['bingo', 'Bingo', 5], ['arcade', 'Arcade', 3], ['fishing', 'Fishing 捕鱼', 4]];
   defaultWt() { return this.WT_CATS.map(([k, n, w]) => ({ k, name: n, on: true, w: String(w) })); }
   seedStages() {
@@ -501,17 +511,18 @@ class Component extends DCLogic {
   renderVals() {
     const s = this.state, p2 = n => String(n).padStart(2, '0'), d0 = new Date(s.now);
     const hk = k => (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.setState({ helpKey: k }); };
-    const FH = {"增减数量":"fQty","备注":"fNote","快递公司":"fCo","快递单号":"fNo","预热开始":"fWarm","活动开始":"fStart","活动结束":"fEnd","初始库存":"fStock"}, REPH = {"参与人数":"rUsers","新增参与":"rNew","闯关人次":"rClears","现金发放":"rCash","替补彩金发放":"rFb","实体领取":"rPhys","实体发货":"rShip","机器人领取":"rRobot"};
+    const FH = {"增减数量":"fQty","备注":"fNote","快递公司":"fCo","快递单号":"fNo","预热开始":"fWarm","活动开始":"fStart","活动结束":"fEnd","初始库存":"fStock"}, REPH = {"参与人数":"rUsers","新增参与":"rNew","闯关人次":"rClears","彩金发放":"rCash","替补彩金发放":"rFb","实体领取":"rPhys","实体发货":"rShip","机器人领取":"rRobot"};
     const help = {}; Object.keys(this.HELP).forEach(k => { help[k] = hk(k); });
     const setF = k => e => this.setState({ form: Object.assign({}, s.form, { [k]: e.target.value }), err: '' });
     const fld = (k, label, type, req, ph, ro) => ({ label, hasHelp: !!FH[label], help: FH[label] ? hk(FH[label]) : null, type: type || 'text', req: req ? '*' : '', ph: ph || '', ro: !!ro, bg: ro ? '#F5F7FA' : '#fff', value: s.form[k] != null ? s.form[k] : '', onChange: setF(k) });
     const nowMs = Date.now();
-    const statusOf = a => { if (a.off && nowMs >= new Date(a.off).getTime()) return '已下架'; const w = new Date(a.warm).getTime(), st = new Date(a.start).getTime(), en = new Date(a.end).getTime(); return nowMs < w ? '未开始' : nowMs < st ? '预热中' : nowMs <= en ? '进行中' : '领奖缓冲'; };
+    const effWarm = a => { if (a.stages > 0) return a.warm; const w = new Date(a.warm).getTime(); if (nowMs < w) return a.warm; const d = new Date(nowMs + 86400000), q = n => String(n).padStart(2, '0'); return d.getFullYear() + '-' + q(d.getMonth() + 1) + '-' + q(d.getDate()) + 'T00:00:00'; };
+    const statusOf = a0 => { const a = Object.assign({}, a0, { warm: effWarm(a0) }); if (a.off && nowMs >= new Date(a.off).getTime()) return '已下架'; const w = new Date(a.warm).getTime(), st = new Date(a.start).getTime(), en = new Date(a.end).getTime(); return nowMs < w ? '未开始' : nowMs < st ? '预热中' : nowMs <= en ? '进行中' : '领奖缓冲'; };
     const stC = { '未开始': '#909399', '预热中': '#E6A23C', '进行中': '#52C41A', '领奖缓冲': '#1890FF', '已下架': '#F56C6C' };
     const m = s.modal;
     let fields = [], mHead = [], mRows = [], modalTitle = '', hasSave = true, modalW = '520px';
     if (m) {
-      if (m.t === 'act') { modalTitle = m.editId ? '修改活动 · ' + m.editId : '新建活动'; fields = [fld('name', '活动名称', 'text', 1), fld('warm', '预热开始', 'datetime-local', 1), fld('start', '活动开始', 'datetime-local', 1), fld('end', '活动结束', 'datetime-local', 1), fld('off', '活动下架时间', 'datetime-local', 1, '前台活动页面最终下架时间，须晚于活动结束')]; }
+      if (m.t === 'act') { modalTitle = m.editId ? '修改活动 · ' + m.editId : '新建活动'; fields = [fld('name', '活动名称', 'text', 1), fld('warm', '预热开始', 'date', 1, '当日 00:00:00 开始'), fld('start', '活动开始', 'date', 1, '当日 00:00:00 开始'), fld('end', '活动结束', 'date', 1, '当日 23:59:59 结束'), fld('off', '活动下架时间', 'date', 1, '当日 23:59:59 下架，须晚于活动结束')]; }
       if (m.t === 'prize') { modalTitle = '新增奖品'; fields = [fld('pname', '奖品名称', 'text', 1), fld('pstock', '初始库存', 'number', 1)]; }
       if (m.t === 'stock') { const neg = /^-/.test(String(s.form.q || '')); modalTitle = '库存增减 · ' + m.p.name; fields = [fld('cur', '当前库存', 'text', 0, '', true), fld('q', '增减数量', 'text', 1, '正整数增加，负整数减少'), Object.assign(fld('note', '备注', 'text', neg, neg ? '减少库存必须填写原因' : '选填'))]; fields[0].value = m.p.stock + ' 件'; }
       if (m.t === 'log') { modalTitle = '库存记录 · ' + m.p.name; hasSave = false; mHead = ['时间', '类型', '数量', '操作人', '备注']; mRows = (s.logs[m.p.id] || []).slice().reverse().map(r => [r[0], r[1], r[2], (r[4] || '后台操作') + ' · ' + (r[5] || '—'), r[3]]); modalW = '720px'; }
@@ -558,7 +569,7 @@ class Component extends DCLogic {
       const shown = all.filter(u => (!rd.q || u.user.toLowerCase().indexOf(rd.q.toLowerCase()) >= 0) && (rd.type === 'all' || (rd.type === 'bot') === u.bot)).sort((a, b) => rd.asc ? a.exp - b.exp : b.exp - a.exp);
       const real = all.filter(u => !u.bot);
       const setRd = patch => this.setState(x => ({ rd: Object.assign({}, x.rd, patch) }));
-      const head = ['用户名', '用户类型', '有效投注', '有效投注分类明细', '当日 EXP', 'EXP 分类明细', '当前关卡', '闯关数', '现金发放', '替补彩金', '实体领取', '未领取', '最后活跃'];
+      const head = ['用户名', '用户类型', '有效投注', '有效投注分类明细', '当日 EXP', 'EXP 分类明细', '当前关卡', '闯关数', '彩金发放', '替补彩金', '实体领取', '未领取', '最后活跃'];
       const fmt = u => [u.user, u.bot ? '机器人' : '真实用户', u.bot ? '—' : peso(u.bet), u.parts.map(x => x.cat + ' ' + peso(x.bet)).join('；') || '—', u.exp.toLocaleString(), u.bot ? '机器人设定' : u.parts.map(x => x.cat + '（₱' + x.w + ':1）' + Math.floor(x.bet / x.w).toLocaleString()).join('；'), u.bot ? '—' : '第 ' + u.stage + ' 关', u.clears, u.cash ? peso(u.cash) : '—', u.fb ? peso(u.fb) : '—', u.phys || '—', u.unclaimed, u.last];
       const dateTxt = '2026-' + days[rd.i][0];
       return {
@@ -566,18 +577,20 @@ class Component extends DCLogic {
         rdQ: rd.q, onRdQ: e => setRd({ q: e.target.value.trim() }),
         rdType: rd.type, onRdType: e => setRd({ type: e.target.value }),
         rdOnlyNew: rd.onlyNew, toggleRdNew: () => setRd({ onlyNew: !rd.onlyNew }),
-        rdSummary: '当前显示 ' + shown.length + ' / ' + all.length + ' 人 · 真实用户 ' + real.length + ' 人，有效投注 ' + peso(real.reduce((a, u) => a + u.bet, 0)) + '，现金发放 ' + peso(real.reduce((a, u) => a + u.cash, 0)),
+        rdSummary: '当前显示 ' + shown.length + ' / ' + all.length + ' 人 · 真实用户 ' + real.length + ' 人，有效投注 ' + peso(real.reduce((a, u) => a + u.bet, 0)) + '，彩金发放 ' + peso(real.reduce((a, u) => a + u.cash, 0)),
         rdPg: this.pg('rd' + rd.i, shown.map((u, k) => { const c = fmt(u); return { _u: u, user: c[0], type: c[1], bet: c[2], exp: c[4], betParts: u.parts.map(x => ({ cat: x.cat, val: peso(x.bet) })), expParts: u.bot ? [{ cat: '机器人设定', rate: '', val: u.exp.toLocaleString() }] : u.parts.map(x => ({ cat: x.cat, rate: '₱' + x.w + ':1', val: Math.floor(x.bet / x.w).toLocaleString() })), stage: c[6], clears: c[7], cash: c[8], fb: c[9], phys: c[10], physHead: u.phys ? u.phys.split('\n').reduce((a, l) => { const q = l.match(/ × (\d+)$/); return a + (q ? Number(q[1]) : 1); }, 0) + ' 件' : '—', physLines: u.phys ? u.phys.split('\n') : [], unclaimed: c[11], uncHead: String(c[11]).split('\n')[0], uncLines: String(c[11]).split('\n').slice(1), last: c[12], bg: u.bot ? '#FAFAFA' : '#fff', tBg: u.bot ? '#F0F0F0' : '#E6F4FF', tColor: u.bot ? '#8C8C8C' : '#1677FF' }; }), (list) => { const H = head.filter(h => h.indexOf('分类明细') < 0 && h !== '新增参与').slice(1); const real = list.map(x => x._u).filter(u => !u.bot); const S = f => real.reduce((a, u) => a + (Number(f(u)) || 0), 0); const unc = (() => { const us = real.filter(u => u.unclaimed && u.unclaimed !== '—'); let amt = 0; const pm = {}; us.forEach(u => { const parts = String(u.unclaimed).split('\n'); const mm = parts[0].match(/₱([0-9,]+)/); if (mm) amt += Number(mm[1].replace(/,/g, '')); parts.slice(1).forEach(l => { const q = l.match(/^(.*) × (\d+)$/); if (q) pm[q[1]] = (pm[q[1]] || 0) + Number(q[2]); }); }); return { text: us.length + ' 人 · ' + peso(amt), lines: Object.keys(pm).map(k => k + ' × ' + pm[k]), align: 'left' }; })();
         const physAgg = (() => { const pm = {}; real.forEach(u => { if (u.phys) String(u.phys).split('\n').forEach(l => { const q = l.match(/^(.*) × (\d+)$/); if (q) pm[q[1]] = (pm[q[1]] || 0) + Number(q[2]); }); }); const n = Object.values(pm).reduce((a, v) => a + v, 0); return { text: n + ' 件', lines: Object.keys(pm).map(k => k + ' × ' + pm[k]), align: 'left' }; })();
-        return H.map(h => h === '未领取' ? unc : h.indexOf('实体') === 0 ? physAgg : { align: 'center', lines: [], text: h === '用户类型' ? '真实 ' + real.length + ' 人' : h === '有效投注' ? peso(S(u => u.bet)) : h === '当日 EXP' ? S(u => u.exp).toLocaleString() : h === '闯关数' ? S(u => u.clears).toLocaleString() : h === '现金发放' ? peso(S(u => u.cash)) : h === '替补彩金' ? peso(S(u => u.fb)) : '—' }); }),
+        return H.map(h => h === '未领取' ? unc : h.indexOf('实体') === 0 ? physAgg : { align: 'center', lines: [], text: h === '用户类型' ? '真实 ' + real.length + ' 人' : h === '有效投注' ? peso(S(u => u.bet)) : h === '当日 EXP' ? S(u => u.exp).toLocaleString() : h === '闯关数' ? S(u => u.clears).toLocaleString() : h === '彩金发放' ? peso(S(u => u.cash)) : h === '替补彩金' ? peso(S(u => u.fb)) : '—' }); }),
       rdTotRef: el => { this.rdTotEl = el; }, rdPageBottom: (45 + (s.rdTotH || 37)) + 'px',
         rdEmpty: shown.length === 0,
         rdClose: () => this.setState({ rd: null }),
         rdExport: () => { this.csv('流水闯关_用户明细_' + dateTxt + '.csv', [head].concat(shown.map(fmt))); this.flash('已导出 ' + shown.length + ' 条用户明细'); }
       };
     })();
-    const repHead = ['日期', '参与人数', '新增参与', '闯关人次', '现金发放', '替补彩金发放', '实体领取', '实体发货', '机器人领取', '未领取'];
-    const repRows = days.map(r => ['2026-' + r[0], r[1].toLocaleString(), r[2].toLocaleString(), r[3].toLocaleString(), peso(r[4]), r[5] ? peso(r[5]) : '—', r[6] + ' 件', r[7] + ' 件', r[8] + ' 次', r[9].toLocaleString() + ' 人 · ' + peso(r[10]) + (r[11] ? '\n' + physList(r[11], parseInt(r[0].slice(3), 10)) : '\n无未领实物')]);
+    const repHead = ['日期', '参与人数', '新增参与', '闯关人次', '彩金发放', '替补彩金发放', '实体领取', '实体发货', '机器人领取', '未领取'];
+    const rqA = s.rqApplied || { act: String((s.acts[0] || {}).id || ''), from: '', to: '' };
+    const daysQ = days.filter(r => { const d = '2026-' + r[0]; return (!rqA.from || d >= rqA.from) && (!rqA.to || d <= rqA.to); });
+    const repRows = daysQ.map(r => ['2026-' + r[0], r[1].toLocaleString(), r[2].toLocaleString(), r[3].toLocaleString(), peso(r[4]), r[5] ? peso(r[5]) : '—', r[6] + ' 件', r[7] + ' 件', r[8] + ' 次', r[9].toLocaleString() + ' 人 · ' + peso(r[10]) + (r[11] ? '\n' + physList(r[11], parseInt(r[0].slice(3), 10)) : '\n无未领实物')]);
     const actsShown = s.acts.filter(a => {
       const q = s.qApplied; if (!q) return true;
       if (q.name && a.name.toLowerCase().indexOf(q.name.trim().toLowerCase()) < 0) return false;
@@ -607,7 +620,7 @@ class Component extends DCLogic {
       onMbExp: e => this.setState({ mb: Object.assign({}, s.mb, { exp: e.target.value.replace(/[^0-9]/g, '') }) }),
       mbPreview: mbExpNum === null ? '' : (rbStages.length ? '→ 可闯至第 ' + botStage(mbExpNum) + ' 关' : '该活动尚未配置关卡'),
       mbAdd: () => {
-        { const ra = s.acts.find(a => a.id === rbActId); if (ra && nowMs > new Date(ra.end).getTime()) return this.flash('活动已结束，不能再新增机器人'); }
+        { const ra = s.acts.find(a => a.id === rbActId); if (ra && nowMs > new Date(ra.end).getTime()) return this.flash('活动已结束，不能再新增机器人'); if (ra && nowMs < new Date(ra.start).getTime()) return this.flash('活动开始（进行中）后才能添加机器人'); }
         const nm = s.mb.name;
         if (!/^[A-Za-z0-9_]{3,20}$/.test(nm)) return this.flash('昵称须为 3–20 位字母、数字或下划线');
         if (botsCur.some(b => b.name.toLowerCase() === nm.toLowerCase())) return this.flash('该活动下已有同名机器人'); const clash = this.maskClash(nm); if (clash) return this.flash('昵称「' + nm + '」在闯关榜脱敏后显示为「' + this.maskName(nm) + '」，与真实用户「' + this.maskName(clash) + '」视觉重名，请更换');
@@ -648,7 +661,9 @@ class Component extends DCLogic {
       onRbAct: e => this.setState({ rb: Object.assign({}, s.rb, { act: Number(e.target.value) }) }),
       rbNoStages: rbStages.length === 0, rbHasStages: rbStages.length > 0
     };
+    const rqVals = { rqAct: s.rq.act || String((s.acts[0] || {}).id || ''), rqFrom: s.rq.from, rqTo: s.rq.to, rqActOpts: s.acts.map(a => ({ value: String(a.id), label: a.id + ' · ' + a.name })), onRqAct: e => this.setState({ rq: Object.assign({}, s.rq, { act: e.target.value }) }), onRqFrom: e => this.setState({ rq: Object.assign({}, s.rq, { from: e.target.value }) }), onRqTo: e => this.setState({ rq: Object.assign({}, s.rq, { to: e.target.value }) }), doRq: () => { if (s.rq.from && s.rq.to && s.rq.from > s.rq.to) return this.flash('开始日期不能晚于结束日期'); this.setState({ rqApplied: Object.assign({ act: String((s.acts[0] || {}).id || '') }, s.rq) }); }, resetRq: () => this.setState({ rq: { act: '', from: '', to: '' }, rqApplied: null }) };
     return {
+      ...rqVals,
       ...rbVals,
       hasWt: !!(m && m.t === 'act'), wtRows, wtCount: wtList.filter(w => w.on).length,
       help, helpOpen: !!s.helpKey, helpTitle: s.helpKey ? this.HELP[s.helpKey][0] : '', helpText: s.helpKey ? this.HELP[s.helpKey][1] : '', helpClose: () => this.setState({ helpKey: null }),
@@ -665,9 +680,9 @@ class Component extends DCLogic {
       resetQuery: () => this.setState({ q: { name: '', id: '', status: 'all', type: 'all', from: '', to: '' }, qApplied: null }),
       qStatus: s.q.status, onQStatus: e => this.setState({ q: Object.assign({}, s.q, { status: e.target.value }) }),
       actsEmpty: actsShown.length === 0,
-      acts: actsShown.map(a => { const st = statusOf(a); const wtUse = (a.wt || this.defaultWt()).filter(w => w.on); return { id: a.id, wtText: wtUse.map(w => w.name.split(' ')[0] + ' ₱' + w.w + ':1').join('、'), name: a.name, warm: this.fmtT(a.warm), start: this.fmtT(a.start), end: this.fmtT(a.end), stages: a.stages ? a.stages + ' 关' : '未配置', status: st, stColor: stC[st],
+      acts: actsShown.map(a => { const st = statusOf(a); const wtUse = (a.wt || this.defaultWt()).filter(w => w.on); return { id: a.id, wtText: wtUse.map(w => w.name.split(' ')[0] + ' ₱' + w.w + ':1').join('、'), name: a.name, warm: this.fmtT(effWarm(a)) + (a.stages > 0 || effWarm(a) === a.warm ? '' : '（关卡未配置，已顺延）'), start: this.fmtT(a.start), end: this.fmtT(a.end), stages: a.stages ? a.stages + ' 关' : '未配置', status: st, stColor: stC[st],
         off: this.fmtT(a.off), canEdit: st === '未开始', cantEdit: st !== '未开始',
-        onEdit: () => { if (st !== '未开始') return this.flash('活动已进入预热阶段，不可再修改'); this.setState({ modal: { t: 'act', editId: a.id }, form: { name: a.name, warm: String(a.warm).slice(0, 16), start: String(a.start).slice(0, 16), end: String(a.end).slice(0, 16), off: String(a.off || '').slice(0, 16), wt: (a.wt || this.defaultWt()).map(w => Object.assign({}, w)) }, err: '' }); },
+        onEdit: () => { if (st !== '未开始') return this.flash('活动已进入预热阶段，不可再修改'); this.setState({ modal: { t: 'act', editId: a.id }, form: { name: a.name, warm: String(a.warm).slice(0, 10), start: String(a.start).slice(0, 10), end: String(a.end).slice(0, 10), off: String(a.off || '').slice(0, 10), wt: (a.wt || this.defaultWt()).map(w => Object.assign({}, w)) }, err: '' }); },
         onConfig: () => { const locked = st !== '未开始'; let rows = ((s.stageCfg || {})[a.id] || []).map(r => Object.assign({}, r)); if (!rows.length) rows = Array.from({ length: 100 }, (_, i) => ({ lv: i + 1, exp: '', type: 'cash', cash: '', prize: '', qty: '', fb: '' })); this.setState({ stEd: { actId: a.id, name: a.name, rows, count: rows.length, bField: 'cash', bVal: '', bFrom: 1, bTo: rows.length, err: '', locked } }); } }; }),
       ...(() => {
         const c = s.closeDlg; if (!c) return { cdOpen: false };
@@ -735,7 +750,7 @@ class Component extends DCLogic {
               onQty: setRow(i, 'qty'), onFb: setRow(i, 'fb')
             };
           }),
-          stEdSummary: '共 ' + e.rows.length + ' 关 · 现金关卡 ' + (e.rows.length - physCount) + ' 个（现金合计 ₱' + cashSum.toLocaleString('en-US') + '）· 实体关卡 ' + physCount + ' 个',
+          stEdSummary: '共 ' + e.rows.length + ' 关 · 彩金关卡 ' + (e.rows.length - physCount) + ' 个（彩金合计 ₱' + cashSum.toLocaleString('en-US') + '）· 实体关卡 ' + physCount + ' 个',
           stEdHasErr: !!e.err, stEdErr: e.err,
           stEdClose: () => this.setState({ stEd: null }),
           stEdSave: () => { if (e.locked) return setE({ err: lockMsg });
@@ -744,9 +759,9 @@ class Component extends DCLogic {
             const use = {};
             for (let i = 0; i < e.rows.length; i++) {
               const r = e.rows[i], L = '第 ' + r.lv + ' 关：';
-              if (!isInt(r.exp)) return setE({ err: L + 'EXP 门槛须为非负整数' });
+              if (!isInt(r.exp)) return setE({ err: L + 'EXP 门槛须为正整数（大于 0）' }); if (Number(r.exp) <= 0) return setE({ err: L + 'EXP 门槛须大于 0' });
               if (i > 0 && Number(r.exp) <= Number(e.rows[i - 1].exp)) return setE({ err: L + 'EXP 门槛须大于上一关' });
-              if (r.type === 'cash') { if (!isInt(r.cash) || Number(r.cash) <= 0) return setE({ err: L + '现金金额须为正整数' }); }
+              if (r.type === 'cash') { if (!isInt(r.cash) || Number(r.cash) <= 0) return setE({ err: L + '彩金金额须为正整数' }); }
               else {
                 if (!r.prize) return setE({ err: L + '请选择实体奖品' });
                 if (!isInt(r.qty) || Number(r.qty) <= 0) return setE({ err: L + '实体数量须为正整数' });
@@ -807,7 +822,9 @@ class Component extends DCLogic {
         onShip: () => this.setState({ modal: { t: 'ship', c }, form: {}, err: '' }),
         onAddr: () => { if (!window.confirm('请确认该记录是否已交给发货人员进行发货。\n如已开始发货，修改地址可能导致错发，请谨慎修改。\n\n点「确定」继续修改，点「取消」不修改。')) return; this.setState({ modal: { t: 'addr', c }, form: { an: c.name, ap: c.phone, aa: c.addr }, err: '' }); } }; }),
       exportPending: () => {
-        const rows = s.claims.filter(c => c.status === '待发货');
+        const qs = s.cqApplied ? s.cqApplied.status : s.claimStatus;
+        if (qs === '已发货') return this.flash('当前查询数据为「已发货」数据，导出待发货仅支持「待发货」状态，请调整发放状态条件');
+        const rows = claims.filter(c => c.status === '待发货');
         if (!rows.length) return this.flash('没有待发货记录');
         const d = new Date(), ts = d.getFullYear() + p2(d.getMonth() + 1) + p2(d.getDate()) + '_' + p2(d.getHours()) + p2(d.getMinutes());
         this.csv('待发货_' + ts + '_Joshua0926.csv', [['发放ID', '活动ID', '活动名称', '用户名', '奖品', '收件人', '手机号', '收货地址', '快递公司', '快递单号']].concat(rows.map(c => { const act = s.acts.find(x => x.id === c.actId); const tr = (c.tracking || '').split(' '); const co = ['LBC Express', 'J&T Express', 'Ninja Van', 'Flash Express', '2GO Express'].find(k => (c.tracking || '').startsWith(k)) || ''; return [c.id, c.actId, act ? act.name : '', c.user, c.prize, c.name, c.phone, c.addr, co, co ? c.tracking.slice(co.length).trim() : (c.tracking || '')]; })));
@@ -817,7 +834,7 @@ class Component extends DCLogic {
       repTotRef: el => { this.repTotEl = el; }, repPageBottom: (45 + (s.repTotH || 37)) + 'px',
       ...rdVals,
       exportReport: () => {
-        const dHead = ['用户名', '用户类型', '有效投注', '有效投注分类明细', '当日 EXP', 'EXP 分类明细', '当前关卡', '闯关数', '现金发放', '替补彩金', '实体领取', '未领取', '最后活跃'];
+        const dHead = ['用户名', '用户类型', '有效投注', '有效投注分类明细', '当日 EXP', 'EXP 分类明细', '当前关卡', '闯关数', '彩金发放', '替补彩金', '实体领取', '未领取', '最后活跃'];
         const dFmt = u => [u.user, u.bot ? '机器人' : '真实用户', u.bot ? '—' : peso(u.bet), u.parts.map(x => x.cat + ' ' + peso(x.bet)).join('；') || '—', u.exp.toLocaleString(), u.bot ? '机器人设定' : u.parts.map(x => x.cat + '（₱' + x.w + ':1）' + Math.floor(x.bet / x.w).toLocaleString()).join('；'), u.bot ? '—' : '第 ' + u.stage + ' 关', u.clears, u.cash ? peso(u.cash) : '—', u.fb ? peso(u.fb) : '—', u.phys || '—', u.unclaimed, u.last];
         const sheets = [{ name: '按日报表', rows: [repHead].concat(repRows) }].concat(days.map((r, i) => ({ name: '2026-' + r[0], rows: [dHead].concat(rdUsers(i).map(dFmt)) })));
         const d = new Date(), q = n => String(n).padStart(2, '0');
@@ -831,7 +848,7 @@ class Component extends DCLogic {
         const f = s.form, e = msg => this.setState({ err: msg });
         if (m.t === 'act') {
           if (!f.name || !f.warm || !f.start || !f.end || !f.off) return e('请填写完整');
-          if (!(f.warm < f.start && f.start < f.end && f.end < f.off)) return e('时间须满足：预热开始 < 活动开始 < 活动结束 < 活动下架时间');
+          const d10 = v => String(v || '').slice(0, 10); f.warm = d10(f.warm); f.start = d10(f.start); f.end = d10(f.end); f.off = d10(f.off); if (!(f.warm < f.start && f.start <= f.end && f.end < f.off)) return e('日期须满足：预热开始 < 活动开始 ≤ 活动结束 < 活动下架时间'); f.warm += 'T00:00:00'; f.start += 'T00:00:00'; f.end += 'T23:59:59'; f.off += 'T23:59:59';
           const wtOn = (f.wt || []).filter(w => w.on);
           if (!wtOn.length) return e('请至少勾选一个参与活动的游戏分类');
           const badW = wtOn.find(w => !/^\d+$/.test(String(w.w)) || Number(w.w) < 1);
@@ -848,7 +865,7 @@ class Component extends DCLogic {
         }
         if (m.t === 'prize') {
           const n = parseInt(f.pstock, 10);
-          if (!f.pname || !(n >= 0)) return e('请填写奖品名称与初始库存');
+          if (!f.pname || !(n >= 0)) return e('请填写奖品名称与初始库存'); if (s.prizes.some(q => q.name.trim().toLowerCase() === String(f.pname).trim().toLowerCase())) return e('奖品名称已存在，实体奖品名称必须唯一');
           const id = 'P' + Date.now();
           this.setState(x => ({ prizes: x.prizes.concat([{ id, name: f.pname, stock: n, claimed: 0 }]), logs: Object.assign({}, x.logs, { [id]: [[this.stamp(), '入库', '+' + n, '新建奖品', '后台操作', 'Joshua0926']] }), modal: null }), () => this.flash('奖品已新增'));
         }

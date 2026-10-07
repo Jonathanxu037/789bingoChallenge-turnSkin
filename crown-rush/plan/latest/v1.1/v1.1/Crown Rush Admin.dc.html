@@ -2987,7 +2987,7 @@ class Component extends DCLogic {
           mrAutoName: f.auto, mrManualName: !f.auto, toggleMrAutoName: () => setF({ auto: !f.auto }),
           mrName: f.name, onMrName: e => setF({ name: e.target.value.trim() }),
           mrPreview: f.mode === 'mimic' ? ('将生成 ' + qty + ' 个机器人，每日增长约 ' + fmtN(mTotal) + ' EXP，按玩家活跃时段分配到每小时自动增长，持续至活动结束（剩余 ' + daysLeft + ' 天，预计结束时约第 ' + lvOf(mTotal * daysLeft) + ' 关）') : '将生成 ' + qty + ' 个机器人，目标第 ' + fromLv + (toLv !== fromLv ? '–' + toLv : '') + ' 关（' + fmtN(expOf(fromLv)) + (toLv !== fromLv ? '–' + fmtN(expOf(toLv)) : '') + ' EXP），' + (f.mode === 'instant' ? '立即到达并领取奖励' : '在 ' + (f.span === 'end' ? '活动结束前' : spanH + ' 小时内') + '逐步成长'),
-          mrCreate: () => { { const stR = (s.actStatus || {})[actId]; if (stR === '领奖缓冲' || stR === '已下架') return this.flash('活动已结束，不能再新增机器人'); }
+          mrCreate: () => { { const stR = (s.actStatus || {})[actId]; if (stR === '领奖缓冲' || stR === '已下架') return this.flash('活动已结束，不能再新增机器人'); } { const stR2 = (s.actStatus || {})[actId]; if (stR2 === '未开始' || stR2 === '预热中') return this.flash('活动开始（进行中）后才能添加机器人'); }
             if (!maxLv) return this.flash('该活动尚未配置关卡');
             if (!f.auto) { if (qty !== 1) return this.flash('自定义昵称时每次只能添加 1 个'); if (!/^[A-Za-z0-9_]{3,20}$/.test(f.name)) return this.flash('昵称须为 3–20 位字母、数字或下划线'); if (allNames.indexOf(f.name.toLowerCase()) >= 0) return this.flash('昵称已存在'); const clash = this.maskClash(f.name); if (clash) return this.flash('昵称「' + f.name + '」在闯关榜脱敏后显示为「' + this.maskName(f.name) + '」，与真实用户「' + this.maskName(clash) + '」视觉重名，请更换'); }
             const taken = new Set(allNames);

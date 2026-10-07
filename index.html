@@ -87,7 +87,7 @@ const CR = [
 ];
 const noPages = l => l.filter(x => x[2] !== 'page');
 const files = (dir, list) => list.map(([name, f, t]) => ({ name, path: dir + '/' + f, type: t }));
-const withEntry = (root, l) => root.indexOf('/latest/') >= 0 ? l.slice(0, 3).concat([['活动入口 · UI 设计需求', 'Crown Rush Entry Points.dc.html', 'page']], l.slice(3)) : l;
+const withEntry = (root, l) => root.indexOf('/latest/') >= 0 ? [l[0], l[1], ['活动进行中页 · 未登录', 'Crown Rush Live.dc.html?guest=1', 'page'], l[2], ['活动结束页 · 未登录', 'Crown Rush Ended.dc.html?guest=1', 'page'], ['活动入口 · UI 设计需求', 'Crown Rush Entry Points.dc.html', 'page']].concat(l.slice(3)) : l;
 const iters = (root, k) => [
   { key: k + '-full', name: '完整需求', desc: '全部功能', children: files(root + '/full', withEntry(root, CR)) },
   { key: k + '-10', name: 'v1.0 迭代', desc: '前台全量 + 后台精简', children: files(root + '/v1.0', withEntry(root, CR)) },
@@ -174,7 +174,7 @@ $('view').addEventListener('load', () => {
   try {
     const base = location.href.replace(/[#?].*$/, '').replace(/[^/]*$/, '');
     const rel = decodeURIComponent($('view').contentWindow.location.href.replace(base, '').replace(/[?].*$/, ''));
-    if (rel && rel.split('#')[0] !== current) go(rel, true);
+    const qs = (() => { try { return $('view').contentWindow.location.search || ''; } catch (e) { return ''; } })(); const full = rel.split('#')[0] + qs; if (rel && full !== current) go(full, true);
   } catch (e) {}
 });
 document.querySelectorAll('.tab').forEach(el => el.onclick = () => { tab = el.dataset.tab; query = ''; $('q').value = ''; render(); });

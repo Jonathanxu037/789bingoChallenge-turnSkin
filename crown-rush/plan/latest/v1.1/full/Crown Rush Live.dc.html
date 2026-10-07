@@ -115,7 +115,7 @@
           </div>
         </div>
 
-        <div style="position:relative;margin:0 12px;height:1px;background:linear-gradient(90deg,rgba(232,192,106,0),rgba(232,192,106,.4) 18%,rgba(232,192,106,.4) 82%,rgba(232,192,106,0))"></div>
+        <sc-if value="{{ notGuest }}" hint-placeholder-val="{{ true }}"><div style="position:relative;margin:0 12px;height:1px;background:linear-gradient(90deg,rgba(232,192,106,0),rgba(232,192,106,.4) 18%,rgba(232,192,106,.4) 82%,rgba(232,192,106,0))"></div>
 
         <div style="position:relative;padding:9px 12px 10px 9px">
         <div style="display:flex;align-items:center;gap:11px">
@@ -149,16 +149,16 @@
             <div style="display:flex;align-items:center;gap:6px">
         <div style="position:relative;flex:1;min-width:0;height:17px;border-radius:999px;background:rgba(8,1,22,.72);border:1px solid rgba(232,192,106,.24);overflow:hidden">
               <div style="position:absolute;inset:0;border-radius:999px;background:linear-gradient(90deg,#8A5E14,#C89A3C 70%,#E3B455);width:{{ pctText }}"></div>
-              <div style="position:relative;height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 9px;font-size:10px;font-weight:800;text-shadow:0 1px 3px rgba(6,0,18,.95)">
+              <sc-if value="{{ notGuest }}" hint-placeholder-val="{{ true }}"><div style="position:relative;height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 9px;font-size:10px;font-weight:800;text-shadow:0 1px 3px rgba(6,0,18,.95)">
                 <span style="display:flex;align-items:baseline;gap:4px"><span style="color:#FFE9B0;letter-spacing:.08em">EXP</span><span style="color:#fff">{{ growthText }}</span></span>
                 <span style="color:#E7D6FF;font-weight:700">{{ remainExp }} EXP to go</span>
-              </div>
+              </div></sc-if><sc-if value="{{ isGuest }}"><div style="position:relative;height:100%;display:flex;align-items:center;justify-content:center;padding:0 9px;font-size:10.5px;font-weight:800;color:#FFE9B0;text-shadow:0 1px 3px rgba(6,0,18,.95)">Log in to start earning EXP</div></sc-if>
             </div>
           <span onClick="{{ openExpRules }}" title="See how each game category earns EXP" style="flex:none;width:16px;height:16px;border-radius:50%;background:rgba(232,192,106,.16);border:1px solid rgba(232,192,106,.45);color:#E8C06A;font-size:10.5px;font-weight:800;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:rgba(232,192,106,.3)">?</span>
         </div>
           </div>
         </div>
-        </div>
+        </div></sc-if>
       </div>
     </div>
   </div>
@@ -204,6 +204,7 @@
     </div>
 
     <div style="margin:11px 0 12px;height:1px;background:rgba(255,255,255,.09)"></div>
+    <sc-if value="{{ isGuest }}"><div onClick="{{ goLogin }}" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 0;border-radius:11px;background:linear-gradient(180deg,#F0D291,#C89A3C);color:#2A1500;font-weight:800;font-size:13.5px;cursor:pointer;box-shadow:0 5px 14px rgba(200,154,60,.24)" style-hover="filter:brightness(1.05)">Log in to claim your rewards</div></sc-if>
     <sc-if value="{{ hasClaimable }}" hint-placeholder-val="{{ true }}">
       <div onClick="{{ claimAll }}" style="position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:7px;width:100%;padding:7px 0;border-radius:999px;background:linear-gradient(180deg,#FBE6B4,#E3B85C 46%,#C08F30);border:1px solid rgba(255,244,214,.55);color:#33200A;font-weight:800;font-size:12.5px;letter-spacing:.02em;cursor:pointer;box-shadow:0 4px 12px rgba(200,154,60,.28), inset 0 1px 0 rgba(255,255,255,.55)" style-hover="filter:brightness(1.05)">
         <span style="position:absolute;top:0;bottom:0;width:60px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);animation:crShine 3.6s ease-in-out infinite;pointer-events:none"></span>
@@ -237,6 +238,7 @@
               <sc-if value="{{ t.claimable }}" hint-placeholder-val="{{ true }}">
                 <div onClick="{{ t.onClaim }}" style="flex:none;padding:8px 15px;border-radius:9px;background:linear-gradient(180deg,#F0D291,#C89A3C);color:#2A1500;font-weight:800;font-size:12.5px;cursor:pointer" style-hover="filter:brightness(1.06)">Claim</div>
               </sc-if>
+              <sc-if value="{{ t.guest }}"><div onClick="{{ t.onLogin }}" style="flex:none;padding:7px 14px;border-radius:9px;background:rgba(232,192,106,.14);border:1px solid rgba(232,192,106,.45);color:#F0D291;font-weight:800;font-size:12px;cursor:pointer;white-space:nowrap" style-hover="background:rgba(232,192,106,.24)">Log in</div></sc-if>
               <sc-if value="{{ t.claimed }}">
                 <div style="flex:none;padding:8px 13px;border-radius:9px;background:rgba(46,204,113,.14);border:1px solid rgba(46,204,113,.38);color:#8FE3B8;font-weight:700;font-size:12px">Claimed</div>
               </sc-if>
@@ -279,6 +281,7 @@
                   <sc-if value="{{ t.claimable }}" hint-placeholder-val="{{ true }}">
                     <div onClick="{{ t.onClaim }}" style="flex:none;padding:7px 14px;border-radius:999px;background:linear-gradient(180deg,#F0D291,#C89A3C);color:#2A1500;font-weight:800;font-size:12px;cursor:pointer" style-hover="filter:brightness(1.06)">Claim</div>
                   </sc-if>
+              <sc-if value="{{ t.guest }}"><div onClick="{{ t.onLogin }}" style="flex:none;padding:7px 14px;border-radius:9px;background:rgba(232,192,106,.14);border:1px solid rgba(232,192,106,.45);color:#F0D291;font-weight:800;font-size:12px;cursor:pointer;white-space:nowrap" style-hover="background:rgba(232,192,106,.24)">Log in</div></sc-if>
                   <sc-if value="{{ t.claimed }}">
                     <div style="flex:none;padding:6px 12px;border-radius:999px;background:rgba(46,204,113,.14);border:1px solid rgba(46,204,113,.38);color:#8FE3B8;font-weight:700;font-size:11px">Claimed</div>
                   </sc-if>
@@ -323,7 +326,7 @@
         </sc-for>
       </div>
     </div>
-    <div onClick="{{ openRecords }}" style="margin-top:-4px;text-align:right;color:#A991D6;font-size:12px;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(169,145,214,.45)" style-hover="color:#E8C06A;text-decoration-color:rgba(232,192,106,.7)">Claim history ›</div>
+    <sc-if value="{{ notGuest }}" hint-placeholder-val="{{ true }}"><div onClick="{{ openRecords }}" style="margin-top:-4px;text-align:right;color:#A991D6;font-size:12px;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(169,145,214,.45)" style-hover="color:#E8C06A;text-decoration-color:rgba(232,192,106,.7)">Claim history ›</div></sc-if>
   </div>
 
   <!-- RECENT GAMES -->
@@ -377,17 +380,17 @@
         </div>
       </sc-for>
     </div>
-    <div style="margin-top:6px;display:grid;grid-template-columns:24px 1fr 76px 34px 62px;gap:4px;align-items:center;padding:7px 8px;border-radius:8px;background:rgba(232,192,106,.1);border:1px solid rgba(232,192,106,.38)">
+    <sc-if value="{{ notGuest }}" hint-placeholder-val="{{ true }}"><div style="margin-top:6px;display:grid;grid-template-columns:24px 1fr 76px 34px 62px;gap:4px;align-items:center;padding:7px 8px;border-radius:8px;background:rgba(232,192,106,.1);border:1px solid rgba(232,192,106,.38)">
       <div style="font-family:Anton,sans-serif;font-size:13px;color:#E8C06A">{{ myRank }}</div>
-      <div style="color:#F5E6C0;font-weight:800;font-size:11.5px">My rank</div>
+      <div style="color:#F5E6C0;font-weight:800;font-size:11.5px">{{ myRankLabel }}</div>
       <div style="display:flex;align-items:center;gap:2px">
         <sc-for list="{{ myPrizes }}" as="pz" hint-placeholder-count="0">
           <div title="{{ pz.title }}" style="width:22px;height:22px;flex:none;border-radius:5px;background-color:rgba(232,192,106,.14);border:1px solid rgba(232,192,106,.4);background-image:{{ pz.img }};background-size:80%;background-position:center;background-repeat:no-repeat"></div>
         </sc-for>
       </div>
-      <div style="text-align:center;color:#E8C06A;font-weight:800;font-size:12px">{{ level }}</div>
-      <div style="text-align:right;color:#F5E6C0;font-weight:700;font-size:11.5px">₱{{ myPrizeTotal }}</div>
-    </div>
+      <div style="text-align:center;color:#E8C06A;font-weight:800;font-size:12px">{{ myRankStage }}</div>
+      <div style="text-align:right;color:#F5E6C0;font-weight:700;font-size:11.5px">{{ myPrizeTotal }}</div>
+    </div></sc-if>
   </div>
 
   <!-- HOT PROMOS -->
@@ -759,9 +762,11 @@ class Component extends DCLogic {
   }
   componentDidUpdate() { this.fitStageList(); }
   // 当前用户本期有效投注合计（示例：后端按本活动参与的游戏分类汇总）
-  userValidBet() { return 464400; }
+  isGuest() { try { if (/[?&]guest=1/.test(window.location.search)) return true; } catch (e) {} return this.props.loggedIn === false; }
+  userValidBet() { return this.isGuest() ? 0 : 464400; }
   renderVals() {
-    const growth = 1084000, level = 30, nextLevel = 31, nextNeed = 1400000, prevNeed = 1000000;
+    const guest = this.isGuest();
+    const growth = guest ? 0 : 1084000, level = guest ? 0 : 30, nextLevel = guest ? 1 : 31, nextNeed = guest ? 100 : 1400000, prevNeed = guest ? 0 : 1000000;
     const pct = Math.min(100, Math.round(((growth - prevNeed) / (nextNeed - prevNeed)) * 100));
     const s = Math.floor(this.state.left / 1000);
     const pad = n => String(n).padStart(2, '0');
@@ -833,7 +838,7 @@ class Component extends DCLogic {
     const physMap = {};
     physicals.forEach(p => { physMap[p.lv] = p; });
     const tasks = rows.map(r => {
-      const reached = r.lv <= level, claimed = r.done || !!this.state.claimed[r.lv];
+      const reached = r.lv <= level, claimed = !guest && (r.done || !!this.state.claimed[r.lv]);
       const ph = physMap[r.lv];
       const soldOut = !!ph && ph.left === 0;
       return {
@@ -863,7 +868,7 @@ class Component extends DCLogic {
         reward: soldOut
           ? ('Physical prize sold out · reward instead ' + this.money(r.cash || 0))
           : (r.cash ? ('Reward ' + this.money(r.cash)) : (r.extra || 'Reward locked')),
-        claimable: reached && !claimed, claimed: reached && claimed, locked: !reached,
+        claimable: !guest && reached && !claimed, claimed: !guest && reached && claimed, locked: !guest && !reached, guest, onLogin: () => this.toast('Redirecting to log in…'),
         unclaimedFlag: (reached && !claimed) || !reached ? '1' : '0',
         onClaim: () => {
           if (ph && !soldOut) {
@@ -942,7 +947,7 @@ class Component extends DCLogic {
       [2, 4, '12/01 12:36'], [1, 3, '12/01 10:15']
     ];
     physicals.forEach(p => { if ((this.state.soldNow || {})[p.lv]) p.left = 0; });
-    const records = recordSrc.map(r => ({ reward: 'Reward ' + this.money(r[1]), lv: r[0], time: r[2] }));
+    const records = (guest ? [] : recordSrc).map(r => ({ reward: 'Reward ' + this.money(r[1]), lv: r[0], time: r[2] }));
     const recordSum = recordSrc.reduce((a, r) => a + r[1], 0);
 
     // game types enabled in admin config
@@ -1047,16 +1052,14 @@ class Component extends DCLogic {
         this.bWheelAt = now;
         this.setState({ betIdx: (bIdx + (e.deltaY > 0 ? 1 : -1) + bn) % bn });
       },
-      loggedIn: this.props.loggedIn !== false,
-      loggedOut: this.props.loggedIn === false,
-      goLogin: () => {},
+      loggedIn: !guest, loggedOut: guest, goLogin: () => this.toast('Redirecting to log in…'),
       username: (() => {
         const u = this.props.username || 'bingoplayer168';
         return u;
       })(),
       ringDash: (Math.round(2 * Math.PI * 27 * pct / 100)) + ' ' + Math.round(2 * Math.PI * 27),
       level, nextLevel, growthText: growth.toLocaleString(), pctText: pct + '%',
-      remainExp: (nextNeed - growth).toLocaleString(), nextReward: 'Reward ₱350',
+      remainExp: (nextNeed - growth).toLocaleString(), nextReward: guest ? 'Reward ' + this.money(rows[0].cash) : 'Reward ₱350',
       cdD: Math.floor(s / 86400),
       cdH: pad(Math.floor(s / 3600) % 24),
       cdM: pad(Math.floor(s / 60) % 60),
@@ -1065,7 +1068,7 @@ class Component extends DCLogic {
         const p = Math.round(((this.simNow() - this.start) / (this.end - this.start)) * 100);
         return Math.max(0, Math.min(100, p)) + '%';
       })(),
-      hasClaimable: claimables.length > 0, noClaimable: claimables.length === 0,
+      hasClaimable: !guest && claimables.length > 0, noClaimable: !guest && claimables.length === 0, isGuest: guest, notGuest: !guest,
       claimableCount: claimables.length, claimableAmount: this.money(claimAmount),
       claimAll: () => {
         const next = Object.assign({}, this.state.claimed);
@@ -1266,7 +1269,7 @@ class Component extends DCLogic {
         this.listEl = el;
         if (el && !this.didInitScroll) { this.didInitScroll = true; setTimeout(() => this.scrollToNext(), 60); }
       },
-      hasClaimedRows: true,
+      hasClaimedRows: !guest,
       claimedCount: rows.filter(r => r.done || this.state.claimed[r.lv]).length,
       scrollTop: () => { if (this.listEl) this.listEl.scrollTo({ top: 0, behavior: 'smooth' }); },
       prizeDots: physicals.map((_, i) => ({
@@ -1290,7 +1293,7 @@ class Component extends DCLogic {
         this.wheelAt = now;
         this.setState(st => ({ prizeIdx: (st.prizeIdx + (e.deltaY > 0 ? 1 : -1) + n) % n }));
       },
-      myRank: 128, myPrizeTotal: '1,548',
+      myRank: guest ? '—' : 128, myRankLabel: guest ? 'Log in to see your rank' : 'My rank', myRankStage: guest ? '—' : level, myPrizeTotal: guest ? '—' : '₱1,548', myPrizeCount: guest ? '—' : undefined,
       toastOn: !!this.state.toast, toastMsg: this.state.toast,
       rulesOpen: this.state.rulesOpen,
       toggleRules: () => this.setState(st => ({ rulesOpen: !st.rulesOpen })),

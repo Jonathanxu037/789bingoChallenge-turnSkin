@@ -468,7 +468,7 @@
                     <td style="padding:12px 8px;border:1px solid #EBEEF5">实体领取</td>
                     <td style="padding:12px 8px;border:1px solid #EBEEF5">实体奖励成本</td>
                     <td style="padding:12px 8px;border:1px solid #EBEEF5">人均关卡</td>
-                    <td style="padding:12px 8px;border:1px solid #EBEEF5">最高关卡</td><td style="padding:12px 8px;border:1px solid #EBEEF5">未领取</td><td style="padding:12px 8px;border:1px solid #EBEEF5">操作</td>
+                    <td style="padding:12px 8px;border:1px solid #EBEEF5">最高关卡</td><td style="padding:12px 8px;border:1px solid #EBEEF5">机器人领取</td><td style="padding:12px 8px;border:1px solid #EBEEF5">未领取</td><td style="padding:12px 8px;border:1px solid #EBEEF5">操作</td>
                   </tr>
                   <sc-for list="{{ dailyPg.rows }}" as="d" hint-placeholder-count="10">
                     <tr>
@@ -484,7 +484,7 @@
                       <td style="padding:12px 8px;border:1px solid #EBEEF5;text-align:left;white-space:nowrap"><div>{{ d.physical }}</div><sc-for list="{{ d.physLines }}" as="ln" hint-placeholder-count="0"><div style="font-size:11px;line-height:1.5;color:#8C8C8C;font-weight:400;white-space:nowrap">{{ ln }}</div></sc-for></td>
                       <td style="padding:12px 8px;border:1px solid #EBEEF5">{{ d.physCost }}</td>
                       <td style="padding:12px 8px;border:1px solid #EBEEF5">{{ d.avg }}</td>
-                      <td style="padding:12px 8px;border:1px solid #EBEEF5">{{ d.max }}</td><td style="color:#D46B08;white-space:nowrap;padding:12px 8px;border:1px solid #EBEEF5;text-align:left;white-space:nowrap"><div>{{ d.unclaimed }}</div><sc-for list="{{ d.uncLines }}" as="ln" hint-placeholder-count="0"><div style="font-size:11px;line-height:1.5;color:#8C8C8C;font-weight:400;white-space:nowrap">{{ ln }}</div></sc-for></td><td style="padding:10px 8px;border:1px solid #EBEEF5;text-align:center"><span onClick="{{ d.onDetail }}" style="color:#1890FF;cursor:pointer;white-space:nowrap">查看详细数据</span></td>
+                      <td style="padding:12px 8px;border:1px solid #EBEEF5">{{ d.max }}</td><td style="padding:12px 8px;border:1px solid #EBEEF5">{{ d.robot }}</td><td style="color:#D46B08;white-space:nowrap;padding:12px 8px;border:1px solid #EBEEF5;text-align:left;white-space:nowrap"><div>{{ d.unclaimed }}</div><sc-for list="{{ d.uncLines }}" as="ln" hint-placeholder-count="0"><div style="font-size:11px;line-height:1.5;color:#8C8C8C;font-weight:400;white-space:nowrap">{{ ln }}</div></sc-for></td><td style="padding:10px 8px;border:1px solid #EBEEF5;text-align:center"><span onClick="{{ d.onDetail }}" style="color:#1890FF;cursor:pointer;white-space:nowrap">查看详细数据</span></td>
                     </tr>
                   </sc-for>
                   <tr style="background:#FAFAFA;font-weight:700">
@@ -500,7 +500,7 @@
                     <td style="padding:12px 8px;border:1px solid #EBEEF5;white-space:nowrap;position:sticky;bottom:81px;z-index:2;background:#FFFBE6">{{ ptot.physical }}</td>
                     <td style="padding:12px 8px;border:1px solid #EBEEF5;white-space:nowrap;position:sticky;bottom:81px;z-index:2;background:#FFFBE6">{{ ptot.physCost }}</td>
                     <td style="padding:12px 8px;border:1px solid #EBEEF5;white-space:nowrap;position:sticky;bottom:81px;z-index:2;background:#FFFBE6">—</td>
-                    <td style="padding:12px 8px;border:1px solid #EBEEF5;white-space:nowrap;position:sticky;bottom:81px;z-index:2;background:#FFFBE6">{{ ptot.max }}</td><td style="padding:12px 8px;border:1px solid #EBEEF5;white-space:nowrap;position:sticky;bottom:81px;z-index:2;background:#FFFBE6">{{ ptot.unclaimed }}</td><td style="padding:10px 8px;border:1px solid #EBEEF5;white-space:nowrap;position:sticky;bottom:81px;z-index:2;background:#FFFBE6"></td>
+                    <td style="padding:12px 8px;border:1px solid #EBEEF5;white-space:nowrap;position:sticky;bottom:81px;z-index:2;background:#FFFBE6">{{ ptot.max }}</td><td style="padding:12px 8px;border:1px solid #EBEEF5;white-space:nowrap;position:sticky;bottom:81px;z-index:2;background:#FFFBE6">{{ ptot.robot }}</td><td style="padding:12px 8px;border:1px solid #EBEEF5;white-space:nowrap;position:sticky;bottom:81px;z-index:2;background:#FFFBE6">{{ ptot.unclaimed }}</td><td style="padding:10px 8px;border:1px solid #EBEEF5;white-space:nowrap;position:sticky;bottom:81px;z-index:2;background:#FFFBE6"></td>
                   </tr>
                   <tr style="background:#FAFAFA;font-weight:700">
                     <td style="padding:12px 8px;border:1px solid #EBEEF5;white-space:nowrap;position:sticky;bottom:45px;z-index:2;background:#E6F4FF">总计（全部 {{ dailyPg.total }} 条）</td>
@@ -515,7 +515,7 @@
                     <td style="padding:12px 8px;border:1px solid #EBEEF5;white-space:nowrap;position:sticky;bottom:45px;z-index:2;background:#E6F4FF">{{ tot.physical }}</td>
                     <td style="padding:12px 8px;border:1px solid #EBEEF5;white-space:nowrap;position:sticky;bottom:45px;z-index:2;background:#E6F4FF">{{ tot.physCost }}</td>
                     <td style="padding:12px 8px;border:1px solid #EBEEF5;white-space:nowrap;position:sticky;bottom:45px;z-index:2;background:#E6F4FF">—</td>
-                    <td style="padding:12px 8px;border:1px solid #EBEEF5;white-space:nowrap;position:sticky;bottom:45px;z-index:2;background:#E6F4FF">{{ tot.max }}</td><td style="padding:12px 8px;border:1px solid #EBEEF5;white-space:nowrap;position:sticky;bottom:45px;z-index:2;background:#E6F4FF">{{ tot.unclaimed }}</td><td style="padding:10px 8px;border:1px solid #EBEEF5;white-space:nowrap;position:sticky;bottom:45px;z-index:2;background:#E6F4FF"></td>
+                    <td style="padding:12px 8px;border:1px solid #EBEEF5;white-space:nowrap;position:sticky;bottom:45px;z-index:2;background:#E6F4FF">{{ tot.max }}</td><td style="padding:12px 8px;border:1px solid #EBEEF5;white-space:nowrap;position:sticky;bottom:45px;z-index:2;background:#E6F4FF">{{ tot.robot }}</td><td style="padding:12px 8px;border:1px solid #EBEEF5;white-space:nowrap;position:sticky;bottom:45px;z-index:2;background:#E6F4FF">{{ tot.unclaimed }}</td><td style="padding:10px 8px;border:1px solid #EBEEF5;white-space:nowrap;position:sticky;bottom:45px;z-index:2;background:#E6F4FF"></td>
                   </tr>
                 </table>
               <div style="position:sticky;bottom:0;z-index:3;display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap;padding:8px 10px;background:#fff;border-top:1px solid #EBEEF5;font-size:12.5px;color:#606266;box-shadow:0 -4px 10px rgba(0,0,0,.05)">
@@ -2064,15 +2064,15 @@ class Component extends DCLogic {
       date: '2026-' + r[0], uv: this.fmt(r[1]), users: this.fmt(r[2]), newUsers: this.fmt(r[3]),
       slots: this.peso(Math.round(r[4] * 1e6)), live: this.peso(Math.round(r[5] * 1e6)), exp: this.fmt(Math.round(r[6] * 1e6)),
       clears: this.fmt(r[7]), cash: this.peso(r[8]), fallback: r[9] ? this.peso(r[9]) : '—', physical: r[10],
-      avg: (8 + r[6] * 2).toFixed(1), max: 34 + i * 6, unclaimed: this.fmt(r[11]) + ' 人 · ' + this.peso(r[12]), uncLines: r[13] ? physList(r[13], i + 1) : ['无未领实物'], physLines: physList(r[10], i + 4), onDetail: () => this.setState({ rd: { i, q: '', type: 'all', onlyNew: false } }) }));
+      avg: (8 + r[6] * 2).toFixed(1), max: 34 + i * 6, robot: (3 + (i * 7) % 9) + ' 次', unclaimed: this.fmt(r[11]) + ' 人 · ' + this.peso(r[12]), uncLines: r[13] ? physList(r[13], i + 1) : ['无未领实物'], physLines: physList(r[10], i + 4), onDetail: () => this.setState({ rd: { i, q: '', type: 'all', onlyNew: false } }) }));
     const sum = i => days.reduce((a, r) => a + r[i], 0);
-    const totOf = (rows) => { const S = j => rows.reduce((a, r) => a + (Number(r[j]) || 0), 0); const last = rows[rows.length - 1] || []; return { uv: this.fmt(S(1)), users: '—', newUsers: this.fmt(S(3)), exp: this.fmt(Math.round(S(6) * 1e6)), clears: this.fmt(S(7)), cash: this.peso(S(8)), fallback: this.peso(S(9)), physical: S(10), physCost: '—', max: '—', unclaimed: last.length ? '页末 ' + this.fmt(last[11]) + ' 人 · ' + this.peso(last[12]) : '—', cac: '—' }; };
+    const totOf = (rows) => { const S = j => rows.reduce((a, r) => a + (Number(r[j]) || 0), 0); const last = rows[rows.length - 1] || []; return { uv: this.fmt(S(1)), users: '—', newUsers: this.fmt(S(3)), exp: this.fmt(Math.round(S(6) * 1e6)), clears: this.fmt(S(7)), cash: this.peso(S(8)), fallback: this.peso(S(9)), physical: S(10), physCost: '—', max: '—', robot: '—', unclaimed: last.length ? '页末 ' + this.fmt(last[11]) + ' 人 · ' + this.peso(last[12]) : '—', cac: '—' }; };
     const dailyPgBase = this.pg('ops', days.map((r, i) => ({ r, i })));
     const ptot = totOf(dailyPgBase.rows.map(x => x.r));
     const tot = {
       uv: this.fmt(sum(1)), users: '11,864（去重）', newUsers: this.fmt(sum(3)),
       slots: this.peso(Math.round(sum(4) * 1e6)), live: this.peso(Math.round(sum(5) * 1e6)), exp: this.fmt(Math.round(sum(6) * 1e6)),
-      clears: this.fmt(sum(7)), cash: this.peso(sum(8)), fallback: this.peso(sum(9)), physical: sum(10), max: 70, unclaimed: this.fmt(days[days.length - 1][11]) + ' 人 · ' + this.peso(days[days.length - 1][12]) + ' · 实物 ' + days[days.length - 1][13] + ' 件（当前）' };
+      clears: this.fmt(sum(7)), cash: this.peso(sum(8)), fallback: this.peso(sum(9)), physical: sum(10), max: 70, robot: days.reduce((a, r, i) => a + 3 + (i * 7) % 9, 0) + ' 次', unclaimed: this.fmt(days[days.length - 1][11]) + ' 人 · ' + this.peso(days[days.length - 1][12]) + ' · 实物 ' + days[days.length - 1][13] + ' 件（当前）' };
     const kpis = [
       { label: '累计参与人数', value: '11,864', color: '#1890FF' },
       { label: '活动游戏总有效投注', value: this.peso(Math.round((sum(4) + sum(5)) * 1e6)), color: '#333' },
@@ -2563,7 +2563,7 @@ class Component extends DCLogic {
       doExport: () => {
         if (s.dataView !== 'ops') { this.flash('已生成导出任务，可在下载中心查看'); return; }
         const dHead = ['日期', '浏览人数', '参与人数', '新增参与', '当日 EXP', '闯关人次', '彩金发放', '替补彩金', '实体领取', '未领取'];
-        const sheet1 = [dHead].concat(days.map(r => ['2026-' + r[0], this.fmt(r[1]), this.fmt(r[2]), this.fmt(r[3]), this.fmt(Math.round(r[6] * 1e6)), this.fmt(r[7]), this.peso(r[8]), r[9] ? this.peso(r[9]) : '—', r[10] + ' 件', this.fmt(r[11]) + ' 人 · ' + this.peso(r[12])]));
+        const sheet1 = [dHead].concat(days.map(r => ['2026-' + r[0], this.fmt(r[1]), this.fmt(r[2]), this.fmt(r[3]), this.fmt(Math.round(r[6] * 1e6)), this.fmt(r[7]), this.peso(r[8]), r[9] ? this.peso(r[9]) : '—', r[10] + ' 件', (3 + (days.indexOf(r) * 7) % 9) + ' 次', this.fmt(r[11]) + ' 人 · ' + this.peso(r[12])]));
         const uHead = ['用户名', '用户类型', '有效投注', '当日 EXP', '当前关卡', '闯关数', '彩金发放', '替补彩金', '实体领取', '未领取', '最后活跃'];
         const uRow = u => [u.user, u.bot ? '机器人' : '真实用户', u.bot ? '—' : this.peso(u.bet), Number(u.exp).toLocaleString(), u.bot ? '—' : '第 ' + u.stage + ' 关', u.clears, u.cash ? this.peso(u.cash) : '—', u.fb ? this.peso(u.fb) : '—', u.phys || '—', u.unclaimed, u.last];
         const sheets = [{ name: '运营数据按日', rows: sheet1 }].concat(days.map((r, i) => ({ name: '2026-' + r[0], rows: [uHead].concat(rdUsers(i).map(uRow)) })));
